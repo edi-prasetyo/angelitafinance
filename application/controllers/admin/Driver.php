@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pelanggan extends CI_Controller
+class Driver extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('user_model');
+        $this->load->model('driver_model');
         $this->load->library('pagination');
 
         $id = $this->session->userdata('id');
@@ -18,8 +18,8 @@ class Pelanggan extends CI_Controller
     public function index()
     {
 
-        $config['base_url']       = base_url('admin/pelanggan/index/');
-        $config['total_rows']     = count($this->user_model->total_row_pelanggan());
+        $config['base_url']       = base_url('admin/driver/index/');
+        $config['total_rows']     = count($this->driver_model->total_row_driver());
         $config['per_page']       = 10;
         $config['uri_segment']    = 4;
 
@@ -50,30 +50,22 @@ class Pelanggan extends CI_Controller
         //End Limit Start
         $this->pagination->initialize($config);
 
-        $keyword = $this->input->post('keyword');
-        $list_pelanggan = $this->user_model->get_allpelanggan($limit, $start, $keyword);
+        $keyword = $this->input->post('keyword');//Pencarian Driver
+        $driver = $this->driver_model->get_alldriver($limit, $start, $keyword);
         $data = [
-            'title'                     => 'Data Pelanggan',
-            'list_pelanggan'            => $list_pelanggan,
+            'title'                     => 'Data Driver',
+            'driver'                    => $driver,
             'pagination'                => $this->pagination->create_links(),
-            'content'                   => 'admin/pelanggan/index_pelanggan'
+            'content'                   => 'admin/driver/index_driver'
 
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
-    // Pencarian Pelanggan
-    public function search(){
-        $keyword = $this->input->post('keyword');
-        $data['user']=$this->user_model->get_user_keyword($keyword);
-        $data['title']='Data';
-        $data['content']='admin/pelanggan/search_pelanggan';
-        $this->load->view('admin/layout/wrapp',$data);
-    }
-    //Create Pelanggan
+    
     public function create()
     {
         $this->form_validation->set_rules(
-            'user_name',
+            'driver_name',
             'Nama',
             'required',
             [
@@ -81,34 +73,34 @@ class Pelanggan extends CI_Controller
             ]
         );
         $this->form_validation->set_rules(
-            'user_phone',
+            'driver_phone',
             'Nomor Handphone',
-            'required|is_unique[user.user_phone]',
+            'required|is_unique[driver.driver_phone]',
             [
-                'is_unique'     => '%s <strong>'.$this->input->post('user_phone'). '</strong> sudah digunakan!',
+                'is_unique'     => '%s <strong>'.$this->input->post('driver_phone'). '</strong> sudah digunakan!',
                 'required'      => 'Nomor Handphone harus di isi',
             ]
         );
         if ($this->form_validation->run() === FALSE) {
             $data = [
-                'title'                 => 'Tambah Data Pelanggan',
-                'content'               => 'admin/pelanggan/create_pelanggan'
+                'title'                 => 'Tambah Data Driver',
+                'content'               => 'admin/driver/create_driver'
             ];
             $this->load->view('admin/layout/wrapp', $data, FALSE);
         }else{
-
+            $slugcode = random_string('numeric', 5);
+            $driver_slug  = url_title($this->input->post('driver_slug'), 'dash', TRUE);
             $data  = [
-                
-                'user_name'             => $this->input->post('user_name'),
-                'user_phone'            => $this->input->post('user_phone'),
-                'user_address'         => $this->input->post('user_address'),
-                'role_id'               => 3,
-                'is_active '            => 1,
-                'date_created'          => time()
+                'driver_slug'               => $slugcode . '-' . $driver_slug,               
+                'driver_name'               => $this->input->post('driver_name'),
+                'driver_phone'              => $this->input->post('driver_phone'),
+                'driver_age'                => $this->input->post('driver_age'),
+                'driver_status'             => $this->input->post('driver_status'),
+                'date_created'              => time()
             ];
-            $this->user_model->create($data);
-            $this->session->set_flashdata('message', 'Data Pelanggan telah ditambahkan');
-            redirect(base_url('admin/pelanggan'), 'refresh');
+            $this->driver_model->create($data);
+            $this->session->set_flashdata('message', 'Data Diver telah ditambahkan');
+            redirect(base_url('admin/driver'), 'refresh');
         }
 
     }
@@ -163,21 +155,30 @@ class Pelanggan extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-     // AUTOCOMPLETE
-     function get_autocomplete()
-     {
-         if (isset($_GET['term'])) {
-             $result = $this->user_model->search_blog($_GET['term']);
-             if (count($result) > 0) {
-                 foreach ($result as $row)
-                     $arr_result[] = array(
-                         'label'                => $row->user_phone,
-                         'user_name'            => $row->user_name,
-                         'user_address'         => $row->user_address,
-                     );
-                 echo json_encode($arr_result);
-             }
-         }
-     }
+    //Banned User
+  public function banned($id)
+  {
+    //Proteksi delete
+    is_login();
+    $data = [
+      'id'                          => $id,
+      'driver_status'               => 'Inactive',
+    ];
+    $this->driver_model->update($data);
+    $this->session->set_flashdata('message', 'Driver Telah di banned');
+    redirect($_SERVER['HTTP_REFERER']);
+  }
+  public function activated($id)
+  {
+    //Proteksi delete
+    is_login();
+    $data = [
+      'id'                          => $id,
+      'driver_status'               => 'Active',
+    ];
+    $this->driver_model->update($data);
+    $this->session->set_flashdata('message', 'Driver Telah di Aktifkan');
+    redirect($_SERVER['HTTP_REFERER']);
+  } 
 
 }

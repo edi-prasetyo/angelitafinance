@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pelanggan extends CI_Controller
+class Car extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('user_model');
+        $this->load->model('car_model');
         $this->load->library('pagination');
 
         $id = $this->session->userdata('id');
@@ -18,8 +18,8 @@ class Pelanggan extends CI_Controller
     public function index()
     {
 
-        $config['base_url']       = base_url('admin/pelanggan/index/');
-        $config['total_rows']     = count($this->user_model->total_row_pelanggan());
+        $config['base_url']       = base_url('admin/car/index/');
+        $config['total_rows']     = count($this->car_model->total_row_car());
         $config['per_page']       = 10;
         $config['uri_segment']    = 4;
 
@@ -50,65 +50,63 @@ class Pelanggan extends CI_Controller
         //End Limit Start
         $this->pagination->initialize($config);
 
-        $keyword = $this->input->post('keyword');
-        $list_pelanggan = $this->user_model->get_allpelanggan($limit, $start, $keyword);
+        $keyword = $this->input->post('keyword');//Pencarian Driver
+        $car = $this->car_model->get_allcar($limit, $start, $keyword);
         $data = [
-            'title'                     => 'Data Pelanggan',
-            'list_pelanggan'            => $list_pelanggan,
+            'title'                     => 'Data Mobil',
+            'car'                       => $car,
             'pagination'                => $this->pagination->create_links(),
-            'content'                   => 'admin/pelanggan/index_pelanggan'
+            'content'                   => 'admin/car/index_car'
 
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
-    // Pencarian Pelanggan
-    public function search(){
-        $keyword = $this->input->post('keyword');
-        $data['user']=$this->user_model->get_user_keyword($keyword);
-        $data['title']='Data';
-        $data['content']='admin/pelanggan/search_pelanggan';
-        $this->load->view('admin/layout/wrapp',$data);
-    }
-    //Create Pelanggan
+    
     public function create()
     {
+        
         $this->form_validation->set_rules(
-            'user_name',
+            'car_name',
             'Nama',
             'required',
             [
-                'required'      => 'Nama harus di isi',
+                'required'      => 'Nama Mobil harus di isi',
             ]
         );
         $this->form_validation->set_rules(
-            'user_phone',
-            'Nomor Handphone',
-            'required|is_unique[user.user_phone]',
+            'plat_number',
+            'Plat Nomor',
+            'required',
             [
-                'is_unique'     => '%s <strong>'.$this->input->post('user_phone'). '</strong> sudah digunakan!',
-                'required'      => 'Nomor Handphone harus di isi',
+                'required'      => 'Plat Nomor harus di isi',
             ]
         );
+        $brand = $this->brand_model->get_brand();
+
         if ($this->form_validation->run() === FALSE) {
             $data = [
-                'title'                 => 'Tambah Data Pelanggan',
-                'content'               => 'admin/pelanggan/create_pelanggan'
+                'title'                 => 'Tambah Data Mobil',
+                'brand'                 => $brand,
+                'content'               => 'admin/car/create_car'
             ];
             $this->load->view('admin/layout/wrapp', $data, FALSE);
         }else{
+            
 
+            $slugcode = random_string('numeric', 5);
+            $car_slug  = url_title($this->input->post('car_name'), 'dash', TRUE);
             $data  = [
-                
-                'user_name'             => $this->input->post('user_name'),
-                'user_phone'            => $this->input->post('user_phone'),
-                'user_address'         => $this->input->post('user_address'),
-                'role_id'               => 3,
-                'is_active '            => 1,
-                'date_created'          => time()
+                'car_slug'                  => $slugcode . '-' . $car_slug,  
+                'brand_id'                  => $this->input->post('brand_id'),             
+                'car_name'                  => $this->input->post('car_name'),
+                'merek_id'                  => $this->input->post('merek_id'),
+                'luggage'                   => $this->input->post('luggage'),
+                'passenger'                 => $this->input->post('passenger'),
+                'date_created'              => time()
             ];
-            $this->user_model->create($data);
-            $this->session->set_flashdata('message', 'Data Pelanggan telah ditambahkan');
-            redirect(base_url('admin/pelanggan'), 'refresh');
+            $this->car_model->create($data);
+            $this->session->set_flashdata('message', 'Data Mobil telah ditambahkan');
+            redirect(base_url('admin/car'), 'refresh');
         }
 
     }
@@ -163,21 +161,30 @@ class Pelanggan extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-     // AUTOCOMPLETE
-     function get_autocomplete()
-     {
-         if (isset($_GET['term'])) {
-             $result = $this->user_model->search_blog($_GET['term']);
-             if (count($result) > 0) {
-                 foreach ($result as $row)
-                     $arr_result[] = array(
-                         'label'                => $row->user_phone,
-                         'user_name'            => $row->user_name,
-                         'user_address'         => $row->user_address,
-                     );
-                 echo json_encode($arr_result);
-             }
-         }
-     }
+    //Banned User
+  public function banned($id)
+  {
+    //Proteksi delete
+    is_login();
+    $data = [
+      'id'                          => $id,
+      'driver_status'               => 'Inactive',
+    ];
+    $this->driver_model->update($data);
+    $this->session->set_flashdata('message', 'Driver Telah di banned');
+    redirect($_SERVER['HTTP_REFERER']);
+  }
+  public function activated($id)
+  {
+    //Proteksi delete
+    is_login();
+    $data = [
+      'id'                          => $id,
+      'driver_status'               => 'Active',
+    ];
+    $this->driver_model->update($data);
+    $this->session->set_flashdata('message', 'Driver Telah di Aktifkan');
+    redirect($_SERVER['HTTP_REFERER']);
+  } 
 
 }

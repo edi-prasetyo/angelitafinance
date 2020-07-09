@@ -24,7 +24,17 @@ $meta = $this->meta_model->get_meta();
                                 <a href="<?php echo base_url('admin/dashboard');?>" aria-expanded="true"><i class="ti-desktop"></i><span>Dashboard</span></a>
                             </li>
                             <li>
+                                <a href="<?php echo base_url('admin/car');?>" aria-expanded="true"><i class="ti-car"></i><span>Mobil</span></a>
+                            </li>
+                            <li>
                                 <a href="<?php echo base_url('admin/pelanggan');?>" aria-expanded="true"><i class="ti-user"></i><span>Pelanggan</span></a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo base_url('admin/transaksi');?>" aria-expanded="true"><i class="ti-shopping-cart"></i><span>Transaksi</span></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/driver');?>" aria-expanded="true"><i class="ti-bag"></i><span>Driver</span></a>
                             </li>
                             
                             <li>
@@ -43,7 +53,16 @@ $meta = $this->meta_model->get_meta();
                                 <a href="<?php echo base_url('admin/dashboard');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
                             </li>
                             <li>
+                                <a href="<?php echo base_url('admin/car');?>" aria-expanded="true"><i class="ti-car"></i><span>Mobil</span></a>
+                            </li>
+                            <li>
                                 <a href="<?php echo base_url('admin/pelanggan');?>" aria-expanded="true"><i class="ti-user"></i><span>Pelanggan</span></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/transaksi');?>" aria-expanded="true"><i class="ti-shopping-cart"></i><span>Transaksi</span></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/driver');?>" aria-expanded="true"><i class="ti-bag"></i><span>Driver</span></a>
                             </li>
 
                             <li>

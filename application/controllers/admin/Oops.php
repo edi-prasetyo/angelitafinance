@@ -7,7 +7,7 @@ class Oops extends CI_Controller
     public function index()
     {
         $data = array(
-            'title' => 'Oops! Halaman tidak di temukan',
+            'title' => 'Oops! 404',
             'deskripsi' => 'error 404',
             'keywords' => 'keywords',
             'content'  => 'admin/oops/index_oops'

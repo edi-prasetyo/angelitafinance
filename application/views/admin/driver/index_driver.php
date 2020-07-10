@@ -68,9 +68,9 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                     <td><?php echo $driver->driver_phone;?></td>
                                                     <td><?php echo $driver->driver_age;?></td> 
                                                     <td><?php if ($driver->driver_status == 'Active') :?>
-                                                        <span class="status-p bg-primary">Aktif</span>
+                                                        <span class="badge badge-success">Aktif</span>
                                                     <?php else:?>
-                                                        <span class="status-p bg-danger">Inactive</span>
+                                                        <span class="badge badge-danger">Inactive</span>
                                                     <?php endif;?>
                                                         
                                                     </td>
@@ -78,9 +78,9 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                         <ul class="d-flex justify-content-center">
                                                         
                                                         <?php if ($driver->driver_status == 'Active') :?>
-                                                            <a class="btn btn-danger btn-xs" href="<?php echo base_url('admin/driver/banned/'.$driver->id);?>"><i class="ti-close"></i></a>
+                                                            <a class="text-danger" href="<?php echo base_url('admin/driver/banned/'.$driver->id);?>"><i class="fas fa-times-circle"></i></a>
                                                         <?php else:?>
-                                                            <a class="btn btn-primary btn-xs" href="<?php echo base_url('admin/driver/activated/'.$driver->id);?>"><i class="ti-check"></i></a>
+                                                            <a class="text-success" href="<?php echo base_url('admin/driver/activated/'.$driver->id);?>"><i class="fas fa-check"></i></a>
                                                         <?php endif;?>
                                                             
                                                             

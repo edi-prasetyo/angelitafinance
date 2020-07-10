@@ -144,25 +144,24 @@
 
 
 
-
+<!-- 
 
 
 </div>
 </div>
-        <!-- main content area end -->
-        <!-- footer area start-->
+       
         <footer>
             <div class="footer-area">
                 <p>© Copyright 2018. All right reserved.</p>
             </div>
         </footer>
-        <!-- footer area end-->
+       
     </div>
-    <!-- page container area end -->
+  
     
-    <!-- jquery latest version -->
+    
     <script src="<?php echo base_url('assets/template/admin/js/vendor/jquery-2.2.4.min.js');?>"></script>
-    <!-- bootstrap 4 js -->
+  
     <script src="<?php echo base_url('assets/template/admin/js/popper.min.js');?>"></script>
     <script src="<?php echo base_url('assets/template/admin/js/bootstrap.min.js');?>"></script>
     <script src="<?php echo base_url('assets/template/admin/js/owl.carousel.min.js');?>"></script>
@@ -170,33 +169,33 @@
     <script src="<?php echo base_url('assets/template/admin/js/jquery.slimscroll.min.js');?>"></script>
     <script src="<?php echo base_url('assets/template/admin/js/jquery.slicknav.min.js');?>"></script>
 
-    <!-- start chart js -->
+  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <!-- start highcharts js -->
+   
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <!-- start amcharts -->
+   
     <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="https://www.amcharts.com/lib/3/ammap.js"></script>
     <script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js"></script>
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
-    <!-- all line chart activation -->
+
     <script src="<?php echo base_url('assets/template/admin/js/line-chart.js');?>"></script>
-    <!-- all pie chart -->
+    
     <script src="<?php echo base_url('assets/template/admin/js/pie-chart.js');?>"></script>
-    <!-- all bar chart -->
+    
     <script src="<?php echo base_url('assets/template/admin/js/bar-chart.js');?>"></script>
-    <!-- all map chart -->
+  
     <script src="<?php echo base_url('assets/template/admin/js/maps.js');?>"></script>
-    <!-- others plugins -->
+    
     <script src="<?php echo base_url('assets/template/admin/js/plugins.js');?>"></script>
     <script src="<?php echo base_url('assets/template/admin/js/scripts.js');?>"></script>
 
 
-<!-- AUTOCOMPLETE -->
+
 <script src="<?php echo base_url('assets/template/admin/js/autocomplete/jquery-3.3.1.js'); ?>"></script>
 <script src="<?php echo base_url('assets/template/admin/js/autocomplete/jquery-ui.js'); ?>"></script>
 <script type="text/javascript">
@@ -219,4 +218,79 @@
 
 </body>
 
+</html> -->
+
+
+
+
+
+</div>
+</div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2020.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.0.0 Beta 
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/jquery/jquery.min.js');?>"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/jquery-ui/jquery-ui.min.js');?>"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+<!-- Bootstrap 4 -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
+<!-- ChartJS -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/chart.js/Chart.min.js');?>"></script>
+<!-- Sparkline -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/sparklines/sparkline.js');?>"></script>
+<!-- JQVMap -->
+
+
+<!-- jQuery Knob Chart -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/jquery-knob/jquery.knob.min.js');?>"></script>
+<!-- daterangepicker -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/moment/moment.min.js');?>"></script>
+<script src="<?php echo base_url('assets/template/admin2/plugins/daterangepicker/daterangepicker.js');?>"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js');?>"></script>
+<!-- Summernote -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/summernote/summernote-bs4.min.js');?>"></script>
+<!-- overlayScrollbars -->
+<script src="<?php echo base_url('assets/template/admin2/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js');?>"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo base_url('assets/template/admin2/dist/js/adminlte.js');?>"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="<?php echo base_url('assets/template/admin2/dist/js/pages/dashboard.js');?>"></script>
+
+<script src="<?php echo base_url('assets/template/admin2/dist/js/autocomplete/jquery-3.3.1.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/admin2/dist/js/autocomplete/jquery-ui.js'); ?>"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#user_phone').autocomplete({
+            source: "<?php echo base_url('admin/pelanggan/get_autocomplete'); ?>",
+
+            select: function(event, ui) {
+                $('[name="user_phone"]').val(ui.item.label);
+                $('[name="user_name"]').val(ui.item.user_name);
+                $('[name="user_address"]').val(ui.item.user_address);
+            }
+        });
+
+    });
+</script>
+
+</body>
 </html>

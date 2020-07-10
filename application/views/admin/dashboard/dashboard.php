@@ -1,13 +1,58 @@
 <div class="row">
+    
                     <!-- seo fact area start -->
                     <div class="col-lg-8 mx-auto">
+
                         <div class="row">
+
+                        <div class="col-lg-6">
+            <!-- small card -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3><?php echo count($pelanggan);?></h3>
+
+                <p>Pelanggan</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-user"></i>
+              </div>
+              <a href="<?php echo base_url('admin/pelanggan');?>" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-6">
+            <!-- small card -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>150</h3>
+
+                <p>Order</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-shopping-bag"></i>
+              </div>
+              <a href="#" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
                             <div class="col-md-6 mt-5 mb-3">
                                 <div class="card">
                                     <div class="seo-fact sbg1">
                                         <div class="p-4 d-flex justify-content-between align-items-center">
                                             <div class="seofct-icon"><i class="ti-user"></i> Pelanggan</div>
-                                            <h2><?php echo count($pelanggan);?></h2>
+                                            <h2></h2>
                                         </div>
                                         <canvas id="seolinechart1" height="50"></canvas>
                                     </div>

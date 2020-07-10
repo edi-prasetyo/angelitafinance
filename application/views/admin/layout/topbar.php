@@ -6,12 +6,12 @@ $meta = $this->meta_model->get_meta();
 
 
 
-    <!-- main content area start -->
-        <div class="main-content">
-            <!-- header area start -->
+    
+        <!-- <div class="main-content">
+         
             <div class="header-area">
                 <div class="row align-items-center">
-                    <!-- nav and search button -->
+                  
                     <div class="col-md-6 col-sm-8 clearfix">
                         <div class="nav-btn pull-left">
                             <span></span>
@@ -19,13 +19,10 @@ $meta = $this->meta_model->get_meta();
                             <span></span>
                         </div>
                         <div class="search-box pull-left">
-                            <!-- <form action="#">
-                                <input type="text" name="search" placeholder="Search..." required>
-                                <i class="ti-search"></i>
-                            </form> -->
+                           
                         </div>
                     </div>
-                    <!-- profile info & task notification -->
+                    
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                             <li id="full-view"><i class="ti-fullscreen"></i></li>
@@ -39,8 +36,7 @@ $meta = $this->meta_model->get_meta();
                     </div>
                 </div>
             </div>
-            <!-- header area end -->
-            <!-- page title area start -->
+            
             <div class="page-title-area">
                 <div class="row align-items-center">
                     <div class="col-sm-6">
@@ -67,6 +63,37 @@ $meta = $this->meta_model->get_meta();
                     </div>
                 </div>
             </div>
-            <!-- page title area end -->
-            <div class="main-content-inner">
+            
+            <div class="main-content-inner"> -->
                 
+
+
+
+
+
+
+<!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      
+    </ul>
+
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      
+      <!-- Notifications Dropdown Menu -->
+     
+      <li class="nav-item">
+        <a class="nav-link"  href="<?php echo base_url('auth/logout'); ?>" role="button">
+          Logout <i class="fas fa-power-off"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->

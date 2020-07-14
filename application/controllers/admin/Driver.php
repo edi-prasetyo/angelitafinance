@@ -104,12 +104,12 @@ class Driver extends CI_Controller
         }
 
     }
-    // Update Pelanggan
+    // Update Driver
     public function update($id)
     {
-        $pelanggan = $this->user_model->read($id);
+        $driver = $this->driver_model->read($id);
         $this->form_validation->set_rules(
-            'user_name',
+            'driver_name',
             'Nama',
             'required',
             [
@@ -118,25 +118,24 @@ class Driver extends CI_Controller
         );
         if ($this->form_validation->run() === FALSE) {
             $data = [
-                'title'                 => 'Tambah Data Pelanggan',
-                'pelanggan'             => $pelanggan,
-                'content'               => 'admin/pelanggan/update_pelanggan'
+                'title'                 => 'Update Data Driver',
+                'driver'                => $driver,
+                'content'               => 'admin/driver/update_driver'
             ];
             $this->load->view('admin/layout/wrapp', $data, FALSE);
         }else{
 
             $data  = [
-                'id'                    => $id,
-                'user_name'             => $this->input->post('user_name'),
-                'user_phone'            => $this->input->post('user_phone'),
-                'user_address'          => $this->input->post('user_address'),
-                'role_id'               => 3,
-                'is_active '            => 1,
-                'date_updated'          => time()
+                'id'                        => $id,
+                'driver_name'               => $this->input->post('driver_name'),
+                'driver_phone'              => $this->input->post('driver_phone'),
+                'driver_age'                => $this->input->post('driver_age'),
+                'driver_status'             => $this->input->post('driver_status'),
+                'date_updated'              => time()
             ];
-            $this->user_model->create($data);
-            $this->session->set_flashdata('message', 'Data Pelanggan telah ditambahkan');
-            redirect(base_url('admin/pelanggan'), 'refresh');
+            $this->driver_model->update($data);
+            $this->session->set_flashdata('message', 'Data Driver telah di update');
+            redirect(base_url('admin/driver'), 'refresh');
         }
 
     }

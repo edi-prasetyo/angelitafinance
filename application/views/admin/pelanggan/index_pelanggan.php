@@ -4,7 +4,7 @@ $user = $this->user_model->user_detail($id);
 ?>
 
 <!-- Progress Table start -->
-<div class="col-12 mt-5">
+<div class="col-12">
                         <div class="card">
                             <div class="card-body">
                             <?php
@@ -67,20 +67,20 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                     <td><?php echo $list_pelanggan->user_phone;?></td>
                                                     <td><?php echo $list_pelanggan->user_address;?></td> 
                                                     <td>
-                                                        <ul class="d-flex justify-content-center">
+                                                        
                                                         <?php if ($list_pelanggan->role_id == 1 || $list_pelanggan->role_id == 2 ) :?>
                                                             <?php else:?>
-                                                            <li class="mr-3"><a class="btn btn-primary btn-sm" href="<?php echo base_url('admin/pelanggan/update/'.$list_pelanggan->id);?>" class="text-secondary"><i class="fa fa-edit"></i></a></li>
-                                                            <li>
+                                                            <a class="btn btn-primary btn-sm" href="<?php echo base_url('admin/pelanggan/update/'.$list_pelanggan->id);?>" class="text-secondary"><i class="fa fa-edit"></i></a>
+                                                            
                                                             <?php if ($user->role_id == 1) :?>
                                                                 <?php include "delete_pelanggan.php";?>
                                                             <?php else:?>
                                                                 
                                                             <?php endif;?>
                                                                                                                            
-                                                            </li>
+                                                            
                                                             <?php endif;?>
-                                                        </ul>
+                                                       
                                                     </td>
                                                 </tr>
                                                 

@@ -29,7 +29,7 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text"><i class="ti-user"></i></div>
                                                         </div>
-                                                        <input type="text" class="form-control" name="keyword" placeholder="Cari Type mobil">
+                                                        <input type="text" class="form-control" name="keyword" placeholder="Cari Nama mobil">
                                                     </div>
                                                     </div>
                                                     <div class="col-auto">
@@ -52,9 +52,8 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                             <thead class="text-uppercase">
                                                 <tr>
                                                     <th scope="col">ID</th>
-                                                    <th scope="col">Merek</th>
                                                     <th scope="col">Nama Mobil</th>
-                                                   
+                                                    <th scope="col">Merek</th>
                                                     <th scope="col">action</th>
                                                 </tr>
                                             </thead>
@@ -63,8 +62,9 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                   
                                                 <tr>
                                                     <th scope="row"><?php echo $no;?></th>
+                                                    <td><?php echo $type->type_name;?></td> 
                                                     <td><?php echo $type->brand_name;?></td>
-                                                    <td><?php echo $type->type_name;?></td>                                                                             
+                                                                                                                                
                                                     <td>
                                                         <a class="btn btn-primary btn-sm" href="<?php echo base_url('admin/type/update/' .$type->id);?>">Ubah</a>
                                                         <?php include "delete_type.php";?>

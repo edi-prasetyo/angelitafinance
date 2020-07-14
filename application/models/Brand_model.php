@@ -9,19 +9,19 @@ class Brand_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-    public function get_brand()
+    public function get_brand($keyword)
     {
         $this->db->select('*');
         $this->db->from('brand');
+        $this->db->like('brand_name',$keyword);
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
-    public function get_brand_donasi()
+    public function get_allbrand()
     {
         $this->db->select('*');
         $this->db->from('brand');
-        $this->db->where('brand_type', 'Donasi');
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result();

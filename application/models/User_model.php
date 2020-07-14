@@ -12,8 +12,12 @@ class User_model extends CI_Model
     //listing Pendaftaran
     public function listUser()
     {
-        $this->db->select('*');
+        $this->db->select('user.*, user_role.role');
         $this->db->from('user');
+        // join
+        $this->db->join('user_role', 'user_role.id = user.role_id', 'LEFT');
+        // End Join
+        $this->db->where(['role_id'     =>  2]);
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result();
@@ -34,7 +38,7 @@ class User_model extends CI_Model
         // join
         $this->db->join('user_role', 'user_role.id = user.role_id', 'LEFT');
         // End Join
-        
+
         $this->db->like('user_name',$keyword);
         $this->db->or_like('user_phone',$keyword);
         $this->db->where('role_id', 3);
@@ -45,8 +49,11 @@ class User_model extends CI_Model
     }
     public function user_detail()
     {
-        $this->db->select('*');
+        $this->db->select('user.*, user_role.role');
         $this->db->from('user');
+        // join
+        $this->db->join('user_role', 'user_role.id = user.role_id', 'LEFT');
+        // End Join
         $this->db->where(array(
             'user.email'    => $this->session->userdata('email')
         ));

@@ -29,7 +29,7 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text"><i class="ti-user"></i></div>
                                                         </div>
-                                                        <input type="text" class="form-control" name="keyword" placeholder="Cari Pelanggan">
+                                                        <input type="text" class="form-control" name="keyword" placeholder="Cari Driver">
                                                     </div>
                                                     </div>
                                                     <div class="col-auto">
@@ -75,7 +75,7 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                         
                                                     </td>
                                                     <td>
-                                                        <ul class="d-flex justify-content-center">
+                                                        <a href="<?php echo base_url('admin/driver/update/' .$driver->id);?>" class="text-primary"><i class="fas fa-edit"></i></a>
                                                         
                                                         <?php if ($driver->driver_status == 'Active') :?>
                                                             <a class="text-danger" href="<?php echo base_url('admin/driver/banned/'.$driver->id);?>"><i class="fas fa-times-circle"></i></a>
@@ -85,7 +85,7 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                             
                                                             
                                                             
-                                                        </ul>
+                                                        
                                                     </td>
                                                 </tr>
                                                 

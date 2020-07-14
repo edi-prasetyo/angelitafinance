@@ -10,7 +10,7 @@ class Driver_model extends CI_Model
         $this->load->database();
     }
     //listing Pendaftaran
-    public function listUser()
+    public function get_driver()
     {
         $this->db->select('*');
         $this->db->from('driver');

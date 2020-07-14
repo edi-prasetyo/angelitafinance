@@ -17,7 +17,7 @@ class User extends CI_Controller
     public function index()
     {
 
-        $list_user = $this->user_model->get_allpelanggan();
+        $list_user = $this->user_model->listUser();
         $data = [
             'title'                 => 'Data User',
             'list_user'             => $list_user,

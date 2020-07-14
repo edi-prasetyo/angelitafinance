@@ -87,7 +87,7 @@ class Meta extends CI_Controller
         if ($this->form_validation->run()) {
 
             $config['upload_path']          = './assets/img/logo/';
-            $config['allowed_types']        = 'gif|jpg|png|jpeg';
+            $config['allowed_types']        = 'gif|jpg|png|jpeg|svg';
             $config['max_size']             = 5000; //Dalam Kilobyte
             $config['max_width']            = 5000; //Lebar (pixel)
             $config['max_height']           = 5000; //tinggi (pixel)

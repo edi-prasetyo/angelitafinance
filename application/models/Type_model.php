@@ -11,7 +11,7 @@ class Type_model extends CI_Model
         $this->load->database();
     }
     //listing Pendaftaran
-    public function listUser()
+    public function get_type()
     {
         $this->db->select('*');
         $this->db->from('type');
@@ -34,6 +34,7 @@ class Type_model extends CI_Model
         // Join
         $this->db->join('brand', 'brand.id = type.brand_id', 'LEFT');
         // End Join
+        $this->db->like('type_name',$keyword);
         $this->db->order_by('id', 'DESC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();

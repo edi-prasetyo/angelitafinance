@@ -60,8 +60,10 @@ class Auth extends CI_Controller
 					$this->session->set_userdata($data);
 					if ($user['role_id'] == 1) {
 						redirect('admin/dashboard');
+					} elseif ($user['role_id'] == 2) {
+						redirect('admin/dashboard');
 					} else {
-						redirect('admin/home');
+						redirect('admin/dashboard');
 					}
 				} else {
 					//Password Salah
@@ -168,11 +170,11 @@ class Auth extends CI_Controller
 
 		if ($type == 'verify') {
 			$this->email->subject('Account Verification');
-			$this->email->message('Silahkan Klik Link ini untuk mengaktivasi akun 
+			$this->email->message('Silahkan Klik Link ini untuk mengaktivasi akun
 			<a href=" ' . base_url() . 'auth/verify?email=' . $this->input->post('email') . '&token=' . urlencode($token) . ' ">Aktivasi</a>');
 		} elseif ($type == 'forgot') {
 			$this->email->subject('Reset Password');
-			$this->email->message('Silahkan Klik Link ini untuk Mereset Password 
+			$this->email->message('Silahkan Klik Link ini untuk Mereset Password
 			<a href=" ' . base_url() . 'auth/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . ' ">Reset Password</a>');
 		}
 

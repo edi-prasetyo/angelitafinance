@@ -12,7 +12,7 @@ class Pelanggan extends CI_Controller
         $id = $this->session->userdata('id');
         $user = $this->user_model->user_detail($id);
         if ($user->role_id == 3) {
-            redirect('admin/home');
+            redirect('admin/dashboard');
         }
     }
     public function index()
@@ -98,17 +98,61 @@ class Pelanggan extends CI_Controller
         }else{
 
             $data  = [
-                
+
                 'user_name'             => $this->input->post('user_name'),
                 'user_phone'            => $this->input->post('user_phone'),
                 'user_address'         => $this->input->post('user_address'),
-                'role_id'               => 3,
+                'role_id'               => 4,
                 'is_active '            => 1,
                 'date_created'          => time()
             ];
             $this->user_model->create($data);
             $this->session->set_flashdata('message', 'Data Pelanggan telah ditambahkan');
             redirect(base_url('admin/pelanggan'), 'refresh');
+        }
+
+    }
+    // Add Pelanggan dari Halaman TRANSAKSI
+    //Create Pelanggan
+    public function add()
+    {
+        $this->form_validation->set_rules(
+            'user_name',
+            'Nama',
+            'required',
+            [
+                'required'      => 'Nama harus di isi',
+            ]
+        );
+        $this->form_validation->set_rules(
+            'user_phone',
+            'Nomor Handphone',
+            'required|is_unique[user.user_phone]',
+            [
+                'is_unique'     => '%s <strong>'.$this->input->post('user_phone'). '</strong> sudah digunakan!',
+                'required'      => 'Nomor Handphone harus di isi',
+            ]
+        );
+        if ($this->form_validation->run() === FALSE) {
+            $data = [
+                'title'                 => 'Tambah Data Pelanggan',
+                'content'               => 'admin/pelanggan/create_pelanggan'
+            ];
+            $this->load->view('admin/layout/wrapp', $data, FALSE);
+        }else{
+
+            $data  = [
+
+                'user_name'             => $this->input->post('user_name'),
+                'user_phone'            => $this->input->post('user_phone'),
+                'user_address'         => $this->input->post('user_address'),
+                'role_id'               => 4,
+                'is_active '            => 1,
+                'date_created'          => time()
+            ];
+            $this->user_model->create($data);
+            $this->session->set_flashdata('message', 'Data Pelanggan telah ditambahkan');
+            redirect($_SERVER['HTTP_REFERER']);
         }
 
     }
@@ -142,8 +186,8 @@ class Pelanggan extends CI_Controller
                 'is_active '            => 1,
                 'date_updated'          => time()
             ];
-            $this->user_model->create($data);
-            $this->session->set_flashdata('message', 'Data Pelanggan telah ditambahkan');
+            $this->user_model->update($data);
+            $this->session->set_flashdata('message', 'Data Pelanggan telah di Update');
             redirect(base_url('admin/pelanggan'), 'refresh');
         }
 

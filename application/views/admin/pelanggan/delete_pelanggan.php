@@ -1,6 +1,6 @@
 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#Delete<?php
                                                                                         echo $list_pelanggan->id ?>">
-    <i class="ti-trash"></i> 
+    <i class="fas fa-trash"></i> 
 </button>
 
 <div class="modal fade" id="Delete<?php echo $list_pelanggan->id ?>">

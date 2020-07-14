@@ -62,7 +62,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         
-                        <input class="btn btn-primary" type="submit" value="Simpan Pelanggan">
+                        <input class="btn btn-primary" type="submit" value="Simpan Driver">
                     
                     </div>
                 </div>

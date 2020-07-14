@@ -75,7 +75,7 @@ class Type extends CI_Controller
             ]
         );
         
-        $brand = $this->brand_model->get_brand();
+        $brand = $this->brand_model->get_allbrand();
 
         if ($this->form_validation->run() === FALSE) {
             $data = [
@@ -107,7 +107,7 @@ class Type extends CI_Controller
     public function update($id)
     {
         $type = $this->type_model->read($id);
-        $brand = $this->brand_model->get_brand();
+        $brand = $this->brand_model->get_allbrand();
         $this->form_validation->set_rules(
             'type_name',
             'Nama',

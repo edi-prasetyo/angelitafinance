@@ -2,6 +2,7 @@
 $id = $this->session->userdata('id');
 $user = $this->user_model->user_detail($id);
 $meta = $this->meta_model->get_meta();
+$count_pemasukan = $this->transaksi_model->count_pemasukan();
 ?>
 
 <!-- Main Sidebar Container -->
@@ -121,26 +122,35 @@ $meta = $this->meta_model->get_meta();
           <i class="nav-icon fas fa-shopping-bag"></i>
           <p>
             Transaksi
-            <span class="right badge badge-danger">10</span>
+           
           </p>
         </a>
       </li>
 
       <li class="nav-header">FINANCE</li>
       <li class="nav-item">
-        <a href="pages/calendar.html" class="nav-link">
-          <i class="nav-icon far fa-calendar-alt"></i>
+        <a href="<?php echo base_url('admin/pemasukan');?>" class="nav-link">
+          <i class="nav-icon far fa-arrow-alt-circle-right"></i>
           <p>
             Pemasukan
-            <span class="badge badge-info right">2</span>
+            <span class="badge badge-danger right"><?php echo $count_pemasukan;?></span>
           </p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="pages/gallery.html" class="nav-link">
-          <i class="nav-icon far fa-image"></i>
+        <a href="<?php echo base_url('admin/pengeluaran');?>" class="nav-link">
+          <i class="nav-icon far fa-arrow-alt-circle-left"></i>
           <p>
             Pengeluaran
+          </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="<?php echo base_url('admin/kas');?>" class="nav-link">
+          <i class="nav-icon fas fa-coins"></i>
+          <p>
+            Kas
           </p>
         </a>
       </li>
@@ -241,26 +251,35 @@ $meta = $this->meta_model->get_meta();
           <i class="nav-icon fas fa-tachometer-alt"></i>
           <p>
             Dashboard
-            <span class="right badge badge-danger">New</span>
+            <!-- <span class="right badge badge-danger">New</span> -->
           </p>
         </a>
       </li>
 
       <li class="nav-header">FINANCE</li>
       <li class="nav-item">
-        <a href="pages/calendar.html" class="nav-link">
-          <i class="nav-icon far fa-calendar-alt"></i>
+        <a href="<?php echo base_url('admin/pemasukan');?>" class="nav-link">
+          <i class="nav-icon far fa-arrow-alt-circle-right"></i>
           <p>
             Pemasukan
-            <span class="badge badge-info right">2</span>
+            <span class="badge badge-danger right"><?php echo $count_pemasukan;?></span>
           </p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="pages/gallery.html" class="nav-link">
-          <i class="nav-icon far fa-image"></i>
+        <a href="<?php echo base_url('admin/pengeluaran');?>" class="nav-link">
+          <i class="nav-icon far fa-arrow-alt-circle-left"></i>
           <p>
             Pengeluaran
+          </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="<?php echo base_url('admin/kas');?>" class="nav-link">
+          <i class="nav-icon fas fa-coins"></i>
+          <p>
+            Kas
           </p>
         </a>
       </li>

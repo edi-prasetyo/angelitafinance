@@ -73,7 +73,7 @@
             <!-- Table row -->
             <div class="row">
               <div class="col-12 table-responsive">
-                <table class="table table-bordered">
+                <table class="table">
                   <thead>
                     <tr>
                       <th>Lama Sewa</th>
@@ -89,8 +89,11 @@
                       <td><?php echo $transaksi->car_name;?></td>
                       <td><?php echo $transaksi->start_date;?></td>
                       <td><?php echo $transaksi->end_date;?></td>
-                      <td>IDR. <?php echo number_format($transaksi->kas_masuk,'0',',','.');?></td>
+                      <td>IDR. <?php echo number_format($transaksi->harga,'0',',','.');?></td>
 
+                    </tr>
+                    <tr>
+                      <td><td><td><td><td>
                     </tr>
 
                   </tbody>
@@ -113,16 +116,20 @@
                 <table class="table">
                   <tr>
                     <th style="width:50%">Subtotal:</th>
-                    <td>IDR. <?php echo number_format($transaksi->kas_masuk,'0',',','.');?></td>
+                    <td>IDR. <?php echo number_format($transaksi->harga,'0',',','.');?></td>
                   </tr>
                   <tr>
                     <th>DP</th>
-                    <td>0</td>
+                    <td>IDR. <?php echo number_format($transaksi->down_payment,'0',',','.');?></td>
                   </tr>
 
                   <tr>
                     <th>Total:</th>
-                    <td>IDR. <?php echo number_format($transaksi->kas_masuk,'0',',','.');?></td>
+                    <td>IDR.
+                      <?php
+                      $total = $transaksi->harga-$transaksi->down_payment;
+                      echo number_format($total,'0',',','.');
+                    ?></td>
                   </tr>
                 </table>
 

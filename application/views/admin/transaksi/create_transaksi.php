@@ -11,6 +11,9 @@
         <hr>
         <!-- Input Hidden data produk -->
         <input type="hidden" name="kode_transaksi" value="<?php echo $kode_transaksi ?>">
+        <input type="hidden" name="kas_tanggal" value="<?php echo date("d/m/Y") ?>">
+
+
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -176,18 +179,32 @@
             </div>
           </div>
 
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="example-text-input" class="col-form-label">Harga Sewa <span class="text-danger">*</span></label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-credit-card"></i></div>
                 </div>
-                <input class="form-control" type="text" name="kas_masuk" placeholder="Rp. ..">
+                <input class="form-control" type="text" name="harga" placeholder="Rp. ..">
               </div>
-              <?php echo form_error('kas_masuk', '<small class="text-danger">', '</small>'); ?>
+              <?php echo form_error('harga', '<small class="text-danger">', '</small>'); ?>
             </div>
           </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">DP Sewa <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-credit-card"></i></div>
+                </div>
+                <input class="form-control" type="text" name="down_payment" placeholder="Rp. ..">
+              </div>
+              <?php echo form_error('down_payment', '<small class="text-danger">', '</small>'); ?>
+            </div>
+          </div>
+
 
 
 

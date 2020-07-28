@@ -16,7 +16,7 @@ class Transaksi extends CI_Controller
         $id = $this->session->userdata('id');
         $user = $this->user_model->user_detail($id);
         if ($user->role_id == 3) {
-            redirect('admin/home');
+            redirect('admin/dashboard');
         }
     }
     public function index()
@@ -59,7 +59,7 @@ class Transaksi extends CI_Controller
         $transaksi = $this->transaksi_model->get_alltransaksi($limit, $start, $keyword);
         $data = [
             'title'                     => 'Data Driver',
-            'transaksi'                    => $transaksi,
+            'transaksi'                 => $transaksi,
             'pagination'                => $this->pagination->create_links(),
             'content'                   => 'admin/transaksi/index_transaksi'
 
@@ -73,11 +73,19 @@ class Transaksi extends CI_Controller
         $paket = $this->paket_model->get_allpaket();
         $driver = $this->driver_model->get_driver();
         $this->form_validation->set_rules(
-            'kas_masuk',
+            'harga',
             'Harga Sewa',
             'required',
             [
                 'required'      => 'Harga Sewa harus di isi',
+            ]
+        );
+        $this->form_validation->set_rules(
+            'down_payment',
+            'DP Sewa',
+            'required',
+            [
+                'required'      => 'DP Harus di isi Atau 0',
             ]
         );
 
@@ -107,15 +115,17 @@ class Transaksi extends CI_Controller
                 'payment_method'            => $this->input->post('payment_method'),
                 'payment_status'            => $this->input->post('payment_status'),
                 'long_term'                 => $this->input->post('long_term'),
-                'kas_masuk'                 => $this->input->post('kas_masuk'),
+                'harga'                     => $this->input->post('harga'),
+                'down_payment'              => $this->input->post('down_payment'),
                 'kas_keluar'                => 0,
+                'tipe_transaksi'            => 'Pemasukan',
+                'kas_tanggal'               => $this->input->post('kas_tanggal'),
                 'date_created'              => time()
             ];
             $this->transaksi_model->create($data);
             $this->session->set_flashdata('message', 'Data Transaksi telah ditambahkan');
             redirect(base_url('admin/transaksi'), 'refresh');
         }
-
     }
     public function view($id)
     {

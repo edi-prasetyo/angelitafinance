@@ -17,15 +17,10 @@
                 <div class="row">
                     <label class="col-md-4">Tanggal</label>
                     <div class="col-md-8">
-                        : <b><?php echo date("d/m/Y", strtotime($pengeluaran->tanggal)); ?></b>
+                        : <b><?php echo $pengeluaran->kas_tanggal; ?></b>
                     </div>
                 </div>
-                <div class="row">
-                    <label class="col-md-4">Nama </label>
-                    <div class="col-md-8">
-                        : <b> <?php echo $pengeluaran->user_name ?></b>
-                    </div>
-                </div>
+                
                 <div class="row">
                     <label class="col-md-4">Kategory</label>
                     <div class="col-md-8">
@@ -37,11 +32,9 @@
                     <label class="col-md-4">Nominal</label>
                     <div class="col-md-8">
                         : <b>
-                            <?php if ($pengeluaran->pengeluaran == NULL) : ?>
-                                Rp. <?php echo "0"; ?>
-                            <?php else : ?>
-                                Rp. <?php echo number_format($pengeluaran->pengeluaran, '0', ',', '.') ?>
-                            <?php endif; ?>
+                            
+                                Rp. <?php echo number_format($pengeluaran->kas_keluar, '0', ',', '.') ?>
+                         
 
                         </b>
                     </div>
@@ -49,15 +42,10 @@
                 <div class="row">
                     <label class="col-md-4">Keterangan</label>
                     <div class="col-md-8">
-                        : <b><?php echo $pengeluaran->keterangan ?></b>
+                        : <b><?php echo $pengeluaran->kas_description ?></b>
                     </div>
                 </div>
-                <div class="row">
-                    <label class="col-md-4">Foto</label>
-                    <div class="col-md-8">
-                        : <img src="<?php echo base_url('assets/img/donatur/' . $pengeluaran->foto); ?>" class="img-fluid" />
-                    </div>
-                </div>
+                
 
             </div>
 

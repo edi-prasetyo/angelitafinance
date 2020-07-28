@@ -7,7 +7,8 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         $this->load->model('user_model');
-        $this->load->model('kas_model');
+        $this->load->model('transaksi_model');
+        $this->load->model('driver_model');
 
         // $id = $this->session->userdata('id');
         // $user = $this->user_model->user_detail($id);
@@ -21,18 +22,21 @@ class Dashboard extends CI_Controller
 
 
         $list_user              = $this->user_model->listUser();
-        $total_pemasukan        = $this->kas_model->total_pemasukan();
-        $total_pengeluaran      = $this->kas_model->total_pengeluaran();
-        $kas                    = $this->kas_model->get_kas_dahsboard();
         $pelanggan              = $this->user_model->count_pelanggan();
+        $transaksi              = $this->transaksi_model->count_transaksi();
+        $driver                 = $this->driver_model->count_driver();
+        $total_pemasukan        = $this->transaksi_model->total_pemasukan();
+        $total_pengeluaran      = $this->transaksi_model->total_pengeluaran();
+        // $pengeluaran            = $this->transaksi_model->count_pengeluaran();
 
         $data = [
             'title'             => 'Dashboard',
             'list_user'         => $list_user,
+            'pelanggan'         => $pelanggan,
+            'transaksi'         => $transaksi,
+            'driver'            => $driver,
             'total_pemasukan'   => $total_pemasukan,
             'total_pengeluaran' => $total_pengeluaran,
-            'kas'               => $kas,
-            'pelanggan'         => $pelanggan,
             'content'           => 'admin/dashboard/dashboard'
 
         ];

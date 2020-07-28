@@ -12,7 +12,7 @@ class Driver extends CI_Controller
         $id = $this->session->userdata('id');
         $user = $this->user_model->user_detail($id);
         if ($user->role_id == 3) {
-            redirect('admin/home');
+            redirect('admin/dashboard');
         }
     }
     public function index()
@@ -61,7 +61,7 @@ class Driver extends CI_Controller
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
-    
+
     public function create()
     {
         $this->form_validation->set_rules(
@@ -91,7 +91,7 @@ class Driver extends CI_Controller
             $slugcode = random_string('numeric', 5);
             $driver_slug  = url_title($this->input->post('driver_slug'), 'dash', TRUE);
             $data  = [
-                'driver_slug'               => $slugcode . '-' . $driver_slug,               
+                'driver_slug'               => $slugcode . '-' . $driver_slug,
                 'driver_name'               => $this->input->post('driver_name'),
                 'driver_phone'              => $this->input->post('driver_phone'),
                 'driver_age'                => $this->input->post('driver_age'),
@@ -178,6 +178,6 @@ class Driver extends CI_Controller
     $this->driver_model->update($data);
     $this->session->set_flashdata('message', 'Driver Telah di Aktifkan');
     redirect($_SERVER['HTTP_REFERER']);
-  } 
+  }
 
 }

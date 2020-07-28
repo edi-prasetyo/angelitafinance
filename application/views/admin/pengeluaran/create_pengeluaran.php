@@ -19,21 +19,26 @@
         ?>
 
 
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Tanggal <span class="text-danger">*</span>
-            </label>
+
+            <div class="form-group row">
+            <label class="col-lg-3 col-form-label">Tanggal</label>
             <div class="col-lg-6">
-                <input type="text" name="tanggal" class="form-control" placeholder="Tanggal" id="datepicker">
-                <?php echo form_error('tanggal', '<small class="text-danger">', '</small>'); ?>
+            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <input type="text" name="kas_tanggal" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
             </div>
-        </div>
+</div>
+          
 
 
         <div class="form-group row">
             <label class="col-lg-3 col-form-label">Kategori <span class="text-danger">*</span>
             </label>
             <div class="col-lg-6">
-                <select name="category_id" class="form-control form-control-chosen">
+                <select name="category_id" class="form-control custom-select">
                     <option></option>
                     <?php foreach ($category as $category) { ?>
                         <option value="<?php echo $category->id ?>">
@@ -49,37 +54,19 @@
             <label class="col-lg-3 col-form-label">Nominal Rp. <span class="text-danger"> *</span>
             </label>
             <div class="col-lg-6">
-                <input type="text" name="pengeluaran" class="form-control" placeholder="Nominal" value="<?php echo set_value('pengeluaran'); ?>">
-                <?php echo form_error('pengeluaran', '<small class="text-danger">', '</small>'); ?>
+                <input type="text" name="kas_keluar" class="form-control" placeholder="Nominal" value="<?php echo set_value('kas_keluar'); ?>">
+                <?php echo form_error('kas_keluar', '<small class="text-danger">', '</small>'); ?>
             </div>
         </div>
 
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Upload Foto <span class="text-danger">*</span>
-            </label>
-            <div class="col-lg-6">
-
-
-
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" name="foto">
-                    <label class="custom-file-label" for="customFile"><i class="ti-camera"></i> Ambil Foto</label>
-                </div>
-
-                <img id="blah" src="#" alt="Gambar Akan Muncul Disini" class="img-fluid" />
-
-
-
-
-            </div>
-        </div>
+        
 
         <div class="form-group row">
             <label class="col-lg-3 col-form-label">Keterangan <span class="text-danger"> *</span>
             </label>
             <div class="col-lg-6">
-                <textarea class="form-control" id="summernote" name="keterangan"><?php echo set_value('keterangan'); ?></textarea>
-                <?php echo form_error('keterangan', '<small class="text-danger">', '</small>'); ?>
+                <textarea class="form-control" id="summernote" name="kas_description"><?php echo set_value('kas_description'); ?></textarea>
+                <?php echo form_error('kas_description', '<small class="text-danger">', '</small>'); ?>
             </div>
         </div>
 

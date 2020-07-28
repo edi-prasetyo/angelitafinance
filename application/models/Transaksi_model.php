@@ -33,6 +33,7 @@ class Transaksi_model extends CI_Model
         // Join
         $this->db->join('driver', 'driver.id = transaksi.driver_id', 'LEFT');
         // End Join
+        $this->db->where('tipe_transaksi', 'Pemasukan');
         $this->db->like('kode_transaksi',$keyword);
         $this->db->order_by('id', 'DESC');
         $this->db->limit($limit, $start);
@@ -69,7 +70,7 @@ class Transaksi_model extends CI_Model
         return $query->row();
     }
 
-    //Total Row Pelanggan
+    //Total Row Transaksi
     public function total_row_transaksi()
     {
         $this->db->select('*');
@@ -78,6 +79,7 @@ class Transaksi_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
     // SEARCH Transaksi
     public function get_transaksi_keyword($keyword){
         $this->db->select('*');
@@ -86,6 +88,199 @@ class Transaksi_model extends CI_Model
         $this->db->or_like('transaksi_phone',$keyword);
         return $this->db->get()->result();
     }
+
+    // FUNGSI HALAMAN FINANCE
+
+    public function get_pemasukan($limit, $start)
+    {
+        $this->db->select('transaksi.*, driver.driver_name');
+        $this->db->from('transaksi');
+        // Join
+        $this->db->join('driver', 'driver.id = transaksi.driver_id', 'LEFT');
+        // End Join
+        $this->db->where('tipe_transaksi', 'Pemasukan');
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_pengeluaran($limit, $start)
+    {
+        $this->db->select('transaksi.*, driver.driver_name, category_name');
+        $this->db->from('transaksi');
+        // Join
+        $this->db->join('driver', 'driver.id = transaksi.driver_id', 'LEFT');
+        $this->db->join('category', 'category.id = transaksi.category_id', 'LEFT');
+        // End Join
+        $this->db->where('tipe_transaksi', 'Pengeluaran');
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    // Detail pemasukan
+    public function detail_pemasukan($id)
+    {
+      $this->db->select('transaksi.*, driver.driver_name, paket.paket_term, paket.paket_name');
+      $this->db->from('transaksi');
+      // Join
+      $this->db->join('driver', 'driver.id = transaksi.driver_id', 'LEFT');
+      $this->db->join('paket', 'paket.id = transaksi.paket_id', 'LEFT');
+      // End Join
+      $this->db->where('transaksi.id', $id);
+      $this->db->order_by('id');
+      $query = $this->db->get();
+      return $query->row();
+    }
+    public function detail_pengeluaran($id)
+    {
+      $this->db->select('transaksi.*, driver.driver_name, paket.paket_term, paket.paket_name');
+      $this->db->from('transaksi');
+      // Join
+      $this->db->join('driver', 'driver.id = transaksi.driver_id', 'LEFT');
+      $this->db->join('paket', 'paket.id = transaksi.paket_id', 'LEFT');
+      // End Join
+      $this->db->where('transaksi.id', $id);
+      $this->db->order_by('id');
+      $query = $this->db->get();
+      return $query->row();
+    }
+    //Total Row Pemasukan
+    public function total_row_pemasukan()
+    {
+        $this->db->select('*');
+        $this->db->from('transaksi');
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
+    // PENJUMLAHAN
+    //Total Semua Kas Masuk
+    public function total_pemasukan()
+    {
+        $this->db->select_sum('kas_masuk');
+        $this->db->where('tipe_transaksi', 'Pemasukan');
+        $query = $this->db->get('transaksi');
+        if ($query->num_rows() > 0) {
+            return $query->row()->kas_masuk;
+        } else {
+            return 0;
+        }
+    }
+    // Count Pemasukan Update
+    public function count_pemasukan()
+    {
+        $this->db->select('*');
+        $this->db->from('transaksi');
+        $this->db->where('payment_status', 'Hutang');
+        $this->db->or_where('payment_status', 'Proses');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    //Total Semua Kas Keluar
+    public function total_pengeluaran()
+    {
+        $this->db->select_sum('kas_keluar');
+        $this->db->where('tipe_transaksi', 'Pengeluaran');
+        $query = $this->db->get('transaksi');
+        if ($query->num_rows() > 0) {
+            return $query->row()->kas_keluar;
+        } else {
+            return 0;
+        }
+    }
+
+    // Total Semua Kas
+    public function get_allkas($limit, $start)
+    {
+        $this->db->select('transaksi.*, driver.driver_name');
+        $this->db->from('transaksi');
+        // Join
+        $this->db->join('driver', 'driver.id = transaksi.driver_id', 'LEFT');
+        // End Join
+        // $this->db->like('kode_transaksi',$keyword);
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    //Total Row Transaksi
+    public function total_row_kas()
+    {
+        $this->db->select('*');
+        $this->db->from('transaksi');
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    // FIlter
+    // Filter Semua Pengeluaran
+    public function filter_alpengeluaran($startdate, $enddate)
+    {
+
+        $this->db->select('transaksi.*,
+        category.category_name, user.user_name');
+        $this->db->from('transaksi');
+        // JOIN
+        $this->db->join('category', 'category.id = transaksi.category_id', 'LEFT');
+        $this->db->join('user', 'user.id = transaksi.user_id', 'LEFT');
+        // END JOIN
+        $this->db->where('kas_tanggal >=', $startdate);
+        $this->db->where('kas_tanggal <=', $enddate);
+        $this->db->where('tipe_transaksi', 'Pengeluaran');
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+   
+
+    // KAS
+     // Filter By Date Only
+     public function searchalkas($startdate, $enddate)
+     {
+ 
+         $this->db->select('transaksi.*,
+         category.category_name, user.user_name');
+         $this->db->from('transaksi');
+         // join
+         $this->db->join('category', 'category.id = transaksi.category_id', 'LEFT');
+         $this->db->join('user', 'user.id = transaksi.user_id', 'LEFT');
+         // End Join
+         $this->db->where('kas_tanggal >=', $startdate);
+         $this->db->where('kas_tanggal <=', $enddate);
+         $this->db->order_by('transaksi.kas_tanggal', 'DESC');
+         $query = $this->db->get();
+         return $query->result();
+     }
+     public function total_pemasukan_aldate($startdate, $enddate)
+    {
+        $this->db->select_sum('kas_masuk');
+        $this->db->where('kas_tanggal >=', $startdate);
+        $this->db->where('kas_tanggal <=', $enddate);
+        $query = $this->db->get('transaksi');
+        if ($query->num_rows() > 0) {
+            return $query->row()->kas_masuk;
+        } else {
+            return 0;
+        }
+    }
+     //Total Semua Kas Keluar
+     public function total_pengeluaran_aldate($startdate, $enddate)
+     {
+         $this->db->select_sum('kas_keluar');
+         $this->db->where('kas_tanggal >=', $startdate);
+         $this->db->where('kas_tanggal <=', $enddate);
+         $query = $this->db->get('transaksi');
+         if ($query->num_rows() > 0) {
+             return $query->row()->kas_keluar;
+         } else {
+             return 0;
+         }
+     }
+
+    
 
 
 }

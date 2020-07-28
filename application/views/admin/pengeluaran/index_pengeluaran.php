@@ -1,4 +1,8 @@
 <?php
+
+$id = $this->session->userdata('id');
+$user = $this->user_model->user_detail($id);
+
 //Notifikasi
 if ($this->session->flashdata('message')) {
     echo '<div class="alert alert-success alert-dismissable fade show">';
@@ -18,7 +22,7 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                     <h6 class="m-0 font-weight-bold text-primary"><?php echo $title; ?></h6>
                 </div>
                 <div class="col-md-3">
-                    <a class="m-0 float-right btn btn-primary bg-gradient-primary btn-block" href="<?php echo base_url('admin/pengeluaran/filter_pengeluaran'); ?>"> Lihat Data Asrama <i class="fas fa-store ml-3"></i></a>
+                <a class="m-0 float-right btn btn-primary bg-gradient-primary btn-block" href="<?php echo base_url('admin/pengeluaran/create'); ?>">Buat pengeluaran <i class="fa fa-plus ml-3"></i></a>
                 </div>
                 <div class="col-md-3">
                     <a class="m-0 float-right btn btn-primary bg-gradient-primary btn-block" href="<?php echo base_url('admin/pengeluaran/filter_alpengeluaran'); ?>">Filter Data Per tanggal <i class="fa fa-calendar ml-3"></i></a>
@@ -31,10 +35,10 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                     <tr>
                         <th width="5%">No</th>
                         <th>Tanggal</th>
-                        <th>Asrama</th>
+                        <th>Keterangan</th>
                         <th>Kategory</th>
-                        <th>Tipe</th>
-                        <th>Nominal</th>
+                        <th>desc</th>
+                        <th>Pengeluaran</th>
                         <th width="22%">Action</th>
                     </tr>
                 </thead>
@@ -43,24 +47,23 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                     foreach ($pengeluaran as $pengeluaran) : ?>
                         <tr>
                             <td class="text-info"><?php echo $no; ?></td>
-                            <td><?php echo date("d/m/Y", strtotime($pengeluaran->tanggal)); ?></td>
+                            <td><?php echo $pengeluaran->kas_tanggal; ?></td>
                             <td>
-                                <i class="fas fa-store"></i> <?php echo $pengeluaran->asrama_name; ?><br>
-                                <i class="far fa-user"></i> <?php echo $pengeluaran->user_name; ?><br>
+                            <?php echo $pengeluaran->kas_description; ?>
                             </td>
                             <td><?php echo $pengeluaran->category_name; ?></td>
-                            <td><span class="badge badge-danger"><?php echo $pengeluaran->type; ?></span></td>
-                            <td>
-                                <?php if ($pengeluaran->pengeluaran == NULL) : ?>
-                                    Rp. <?php echo "0"; ?>
-                                <?php else : ?>
-                                    Rp. <?php echo number_format($pengeluaran->pengeluaran, '0', ',', '.') ?>
-                                <?php endif; ?>
+                            <td><?php echo $pengeluaran->kas_description; ?></td>
+                            <td>                                
+                                    Rp. <?php echo number_format($pengeluaran->kas_keluar, '0', ',', '.') ?>
                             </td>
                             <td>
                                 <?php include "view_pengeluaran.php"; ?>
                                 <!-- <a href="<?php echo base_url('admin/pengeluaran/update/' . $pengeluaran->id); ?>" class="btn btn-sm btn-info"><i class="ti-pencil-alt"></i> edit</a> -->
-                                <?php include "delete_pengeluaran.php"; ?>
+                                <?php if ($user->role_id == 3) : ?>
+                                
+                                <?php else:?>
+                                    <?php include "delete_pengeluaran.php"; ?>
+                                <?php endif;?>
                             </td>
                         </tr>
                     <?php $no++;
@@ -83,10 +86,7 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
         <div class="card-footer">
 
 
-
         </div>
-
-
 
     </div>
 

@@ -7,16 +7,17 @@ class Pemasukan extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('kas_model');
-        $this->load->model('category_model');
+        $this->load->model('transaksi_model');
+        $this->load->model('car_model');
+        $this->load->model('paket_model');
+        $this->load->model('driver_model');
         $this->load->model('user_model');
-        $this->load->model('asrama_model');
         $this->load->library('pagination');
 
         $id = $this->session->userdata('id');
         $user = $this->user_model->user_detail($id);
         if ($user->role_id == 2) {
-            redirect('admin/home');
+            redirect('admin/dashboard');
         }
     }
     //listing data Pemasukan
@@ -24,7 +25,7 @@ class Pemasukan extends CI_Controller
     {
 
         $config['base_url']       = base_url('admin/pemasukan/index/');
-        $config['total_rows']     = count($this->kas_model->total_row_pemasukan());
+        $config['total_rows']     = count($this->transaksi_model->total_row_pemasukan());
         $config['per_page']       = 10;
         $config['uri_segment']    = 4;
 
@@ -48,28 +49,24 @@ class Pemasukan extends CI_Controller
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
 
-
         //Limit dan Start
         $limit                    = $config['per_page'];
         $start                    = ($this->uri->segment(4)) ? ($this->uri->segment(4)) : 0;
         //End Limit Start
         $this->pagination->initialize($config);
 
-
-
-
-
-        $pemasukan = $this->kas_model->get_pemasukan($limit, $start);
-        $total_pemasukan       = $this->kas_model->total_pemasukan();
+        $pemasukan              = $this->transaksi_model->get_pemasukan($limit, $start);
+        $total_pemasukan        = $this->transaksi_model->total_pemasukan();
         $data = [
             'title'             => 'Data Pemasukan',
             'pemasukan'         => $pemasukan,
-            'total_pemasukan'     => $total_pemasukan,
+            'total_pemasukan'   => $total_pemasukan,
             'pagination'        => $this->pagination->create_links(),
             'content'           => 'admin/pemasukan/index_pemasukan'
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
+
     // Filter Semua Pemasukan
     public function filter_alpemasukan()
     {
@@ -95,10 +92,10 @@ class Pemasukan extends CI_Controller
         // $total_pengeluaran      = $this->kas_model->total_pengeluaran();
 
         $data = [
-            'title'                     => 'Data Pemasukan tanggal',
+            'title'                       => 'Data Pemasukan tanggal',
             'filter_alpemasukan'          => $filter_alpemasukan,
             'total_pemasukan_aldate'      => $total_pemasukan_aldate,
-            'content'                   => 'admin/pemasukan/filter_alpemasukan'
+            'content'                     => 'admin/pemasukan/filter_alpemasukan'
         ];
 
         $this->session->set_flashdata('messagefilter',  'Menampilkan Data dari Tanggal ' . date("d/m/Y", strtotime($startdate)) . ' Sampai Tanggal ' . date("d/m/Y", strtotime($enddate)));
@@ -128,7 +125,7 @@ class Pemasukan extends CI_Controller
             $enddate = $_POST['end_date'];
         }
 
-        $listasrama                      = $this->asrama_model->get_asrama();
+        $listasrama                  = $this->asrama_model->get_asrama();
 
         $filter_pemasukan            = $this->kas_model->filter_pemasukan($startdate, $enddate, $asrama);
         $total_pemasukan_date        = $this->kas_model->total_pemasukan_date($startdate, $enddate, $asrama);
@@ -141,7 +138,7 @@ class Pemasukan extends CI_Controller
         $data = [
             'title'                     => 'Data Pemasukan tanggal',
             'filter_pemasukan'          => $filter_pemasukan,
-            'listasrama'                    => $listasrama,
+            'listasrama'                => $listasrama,
             'total_pemasukan_date'      => $total_pemasukan_date,
             'content'                   => 'admin/pemasukan/filter_pemasukan'
         ];
@@ -150,309 +147,72 @@ class Pemasukan extends CI_Controller
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
 
-    //Buat Data Pemasukan
-    public function create()
-    {
-
-        $category = $this->category_model->get_category_donasi();
-        $this->form_validation->set_rules(
-            'tanggal',
-            'Tanggal',
-            'required',
-            [
-                'required'      => 'Tanggal Donasi harus di isi',
-            ]
-        );
-        $this->form_validation->set_rules(
-            'category_id',
-            'Kategori',
-            'required',
-            [
-                'required'      => 'Harus Pilih kategori',
-            ]
-        );
-        $this->form_validation->set_rules(
-            'donatur_title',
-            'Title Donatur',
-            'required',
-            [
-                'required'      => 'Harus Pilih Title',
-            ]
-        );
-        $this->form_validation->set_rules(
-            'donatur_name',
-            'Nama Donatur',
-            'required',
-            [
-                'required'      => 'Nama Donatur Harus Diisi',
-            ]
-        );
-        $this->form_validation->set_rules(
-            'donatur_phone',
-            'Nomor HP Donatur',
-            'required',
-            [
-                'required'      => 'Nomor HP Donatur Harus Diisi',
-            ]
-        );
-        $this->form_validation->set_rules(
-            'nominal',
-            'Nominal',
-            'required',
-            [
-                'required'      => 'Nominal Harus Diisi',
-            ]
-        );
-        $this->form_validation->set_rules(
-            'keterangan',
-            'Keterangan',
-            'required',
-            [
-                'required'      => 'Keterangan Harus Diisi',
-            ]
-        );
-
-        if ($this->form_validation->run()) {
-
-            if (!empty($_FILES['foto']['name'])) {
-
-                $config['upload_path']          = './assets/img/donatur/';
-                $config['allowed_types']        = 'gif|jpg|png|jpeg';
-                $config['max_size']             = 5000; //Dalam Kilobyte
-                $config['max_width']            = 5000; //Lebar (pixel)
-                $config['max_height']           = 5000; //tinggi (pixel)
-                $this->load->library('upload', $config);
-
-                if (!$this->upload->do_upload('foto')) {
-
-                    //End Validasi
-                    $data = [
-                        'title'                 => 'Tambah Data',
-                        'category'              => $category,
-                        'error_upload'          => $this->upload->display_errors(),
-                        'content'               => 'admin/pemasukan/create_pemasukan'
-                    ];
-                    $this->load->view('admin/layout/wrapp', $data, FALSE);
-
-                    //Masuk Database
-
-                } else {
-
-                    //Proses Manipulasi Gambar
-                    $upload_data    = array('uploads'  => $this->upload->data());
-                    //Gambar Asli disimpan di folder assets/upload/image
-                    //lalu gambara Asli di copy untuk versi mini size ke folder assets/upload/image/thumbs
-
-                    $config['image_library']    = 'gd2';
-                    $config['source_image']     = './assets/img/donatur/' . $upload_data['uploads']['file_name'];
-                    //Gambar Versi Kecil dipindahkan
-                    // $config['new_image']        = './assets/img/artikel/thumbs/' . $upload_data['uploads']['file_name'];
-                    $config['create_thumb']     = TRUE;
-                    $config['maintain_ratio']   = TRUE;
-                    $config['width']            = 500;
-                    $config['height']           = 500;
-                    $config['thumb_marker']     = '';
-
-                    $this->load->library('image_lib', $config);
-                    $this->image_lib->resize();
-
-
-                    $data  = [
-                        'user_id'               => $this->session->userdata('id'),
-                        'nama_asrama'               => $this->input->post('nama_asrama'),
-                        'tanggal'               => $this->input->post('tanggal'),
-                        'category_id'           => $this->input->post('category_id'),
-                        'donatur_title'            => $this->input->post('donatur_title'),
-                        'donatur_name'             => $this->input->post('donatur_name'),
-                        'donatur_phone'            => $this->input->post('donatur_phone'),
-                        'donatur_address'          => $this->input->post('donatur_address'),
-                        'nominal'               => $this->input->post('nominal'),
-                        'pengeluaran'           => 0,
-                        'foto'                  => $upload_data['uploads']['file_name'],
-                        'keterangan'            => $this->input->post('keterangan'),
-                        'type'                  => 'Pemasukan',
-                        'date_created'          => time()
-                    ];
-                    $this->kas_model->create($data);
-                    $this->session->set_flashdata('message', 'Data Donasi telah ditambahkan');
-                    redirect(base_url('admin/pemasukan'), 'refresh');
-                }
-            } else {
-
-                $data  = [
-                    'user_id'                   => $this->session->userdata('id'),
-                    'nama_asrama'               => $this->input->post('nama_asrama'),
-                    'tanggal'                   => $this->input->post('tanggal'),
-                    'category_id'               => $this->input->post('category_id'),
-                    'donatur_title'            => $this->input->post('donatur_title'),
-                    'donatur_name'             => $this->input->post('donatur_phone'),
-                    'donatur_phone'            => $this->input->post('product_price'),
-                    'donatur_address'          => $this->input->post('donatur_address'),
-                    'nominal'               => $this->input->post('nominal'),
-                    'pengeluaran'           => 0,
-                    'keterangan'            => $this->input->post('keterangan'),
-                    'type'                  => 'Pemasukan',
-                    'date_created'          => time()
-                ];
-                $this->kas_model->create($data);
-                $this->session->set_flashdata('message', 'Data Donasi telah di Update');
-                redirect(base_url('admin/pemasukan'), 'refresh');
-            }
-        }
-        //End Masuk Database
-        $data = [
-            'title'                     => 'Tambah Pemasukan',
-            'category'                  => $category,
-            'content'                   => 'admin/pemasukan/create_pemasukan'
-        ];
-        $this->load->view('admin/layout/wrapp', $data, FALSE);
-    }
     // Update Data Pemasukan
     public function update($id)
     {
-
-        $category = $this->category_model->get_category_donasi();
-        $pemasukan = $this->kas_model->kas_detail_pemasukan($id);
-
+        $pemasukan = $this->transaksi_model->detail_pemasukan($id);
         if (!$pemasukan) {
             redirect('admin/pemasukan');
         }
 
+        $car = $this->car_model->get_car();
+        $paket = $this->paket_model->get_allpaket();
+        $driver = $this->driver_model->get_driver();
+        // Validasi
         $this->form_validation->set_rules(
-            'donatur_title',
-            'Title Donatur',
+            'spj',
+            'Spj',
             'required',
             [
-                'required'      => 'Pilih Title',
+                'required'      => 'Spj harus di isi',
             ]
         );
-        $this->form_validation->set_rules(
-            'tanggal',
-            'Tanggal',
-            'required',
-            [
-                'required'      => 'Tanggal Donasi harus di isi',
-            ]
-        );
-        if ($this->form_validation->run()) {
 
-            if (!empty($_FILES['foto']['name'])) {
+        if ($this->form_validation->run() === FALSE) {
+            $data = [
+                'title'                 => 'Update Pemasukan',
+                'car'                   => $car,
+                'paket'                 => $paket,
+                'driver'                => $driver,
+                'pemasukan'             => $pemasukan,
+                'content'               => 'admin/pemasukan/update_pemasukan'
+            ];
+            $this->load->view('admin/layout/wrapp', $data, FALSE);
+        }else{
 
-                $config['upload_path']          = './assets/img/donatur/';
-                $config['allowed_types']        = 'gif|jpg|png|jpeg';
-                $config['max_size']             = 5000; //Dalam Kilobyte
-                $config['max_width']            = 5000; //Lebar (pixel)
-                $config['max_height']           = 5000; //tinggi (pixel)
-                $this->load->library('upload', $config);
-
-                if (!$this->upload->do_upload('foto')) {
-
-                    //End Validasi
-                    $data = [
-                        'title'                 => 'Tambah Data',
-                        'category'              => $category,
-                        'pemasukan'             => $pemasukan,
-                        'error_upload'          => $this->upload->display_errors(),
-                        'content'               => 'admin/pemasukan/update_pemasukan'
-                    ];
-                    $this->load->view('admin/layout/wrapp', $data, FALSE);
-
-                    //Masuk Database
-
-                } else {
-
-                    //Proses Manipulasi Gambar
-                    $upload_data    = array('uploads'  => $this->upload->data());
-                    //Gambar Asli disimpan di folder assets/upload/image
-                    //lalu gambara Asli di copy untuk versi mini size ke folder assets/upload/image/thumbs
-
-                    $config['image_library']    = 'gd2';
-                    $config['source_image']     = './assets/img/donatur/' . $upload_data['uploads']['file_name'];
-                    //Gambar Versi Kecil dipindahkan
-                    // $config['new_image']        = './assets/img/artikel/thumbs/' . $upload_data['uploads']['file_name'];
-                    $config['create_thumb']     = TRUE;
-                    $config['maintain_ratio']   = TRUE;
-                    $config['width']            = 500;
-                    $config['height']           = 500;
-                    $config['thumb_marker']     = '';
-
-                    $this->load->library('image_lib', $config);
-                    $this->image_lib->resize();
-
-                    // Hapus Gambar Lama Jika Ada upload gambar baru
-                    if ($pemasukan->foto != "") {
-                        unlink('./assets/img/donatur/' . $pemasukan->foto);
-                        // unlink('./assets/img/artikel/thumbs/' . $berita->berita_gambar);
-                    }
-                    //End Hapus Gambar
-
-                    $data  = [
-                        'id'                    => $id,
-                        'user_id'               => $this->session->userdata('id'),
-                        // 'tanggal'               => $this->input->post('tanggal'),
-                        'category_id'           => $this->input->post('category_id'),
-                        'donatur_title'            => $this->input->post('donatur_title'),
-                        'donatur_name'             => $this->input->post('donatur_name'),
-                        'donatur_phone'            => $this->input->post('donatur_phone'),
-                        'donatur_address'          => $this->input->post('donatur_address'),
-                        'nominal'               => $this->input->post('nominal'),
-                        'pengeluaran'           => 0,
-                        'foto'                  => $upload_data['uploads']['file_name'],
-                        'keterangan'            => $this->input->post('keterangan'),
-                        'type'                  => 'Pemasukan',
-                        'date_updated'          => time()
-                    ];
-                    $this->kas_model->update($data);
-                    $this->session->set_flashdata('message', 'Data Donasi telah ditambahkan');
-                    redirect(base_url('admin/pemasukan'), 'refresh');
-                }
-            } else {
-
-                //Update Berita Tanpa Ganti Gambar
-                if ($pemasukan->foto != "")
-
-                    $data  = [
-                        'id'                    => $id,
-                        'user_id'               => $this->session->userdata('id'),
-                        // 'tanggal'               => $this->input->post('tanggal'),
-                        'category_id'           => $this->input->post('category_id'),
-                        'donatur_title'            => $this->input->post('donatur_title'),
-                        'donatur_name'             => $this->input->post('donatur_name'),
-                        'donatur_phone'            => $this->input->post('donatur_phone'),
-                        'donatur_address'          => $this->input->post('donatur_address'),
-                        'nominal'               => $this->input->post('nominal'),
-                        'pengeluaran'           => 0,
-                        'keterangan'            => $this->input->post('keterangan'),
-                        'type'                  => 'Pemasukan',
-                        'date_updated'          => time()
-                    ];
-                $this->kas_model->update($data);
-                $this->session->set_flashdata('message', 'Data Donasi telah di Update');
-                redirect(base_url('admin/pemasukan'), 'refresh');
-            }
+            $kas_masukfinal = $pemasukan->harga-$this->input->post('spj')-$this->input->post('bbm')-$this->input->post('toll')-$this->input->post('parkir')-$this->input->post('uang_makan')-$this->input->post('uang_inap')-$this->input->post('ppn')-$this->input->post('pph')-$this->input->post('fee');
+            $data  = [
+                'id'                        => $id,
+                'user_id'                   => $this->session->userdata('id'),
+                'payment_status'            => $this->input->post('payment_status'),
+                'bbm'                       => $this->input->post('bbm'),
+                'toll'                      => $this->input->post('toll'),
+                'parkir'                    => $this->input->post('parkir'),
+                'spj'                       => $this->input->post('spj'),
+                'uang_makan'                => $this->input->post('uang_makan'),
+                'uang_inap'                 => $this->input->post('uang_inap'),
+                'ppn'                       => $this->input->post('ppn'),
+                'pph'                       => $this->input->post('pph'),
+                'fee'                       => $this->input->post('fee'),
+                'kas_masuk'                 => $kas_masukfinal,
+                'status_update'             => 1,
+                'date_updated'              => time()
+            ];
+            $this->transaksi_model->update($data);
+            $this->session->set_flashdata('message', 'Data Transaksi telah di Update');
+            redirect(base_url('admin/pemasukan'), 'refresh');
         }
-        //End Masuk Database
-        $data = [
-            'title'                     => 'Tambah Pemasukan',
-            'category'                  => $category,
-            'pemasukan'                 => $pemasukan,
-            'content'                   => 'admin/pemasukan/update_pemasukan'
-        ];
-        $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
 
     // View Detail Pemasukan
     public function view($id)
     {
-        $category = $this->category_model->get_category_donasi();
-        $pemasukan = $this->kas_model->kas_detail($id);
+        $pemasukan = $this->transaksi_model->detail_pemasukan($id);
 
         //End Validasi
         $data = [
             'title'                 => 'Detail Data',
-            'category'              => $category,
             'pemasukan'             => $pemasukan,
-            'error_upload'          => $this->upload->display_errors(),
             'content'               => 'admin/pemasukan/view_pemasukan'
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);

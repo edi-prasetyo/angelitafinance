@@ -6,7 +6,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Pemasukan</h6>
                 </div>
                 <div class="col-md-3">
-                    <a class="m-0 float-right btn btn-primary btn-md btn-block bg-gradient-primary" href="<?php echo base_url('admin/kas/filter_kas'); ?>"> Filter per Asrama <i class="fas fa-store ml-3"></i></a>
+                    <!-- <a class="m-0 float-right btn btn-primary btn-md btn-block bg-gradient-primary" href="<?php echo base_url('admin/kas/filter_kas'); ?>"> Filter per Asrama <i class="fas fa-store ml-3"></i></a> -->
 
                 </div>
                 <div class="col-md-3">
@@ -23,8 +23,7 @@
                     <tr>
                         <th width="5%">No</th>
                         <th>Tanggal</th>
-                        <th>Asrama</th>
-                        <th>Kategori</th>
+                        <th>Keterangan</th>
                         <th>Tipe</th>
                         <th>Pemasukan</th>
                         <th>Pengeluaran</th>
@@ -35,37 +34,31 @@
                     foreach ($kas as $kas) : ?>
                         <tr>
                             <td class="text-info"><?php echo $no; ?></td>
-                            <td><?php echo date("d/m/Y", strtotime($kas->tanggal)); ?></td>
+                            <td><?php echo $kas->kas_tanggal; ?></td>
                             <td>
-                                <?php if ($kas->type == 'Pengeluaran') : ?>
-                                    <div class="badge badge-danger bg-gradient-danger"><i class="fas fa-store"></i> <?php echo $kas->asrama_name; ?></div><br>
-                                    <i class="far fa-user"></i> <?php echo $kas->user_name; ?>
-                                <?php else : ?>
-                                    <div class="badge badge-success bg-gradient-success"><i class="fas fa-store"></i> <?php echo $kas->asrama_name; ?></div><br>
-                                    <?php echo $kas->donatur_title; ?> <?php echo $kas->donatur_name; ?>
-                                <?php endif; ?>
 
+                            <?php echo $kas->kas_description; ?>
                             </td>
-                            <td><?php echo $kas->category_name; ?></td>
+
                             <td>
-                                <?php if ($kas->type == 'Pemasukan') : ?>
-                                    <span class="badge badge-success bg-gradient-success"><?php echo $kas->type; ?></span>
+                                <?php if ($kas->tipe_transaksi == 'Pemasukan') : ?>
+                                    <span class="badge badge-success bg-gradient-success"><?php echo $kas->tipe_transaksi; ?></span>
                                 <?php else : ?>
-                                    <span class="badge badge-danger bg-gradient-danger"><?php echo $kas->type; ?></span>
+                                    <span class="badge badge-danger bg-gradient-danger"><?php echo $kas->tipe_transaksi; ?></span>
                                 <?php endif; ?>
 
                             </td>
                             <td>
-                                <?php if ($kas->nominal == NULL) : ?>
+                                <?php if ($kas->kas_masuk == NULL) : ?>
                                     Rp. <?php echo '0'; ?>
                                 <?php else : ?>
-                                    Rp. <?php echo number_format($kas->nominal, '0', ',', '.') ?>
+                                    Rp. <?php echo number_format($kas->kas_masuk, '0', ',', '.') ?>
                                 <?php endif; ?>
                             </td>
-                            <td><?php if ($kas->pengeluaran == NULL) : ?>
+                            <td><?php if ($kas->kas_keluar == NULL) : ?>
                                     Rp. <?php echo '0'; ?>
                                 <?php else : ?>
-                                    Rp. <?php echo number_format($kas->pengeluaran, '0', ',', '.') ?>
+                                    Rp. <?php echo number_format($kas->kas_keluar, '0', ',', '.') ?>
                                 <?php endif; ?></td>
 
                         </tr>
@@ -76,7 +69,7 @@
                 <tfoot>
                     <tr>
                         <th width="5%"></th>
-                        <th></th>
+
                         <th></th>
                         <th></th>
                         <th>Jumlah</th>
@@ -85,8 +78,8 @@
                         <th>Rp. <?php echo number_format($total_pengeluaran, '0', ',', '.'); ?></th>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
+
+                        <td></>
                         <td></td>
                         <td></td>
                         <td style="font-size:30px;"><b>SALDO</b></td>

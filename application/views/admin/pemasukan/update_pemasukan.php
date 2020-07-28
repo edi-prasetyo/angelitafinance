@@ -1,143 +1,306 @@
-<div class="card">
-    <div class="card-header">
-        <?php echo $title; ?>
-    </div>
-    <div class="text-center">
+<div class="row">
+
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <h4><b> Update Data Pemasukan</b></h4>
+        <hr>
+
         <?php
-        echo $this->session->flashdata('message');
-        if (isset($error_upload)) {
-            echo '<div class="alert alert-warning">' . $error_upload . '</div>';
+        //Notifikasi
+        if ($this->session->flashdata('message')) {
+          echo '<div class="alert alert-success alert-dismissable fade show">';
+          echo '<button class="close" data-dismiss="alert" aria-label="Close">×</button>';
+          echo $this->session->flashdata('message');
+          echo '</div>';
         }
+        echo validation_errors('<div class="alert alert-warning">', '</div>');
+
         ?>
+
+        <?php echo form_open('admin/pemasukan/update/' .$pemasukan->id);?>
+
+
+        <div class="form-group">
+          <label class="col-form-label"> Status Pembayaran</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-thumbs-up"></i></div>
+            </div>
+            <select class="custom-select" name="payment_status">
+              <option value="Hutang">Hutang</option>
+              <option value="Proses">Proses</option>
+              <option value="Lunas">Lunas</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">SPJ <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
+            </div>
+            <input class="form-control" type="text" name="spj" value="<?php echo $pemasukan->spj;?>">
+          </div>
+          <?php echo form_error('spj', '<small class="text-danger">', '</small>'); ?>
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">BBM </label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-gas-pump"></i></div>
+            </div>
+            <input class="form-control" type="text" name="bbm" value="<?php echo $pemasukan->bbm;?>">
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">Toll </label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-road"></i></div>
+            </div>
+            <input class="form-control" type="text" name="toll" value="<?php echo $pemasukan->toll;?>">
+          </div>
+          <?php echo form_error('toll', '<small class="text-danger">', '</small>'); ?>
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">Parkir</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-ticket-alt"></i></div>
+            </div>
+            <input class="form-control" type="text" name="parkir" value="<?php echo $pemasukan->parkir;?>">
+          </div>
+          <?php echo form_error('parkir', '<small class="text-danger">', '</small>'); ?>
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">Uang Makan</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-utensils"></i></div>
+            </div>
+            <input class="form-control" type="text" name="uang_makan" value="<?php echo $pemasukan->uang_makan;?>">
+          </div>
+          <?php echo form_error('uang_makan', '<small class="text-danger">', '</small>'); ?>
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">Uang Inap </label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-bed"></i></div>
+            </div>
+            <input class="form-control" type="text" name="uang_inap" value="<?php echo $pemasukan->uang_inap;?>">
+          </div>
+          <?php echo form_error('uang_inap', '<small class="text-danger">', '</small>'); ?>
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">PPn </label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-file-signature"></i></div>
+            </div>
+            <input class="form-control" type="text" name="ppn" value="<?php echo $pemasukan->ppn;?>">
+          </div>
+          <?php echo form_error('ppn', '<small class="text-file-signature">', '</small>'); ?>
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">PPh </label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-file-signature"></i></div>
+            </div>
+            <input class="form-control" type="text" name="pph" value="<?php echo $pemasukan->pph;?>">
+          </div>
+          <?php echo form_error('pph', '<small class="text-danger">', '</small>'); ?>
+        </div>
+
+        <div class="form-group">
+          <label for="example-text-input" class="col-form-label">Fee </label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-file-signature"></i></div>
+            </div>
+            <input class="form-control" type="text" name="fee" value="<?php echo $pemasukan->fee;?>">
+          </div>
+          <?php echo form_error('fee', '<small class="text-danger">', '</small>'); ?>
+        </div>
+
+
+
+        <div class="form-group">
+          <input class="btn btn-primary" type="submit" value="Update Data">
+
+        </div>
+
+        <?php echo form_close();?>
+
+      </div>
     </div>
+  </div>
 
 
-    <div class="card-body">
-        <?php
-        echo form_open_multipart('admin/pemasukan/update/' . $pemasukan->id);
-        ?>
+  <div class="col-md-4">
 
 
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Tanggal <span class="text-danger">*</span>
-            </label>
-            <div class="col-lg-6">
-                <input type="text" name="tanggal" class="form-control" value="<?php echo date("d/m/Y", strtotime($pemasukan->tanggal)); ?>" readonly>
-                <?php echo form_error('tanggal', '<small class="text-danger">', '</small>'); ?>
-            </div>
-        </div>
+    <div class="card">
+      <div class="card-body">
 
 
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Kategori <span class="text-danger">*</span>
-            </label>
-            <div class="col-lg-6">
-                <select name="category_id" class="form-control form-control-chosen">
+        <h4><b> Cusotmer Information</b></h4>
+        <hr>
+        <!-- Input Hidden data produk -->
 
-                    <?php foreach ($category as $category) { ?>
-                        <option value="<?php echo $category->id ?>" <?php if ($pemasukan->category_id == $category->id) {
-                                                                        echo "selected";
-                                                                    } ?>>
-                            <?php echo $category->category_name ?>
-                        </option>
-                    <?php } ?>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Title <span class="text-danger">*</span>
-            </label>
-            <div class="col-lg-6">
-                <select name="donatur_title" class="form-control form-control-chosen">
-                    <option value="Bapak" <?php if ($pemasukan->donatur_title == "Bapak") {
-                                                echo "selected";
-                                            } ?>>Bapak</option>
-                    <option value="Ibu">Ibu</option>
-                </select>
-                <?php echo form_error('donatur_title', '<small class="text-danger">', '</small>'); ?>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Nama Donatur <span class="text-danger">*</span>
-            </label>
-            <div class="col-lg-6">
-                <input type="text" name="donatur_name" class="form-control" id="donatur_name" placeholder="Nama Donatur" value="<?php echo $pemasukan->donatur_name; ?>">
-                <?php echo form_error('donatur_name', '<small class="text-danger">', '</small>'); ?>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Nomor Handphone <span class="text-danger">*</span>
-            </label>
-            <div class="col-lg-6">
-                <input type="text" name="donatur_phone" class="form-control" placeholder="Nomor Handphone" value="<?php echo $pemasukan->donatur_phone; ?>">
-                <?php echo form_error('donatur_phone', '<small class="text-danger">', '</small>'); ?>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Alamat Donatur <span class="text-success"> (Boleh Kosong)</span>
-            </label>
-            <div class="col-lg-6">
-                <input type="text" name="donatur_address" class="form-control" placeholder="Alamat Donatur" value="<?php echo $pemasukan->donatur_address; ?>">
-                <?php echo form_error('donatur_address', '<small class="text-danger">', '</small>'); ?>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Nominal Rp. <span class="text-danger"> *</span>
-            </label>
-            <div class="col-lg-6">
-                <input type="text" name="nominal" class="form-control" placeholder="Nominal" value="<?php echo $pemasukan->nominal; ?>">
-                <?php echo form_error('nominal', '<small class="text-danger">', '</small>'); ?>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Upload Gambar <span class="text-danger">*</span>
-            </label>
-            <div class="col-lg-6">
-
-
-
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" name="foto">
-                    <label class="custom-file-label" for="customFile"><i class="ti-camera"></i> Ambil Foto</label>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Nomor Handphone </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-phone"></i></div>
                 </div>
-
-                <img id="blah" src="<?php echo base_url('assets/img/donatur/' . $pemasukan->foto); ?>" alt="Gambar Akan Muncul Disini" class="img-fluid" />
-
-
-
-
-
+                <input class="form-control" type="text" value="<?php echo $pemasukan->user_phone;?>" readonly>
+              </div>
+              <?php echo form_error('nomor_hp', '<small class="text-danger">', '</small>'); ?>
             </div>
-        </div>
+          </div>
 
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Keterangan <span class="text-danger"> *</span>
-            </label>
-            <div class="col-lg-6">
-                <textarea class="form-control" id="summernote" name="keterangan"><?php echo $pemasukan->keterangan; ?></textarea>
-                <?php echo form_error('keterangan', '<small class="text-danger">', '</small>'); ?>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Nama Pelanggan </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-user"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->user_name;?>" readonly>
+              </div>
+              <?php echo form_error('user_name', '<small class="text-danger">', '</small>'); ?>
             </div>
-        </div>
+          </div>
 
-
-
-        <div class="form-group row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6">
-                <button type="submit" class="btn btn-primary btn-lg btn-block">
-                    Simpan
-                </button>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Alamat <span class="text-success">( Optional )</span></label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-map-marker-alt"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->user_address;?>" readonly>
+              </div>
             </div>
+          </div>
+          <div class="col-md-12">
+            <br>
+            <h4><b> Order Information</b></h4>
+            <hr>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Mobil</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-car"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->car_name;?>" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Paket </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-car"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->paket_name;?>" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Start Date </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->start_date;?>" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">End Date</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->end_date;?>" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Driver</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->driver_name;?>" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Metode Pembayaran </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->payment_method;?>" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Lama Sewa </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo $pemasukan->long_term;?>" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Harga Sewa </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
+                </div>
+                <input class="form-control" type="text" value="<?php echo number_format($pemasukan->harga,'0',',','.');?>" readonly>
+              </div>
+            </div>
+          </div>
+
         </div>
-
-        <?php echo form_close() ?>
-
-
+      </div>
     </div>
+  </div>
 </div>

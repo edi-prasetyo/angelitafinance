@@ -8,12 +8,34 @@
             <?php echo form_open('admin/pengeluaran/filter_alpengeluaran'); ?>
             <div class="row my-3">
                 <div class="col-lg-4 form-group">
-                    <input type="text" name="start_date" class="form-control" placeholder="Dari Tanggal" id="start_date">
+
+                <div class="form-group">
+              <label class="col-form-label">Start Date</label>
+              <div class="input-group date" id="start_date" data-target-input="nearest">
+                <input type="text" name="start_date" class="form-control datetimepicker-input" data-target="#start_date"/>
+                <div class="input-group-append" data-target="#start_date" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+              </div>
+            </div>
+                
                 </div>
                 <div class="col-lg-4 form-group">
-                    <input type="text" name="end_date" class="form-control" placeholder="Sampai Tanggal" id="end_date">
+                
+                <div class="form-group">
+              <label class="col-form-label">End Date</label>
+              <div class="input-group date" id="end_date" data-target-input="nearest">
+                <input type="text" name="end_date" class="form-control datetimepicker-input" data-target="#end_date"/>
+                <div class="input-group-append" data-target="#end_date" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+              </div>
+            
+
+              </div>
                 </div>
                 <div class="col-lg-4 form-group">
+                <label class="col-form-label"><span style="color:transparent";>Label</span></label>
                     <button type="submit" class="btn btn-primary btn-block bg-gradient-primary"><i class="ti-search"></i> Tampilkan Data </button>
                 </div>
             </div>
@@ -36,7 +58,6 @@
                         <tr>
                             <th width="5%">No</th>
                             <th>Tanggal</th>
-                            <th>Asrama</th>
                             <th>Kategori</th>
                             <th>Tipe</th>
                             <th>Nominal</th>
@@ -47,25 +68,22 @@
                         foreach ($filter_pengeluaran as $filter_pengeluaran) : ?>
                             <tr>
                                 <td class="text-info"><?php echo $no; ?></td>
-                                <td><?php echo date("d/m/Y", strtotime($filter_pengeluaran->tanggal)); ?></td>
-                                <td>
-                                    <i class="fas fa-store"></i> <?php echo $filter_pengeluaran->asrama_name; ?><br>
-                                    <i class="far fa-user"></i> <?php echo $filter_pengeluaran->user_name; ?>
-                                </td>
+                                <td><?php echo $filter_pengeluaran->kas_tanggal; ?></td>
+                                
                                 <td><?php echo $filter_pengeluaran->category_name; ?></td>
                                 <td>
-                                    <?php if ($filter_pengeluaran->type == 'Pemasukan') : ?>
-                                        <span class="badge badge-success"><?php echo $filter_pengeluaran->type; ?></span>
+                                    <?php if ($filter_pengeluaran->tipe_transaksi == 'Pemasukan') : ?>
+                                        <span class="badge badge-success"><?php echo $filter_pengeluaran->tipe_transaksi; ?></span>
                                     <?php else : ?>
-                                        <span class="badge badge-danger"><?php echo $filter_pengeluaran->type; ?></span>
+                                        <span class="badge badge-danger"><?php echo $filter_pengeluaran->tipe_transaksi; ?></span>
                                     <?php endif; ?>
 
                                 </td>
                                 <td>
-                                    <?php if ($filter_pengeluaran->pengeluaran == NULL) : ?>
+                                    <?php if ($filter_pengeluaran->kas_keluar == NULL) : ?>
                                         Rp. <?php echo "0"; ?>
                                     <?php else : ?>
-                                        Rp. <?php echo number_format($filter_pengeluaran->pengeluaran, '0', ',', '.') ?>
+                                        Rp. <?php echo number_format($filter_pengeluaran->kas_keluar, '0', ',', '.') ?>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -79,7 +97,7 @@
                     <tfoot>
                         <tr>
                             <th width="5%"></th>
-                            <th></th>
+                       
                             <th></th>
                             <th></th>
                             <th style="font-size: 30px;">Jumlah</th>

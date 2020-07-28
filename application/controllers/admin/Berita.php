@@ -13,7 +13,7 @@ class Berita extends CI_Controller
 
         $id = $this->session->userdata('id');
         $user = $this->user_model->user_detail($id);
-        if ($user->role_id == 2) {
+        if ($user->role_id == 2 || $user->role_id == 3) {
             redirect('admin/dashboard');
         }
     }

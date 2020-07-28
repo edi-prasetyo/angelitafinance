@@ -13,7 +13,7 @@ class Car extends CI_Controller
         $id = $this->session->userdata('id');
         $user = $this->user_model->user_detail($id);
         if ($user->role_id == 3) {
-            redirect('admin/home');
+            redirect('admin/dashboard');
         }
     }
     public function index()
@@ -62,7 +62,7 @@ class Car extends CI_Controller
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
-    
+
     public function create()
     {
         $type = $this->type_model->get_type();
@@ -91,10 +91,10 @@ class Car extends CI_Controller
             ];
             $this->load->view('admin/layout/wrapp', $data, FALSE);
         }else{
-            
-            
+
+
             $data  = [
-                            
+
                 'type_id'                   => $this->input->post('type_id'),
                 'car_number'                 => $this->input->post('car_number'),
                 'car_color'                   => $this->input->post('car_color'),
@@ -181,6 +181,6 @@ class Car extends CI_Controller
     $this->car_model->update($data);
     $this->session->set_flashdata('message', 'Driver Telah di Aktifkan');
     redirect($_SERVER['HTTP_REFERER']);
-  } 
+  }
 
 }

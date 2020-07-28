@@ -13,7 +13,7 @@ class Type extends CI_Controller
         $id = $this->session->userdata('id');
         $user = $this->user_model->user_detail($id);
         if ($user->role_id == 3) {
-            redirect('admin/home');
+            redirect('admin/dashboard');
         }
     }
     public function index()
@@ -62,10 +62,10 @@ class Type extends CI_Controller
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
-    
+
     public function create()
     {
-        
+
         $this->form_validation->set_rules(
             'type_name',
             'Nama',
@@ -74,7 +74,7 @@ class Type extends CI_Controller
                 'required'      => 'Nama Mobil harus di isi',
             ]
         );
-        
+
         $brand = $this->brand_model->get_allbrand();
 
         if ($this->form_validation->run() === FALSE) {
@@ -85,13 +85,13 @@ class Type extends CI_Controller
             ];
             $this->load->view('admin/layout/wrapp', $data, FALSE);
         }else{
-            
+
 
             $slugcode = random_string('numeric', 5);
             $type_slug  = url_title($this->input->post('type_name'), 'dash', TRUE);
             $data  = [
-                'type_slug'                  => $slugcode . '-' . $type_slug,  
-                'brand_id'                  => $this->input->post('brand_id'),             
+                'type_slug'                  => $slugcode . '-' . $type_slug,
+                'brand_id'                  => $this->input->post('brand_id'),
                 'type_name'                  => $this->input->post('type_name'),
                 'luggage'                   => $this->input->post('luggage'),
                 'passenger'                 => $this->input->post('passenger'),
@@ -128,11 +128,11 @@ class Type extends CI_Controller
 
             $data  = [
                 'id'                        => $id,
-                'brand_id'                  => $this->input->post('brand_id'),             
+                'brand_id'                  => $this->input->post('brand_id'),
                 'type_name'                 => $this->input->post('type_name'),
                 'luggage'                   => $this->input->post('luggage'),
                 'passenger'                 => $this->input->post('passenger')
-              
+
             ];
             $this->type_model->update($data);
             $this->session->set_flashdata('message', 'Data Mobil telah di Update');

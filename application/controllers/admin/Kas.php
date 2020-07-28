@@ -7,16 +7,15 @@ class Kas extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('kas_model');
+        $this->load->model('transaksi_model');
         $this->load->model('category_model');
         $this->load->model('user_model');
-        $this->load->model('asrama_model');
         $this->load->library('pagination');
 
         $id = $this->session->userdata('id');
         $user = $this->user_model->user_detail($id);
         if ($user->role_id == 2) {
-            redirect('admin/home');
+            redirect('admin/dashboard');
         }
     }
     //listing data Pemasukan
@@ -24,7 +23,7 @@ class Kas extends CI_Controller
     {
 
         $config['base_url']       = base_url('admin/kas/index/');
-        $config['total_rows']     = count($this->kas_model->total_row_kas());
+        $config['total_rows']     = count($this->transaksi_model->total_row_kas());
         $config['per_page']       = 10;
         $config['uri_segment']    = 4;
 
@@ -55,9 +54,9 @@ class Kas extends CI_Controller
         //End Limit Start
         $this->pagination->initialize($config);
 
-        $kas                    = $this->kas_model->get_allkas($limit, $start);
-        $total_pemasukan        = $this->kas_model->total_pemasukan();
-        $total_pengeluaran        = $this->kas_model->total_pengeluaran();
+        $kas                    = $this->transaksi_model->get_allkas($limit, $start);
+        $total_pemasukan        = $this->transaksi_model->total_pemasukan();
+        $total_pengeluaran        = $this->transaksi_model->total_pengeluaran();
         $data = [
             'title'             => 'Data Kas',
             'kas'               => $kas,
@@ -83,9 +82,9 @@ class Kas extends CI_Controller
         }
 
 
-        $searchalkas                   = $this->kas_model->searchalkas($startdate, $enddate);
-        $total_pemasukan_aldate        = $this->kas_model->total_pemasukan_aldate($startdate, $enddate);
-        $total_pengeluaran_aldate      = $this->kas_model->total_pengeluaran_aldate($startdate, $enddate);
+        $searchalkas                   = $this->transaksi_model->searchalkas($startdate, $enddate);
+        $total_pemasukan_aldate        = $this->transaksi_model->total_pemasukan_aldate($startdate, $enddate);
+        $total_pengeluaran_aldate      = $this->transaksi_model->total_pengeluaran_aldate($startdate, $enddate);
 
         // $total_pemasukan        = $this->kas_model->total_pemasukan();
         // $total_pengeluaran      = $this->kas_model->total_pengeluaran();
@@ -97,7 +96,7 @@ class Kas extends CI_Controller
             'total_pengeluaran_aldate'    => $total_pengeluaran_aldate,
             'content'                   => 'admin/kas/filter_alkas'
         ];
-        $this->session->set_flashdata('messagefilter',  'Menampilkan Data dari Tanggal ' . date("d/m/Y", strtotime($startdate)) . ' Sampai Tanggal ' . date("d/m/Y", strtotime($enddate)));
+        $this->session->set_flashdata('messagefilter',  'Menampilkan Data dari Tanggal ' . $startdate . ' Sampai Tanggal ' . $enddate);
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
 

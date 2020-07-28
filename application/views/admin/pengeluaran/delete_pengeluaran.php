@@ -12,7 +12,7 @@
                     <span aria-hidden="true"><i class="fa fa-window-close"></i></span></button>
             </div>
             <div class="modal-body">
-                <p>Apakah Anda Yakin Ingin Menghapus Data Pemasukan Tanggal <b><?php echo date("d/m/Y", strtotime($pengeluaran->tanggal)); ?></b>?</p>
+                <p>Apakah Anda Yakin Ingin Menghapus Data Pemasukan Tanggal <b><?php echo $pengeluaran->kas_tanggal; ?></b>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>

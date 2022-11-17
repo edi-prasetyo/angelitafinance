@@ -88,6 +88,22 @@ class Transaksi extends CI_Controller
                 'required'      => 'DP Harus di isi Atau 0',
             ]
         );
+        $this->form_validation->set_rules(
+            'uang_makan_inv',
+            'Uang makan',
+            'required',
+            [
+                'required'      => 'Uang Makan Harus di isi Atau 0',
+            ]
+        );
+        $this->form_validation->set_rules(
+            'uang_inap_inv',
+            'Uang Inap',
+            'required',
+            [
+                'required'      => 'Uang Inap Harus di isi Atau 0',
+            ]
+        );
 
         if ($this->form_validation->run() === FALSE) {
             $data = [
@@ -100,6 +116,7 @@ class Transaksi extends CI_Controller
             $this->load->view('admin/layout/wrapp', $data, FALSE);
         }else{
 
+            $total_harga = $this->input->post('long_term')*$this->input->post('harga');
 
             $data  = [
                 'user_id'                   => $this->session->userdata('id'),
@@ -116,7 +133,10 @@ class Transaksi extends CI_Controller
                 'payment_status'            => $this->input->post('payment_status'),
                 'long_term'                 => $this->input->post('long_term'),
                 'harga'                     => $this->input->post('harga'),
+                'total_harga'               => $total_harga,
                 'down_payment'              => $this->input->post('down_payment'),
+                'uang_makan_inv'            => $this->input->post('uang_makan_inv'),
+                'uang_inap_inv'             => $this->input->post('uang_inap_inv'),
                 'kas_keluar'                => 0,
                 'tipe_transaksi'            => 'Pemasukan',
                 'kas_tanggal'               => $this->input->post('kas_tanggal'),

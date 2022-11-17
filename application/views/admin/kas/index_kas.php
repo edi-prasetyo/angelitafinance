@@ -3,7 +3,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6">
-                    <h6 class="m-0 font-weight-bold text-primary">Pemasukan</h6>
+                    <h6 class="m-0 font-weight-bold text-primary"><?php echo $title;?></h6>
                 </div>
                 <div class="col-md-3">
                     <!-- <a class="m-0 float-right btn btn-primary btn-md btn-block bg-gradient-primary" href="<?php echo base_url('admin/kas/filter_kas'); ?>"> Filter per Asrama <i class="fas fa-store ml-3"></i></a> -->
@@ -36,10 +36,13 @@
                             <td class="text-info"><?php echo $no; ?></td>
                             <td><?php echo $kas->kas_tanggal; ?></td>
                             <td>
-
+                              <?php if ($kas->kas_description == NULL): ?>
+                                <?php echo $kas->kode_transaksi; ?>
+                              <?php else:?>
                             <?php echo $kas->kas_description; ?>
-                            </td>
+                              <?php endif;?>
 
+                            </td>
                             <td>
                                 <?php if ($kas->tipe_transaksi == 'Pemasukan') : ?>
                                     <span class="badge badge-success bg-gradient-success"><?php echo $kas->tipe_transaksi; ?></span>
@@ -49,10 +52,10 @@
 
                             </td>
                             <td>
-                                <?php if ($kas->kas_masuk == NULL) : ?>
+                                <?php if ($kas->total_harga == NULL) : ?>
                                     Rp. <?php echo '0'; ?>
                                 <?php else : ?>
-                                    Rp. <?php echo number_format($kas->kas_masuk, '0', ',', '.') ?>
+                                    Rp. <?php echo number_format($kas->total_harga, '0', ',', '.') ?>
                                 <?php endif; ?>
                             </td>
                             <td><?php if ($kas->kas_keluar == NULL) : ?>

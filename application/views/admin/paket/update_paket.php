@@ -27,10 +27,10 @@
 
                 <div class="form-group">
                     <label>Ketentuan paket</label>
-                    <textarea class="textarea" id="summernote" name="paket_term" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"value="<?php echo $paket->paket_term ?>"></textarea>
+                    <textarea class="textarea" id="summernote" name="paket_term" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?php echo $paket->paket_term ?></textarea>
                 </div>
 
-                
+
 
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" name="submit" value="Update Data">

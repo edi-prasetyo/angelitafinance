@@ -41,7 +41,7 @@ class User_model extends CI_Model
 
         $this->db->like('user_name',$keyword);
         $this->db->or_like('user_phone',$keyword);
-        $this->db->where('role_id', 3);
+        $this->db->where('role_id', 4);
         $this->db->order_by('id', 'DESC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -104,7 +104,7 @@ class User_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('user');
-        $this->db->where(['role_id'     =>  3]);
+        $this->db->where(['role_id'     =>  4]);
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result();
@@ -115,7 +115,7 @@ class User_model extends CI_Model
         $this->db->from('user');
         $this->db->like('user_name',$keyword);
         $this->db->or_like('user_phone',$keyword);
-        $this->db->where(['role_id'     =>  3]);
+        $this->db->where(['role_id'     =>  4]);
         return $this->db->get()->result();
     }
 

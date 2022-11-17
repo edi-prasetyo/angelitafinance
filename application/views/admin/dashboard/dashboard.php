@@ -12,7 +12,7 @@ $user = $this->user_model->user_detail($id);
 
 
     <!-- Akses SuperAdmin -->
-    
+
     <?php if ($user->role_id == 1) : ?>
 
       <div class="col-lg-4">
@@ -38,7 +38,7 @@ $user = $this->user_model->user_detail($id);
           <div class="inner">
             <h3><?php echo count($transaksi);?></h3>
 
-            <p>Order</p>
+            <p>Transaksi</p>
           </div>
           <div class="icon">
             <i class="fas fa-shopping-bag"></i>
@@ -77,7 +77,7 @@ $user = $this->user_model->user_detail($id);
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-                
+
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -97,7 +97,7 @@ $user = $this->user_model->user_detail($id);
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-               
+
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -111,13 +111,13 @@ $user = $this->user_model->user_detail($id);
               <div class="info-box-content">
                 <span class="info-box-text">Saldo</span>
                 <span class="info-box-number">
-                <?php $saldo =  $total_pemasukan-$total_pengeluaran;?> 
+                <?php $saldo =  $total_pemasukan-$total_pengeluaran;?>
                 Rp. <?php echo number_format($saldo,'0',',','.');?></span>
 
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-                
+
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -155,7 +155,7 @@ $user = $this->user_model->user_detail($id);
           <div class="inner">
             <h3><?php echo count($transaksi);?></h3>
 
-            <p>Order</p>
+            <p>Transaksi</p>
           </div>
           <div class="icon">
             <i class="fas fa-shopping-bag"></i>
@@ -200,7 +200,7 @@ $user = $this->user_model->user_detail($id);
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-                
+
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -220,7 +220,7 @@ $user = $this->user_model->user_detail($id);
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-               
+
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -234,13 +234,13 @@ $user = $this->user_model->user_detail($id);
               <div class="info-box-content">
                 <span class="info-box-text">Saldo</span>
                 <span class="info-box-number">
-                <?php $saldo =  $total_pemasukan-$total_pengeluaran;?> 
+                <?php $saldo =  $total_pemasukan-$total_pengeluaran;?>
                 Rp. <?php echo number_format($saldo,'0',',','.');?></span>
 
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-                
+
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -250,12 +250,12 @@ $user = $this->user_model->user_detail($id);
 
           <!-- End Akses Finance -->
           <?php endif;?>
-      
-      
-      
-      
+
+
+
+
     </div>
   </div>
-  
+
 
 </div>

@@ -47,7 +47,7 @@ $user = $this->user_model->user_detail($id);
       <hr>
       <div class="single-table">
         <div class="table-responsive">
-          <table class="table table-bordered text-center">
+          <table class="table table-bordered">
             <thead class="text-uppercase">
               <tr>
                 <th scope="col">No</th>
@@ -75,6 +75,10 @@ $user = $this->user_model->user_detail($id);
                   <td><?php echo $transaksi->user_address;?></td>
                   <td>
                     <a href="<?php echo base_url('admin/transaksi/view/' .$transaksi->id);?>" class="text-primary"><i class="fas fa-edit"></i></a>
+                  <?php if ($user->role_id == 1) : ?>
+                    <?php include "delete_transaksi.php";?>
+                  <?php else:?>
+                  <?php endif;?>
 
                   </td>
                 </tr>
@@ -85,7 +89,7 @@ $user = $this->user_model->user_detail($id);
             </table>
           </div>
 
-          <div class="pagination text-center ml-3">
+          <div class="pagination ml-3">
             <?php if (isset($pagination)) {
               echo $pagination;
             } ?>

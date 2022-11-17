@@ -1,9 +1,7 @@
 <div class="row">
-
   <div class="col-8">
     <div class="card">
       <div class="card-body">
-
         <?php
         $kode_transaksi = date('dmY') . strtoupper(random_string('alnum', 5));
         echo form_open('admin/transaksi/create');?>
@@ -12,7 +10,6 @@
         <!-- Input Hidden data produk -->
         <input type="hidden" name="kode_transaksi" value="<?php echo $kode_transaksi ?>">
         <input type="hidden" name="kas_tanggal" value="<?php echo date("d/m/Y") ?>">
-
 
         <div class="row">
           <div class="col-md-6">
@@ -205,6 +202,32 @@
             </div>
           </div>
 
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Uang Makan <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-credit-card"></i></div>
+                </div>
+                <input class="form-control" type="text" name="uang_makan_inv" placeholder="Rp. ..">
+              </div>
+              <?php echo form_error('uang_makan_inv', '<small class="text-danger">', '</small>'); ?>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="example-text-input" class="col-form-label">Uang Inap <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-credit-card"></i></div>
+                </div>
+                <input class="form-control" type="text" name="uang_inap_inv" placeholder="Rp. ..">
+              </div>
+              <?php echo form_error('uang_inap_inv', '<small class="text-danger">', '</small>'); ?>
+            </div>
+          </div>
+
 
 
 
@@ -222,7 +245,6 @@
       </div>
     </div>
   </div>
-
 
   <div class="col-md-4">
     <div class="card">
@@ -244,8 +266,6 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
 
         <?php echo form_open('admin/pelanggan/add');?>
         <div class="row">
-
-
 
           <div class="col-md-6">
             <div class="form-group">
@@ -292,8 +312,6 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
 
             </div>
           </div>
-
-
 
         </div>
         <?php echo form_close();?>

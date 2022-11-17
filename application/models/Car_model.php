@@ -17,6 +17,7 @@ class Car_model extends CI_Model
         // Join
         $this->db->join('type', 'type.id = car.type_id', 'LEFT');
         // End Join
+        $this->db->where(['car_status' => 'Active']);
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result();
@@ -37,7 +38,7 @@ class Car_model extends CI_Model
         $this->db->join('type', 'type.id = car.type_id', 'LEFT');
         // End Join
         $this->db->like('car_number',$keyword);
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('car_status', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
@@ -60,9 +61,12 @@ class Car_model extends CI_Model
     //  Car Read
     public function read($id)
     {
-        $this->db->select('*');
+        $this->db->select('car.*, type.type_name');
         $this->db->from('car');
-        $this->db->where('id', $id);
+        // Join
+        $this->db->join('type', 'type.id = car.type_id', 'LEFT');
+        // End Join
+        $this->db->where('car.id', $id);
         $this->db->order_by('id');
         $query = $this->db->get();
         return $query->row();

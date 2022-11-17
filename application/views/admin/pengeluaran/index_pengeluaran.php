@@ -53,14 +53,14 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                             </td>
                             <td><?php echo $pengeluaran->category_name; ?></td>
                             <td><?php echo $pengeluaran->kas_description; ?></td>
-                            <td>                                
+                            <td>
                                     Rp. <?php echo number_format($pengeluaran->kas_keluar, '0', ',', '.') ?>
                             </td>
                             <td>
                                 <?php include "view_pengeluaran.php"; ?>
-                                <!-- <a href="<?php echo base_url('admin/pengeluaran/update/' . $pengeluaran->id); ?>" class="btn btn-sm btn-info"><i class="ti-pencil-alt"></i> edit</a> -->
+                                <a href="<?php echo base_url('admin/pengeluaran/update/' . $pengeluaran->id); ?>" class="btn btn-sm btn-info"><i class="ti-pencil-alt"></i> edit</a>
                                 <?php if ($user->role_id == 3) : ?>
-                                
+
                                 <?php else:?>
                                     <?php include "delete_pengeluaran.php"; ?>
                                 <?php endif;?>

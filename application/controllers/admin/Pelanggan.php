@@ -101,7 +101,7 @@ class Pelanggan extends CI_Controller
 
                 'user_name'             => $this->input->post('user_name'),
                 'user_phone'            => $this->input->post('user_phone'),
-                'user_address'         => $this->input->post('user_address'),
+                'user_address'          => $this->input->post('user_address'),
                 'role_id'               => 4,
                 'is_active '            => 1,
                 'date_created'          => time()

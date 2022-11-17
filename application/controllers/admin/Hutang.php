@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pemasukan extends CI_Controller
+class Hutang extends CI_Controller
 {
     //load Model & Library
     public function __construct()
@@ -20,12 +20,12 @@ class Pemasukan extends CI_Controller
             redirect('admin/dashboard');
         }
     }
-    //listing data Pemasukan
+    //listing data Hutang
     public function index()
     {
 
-        $config['base_url']       = base_url('admin/pemasukan/index/');
-        $config['total_rows']     = count($this->transaksi_model->total_row_pemasukan());
+        $config['base_url']       = base_url('admin/hutang/index/');
+        $config['total_rows']     = count($this->transaksi_model->total_row_hutang());
         $config['per_page']       = 10;
         $config['uri_segment']    = 4;
 
@@ -55,20 +55,20 @@ class Pemasukan extends CI_Controller
         //End Limit Start
         $this->pagination->initialize($config);
 
-        $pemasukan              = $this->transaksi_model->get_pemasukan($limit, $start);
-        $total_pemasukan        = $this->transaksi_model->total_pemasukan();
+        $hutang              = $this->transaksi_model->get_hutang($limit, $start);
+        $total_hutang        = $this->transaksi_model->total_hutang();
         $data = [
-            'title'             => 'Data Pemasukan',
-            'pemasukan'         => $pemasukan,
-            'total_pemasukan'   => $total_pemasukan,
+            'title'             => 'Data Hutang',
+            'hutang'            => $hutang,
+            'total_hutang'      => $total_hutang,
             'pagination'        => $this->pagination->create_links(),
-            'content'           => 'admin/pemasukan/index_pemasukan'
+            'content'           => 'admin/hutang/index_hutang'
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
 
-    // Filter Semua Pemasukan
-    public function filter_alpemasukan()
+    // Filter Semua Hutang
+    public function filter_alhutang()
     {
         $startdate = "";
         $enddate = "";
@@ -83,26 +83,26 @@ class Pemasukan extends CI_Controller
 
 
 
-        $filter_alpemasukan            = $this->transaksi_model->filter_alpemasukan($startdate, $enddate);
-        $total_pemasukan_aldate        = $this->transaksi_model->total_pemasukan_aldate($startdate, $enddate);
+        $filter_alhutang            = $this->transaksi_model->filter_alhutang($startdate, $enddate);
+        $total_hutang_aldate        = $this->transaksi_model->total_hutang_aldate($startdate, $enddate);
 
 
 
-        // $total_pemasukan        = $this->kas_model->total_pemasukan();
+        // $total_hutang        = $this->kas_model->total_hutang();
         // $total_pengeluaran      = $this->kas_model->total_pengeluaran();
 
         $data = [
-            'title'                       => 'Data Pemasukan tanggal',
-            'filter_alpemasukan'          => $filter_alpemasukan,
-            'total_pemasukan_aldate'      => $total_pemasukan_aldate,
-            'content'                     => 'admin/pemasukan/filter_alpemasukan'
+            'title'                       => 'Data Hutang tanggal',
+            'filter_alhutang'          => $filter_alhutang,
+            'total_hutang_aldate'      => $total_hutang_aldate,
+            'content'                     => 'admin/hutang/filter_alhutang'
         ];
 
         $this->session->set_flashdata('messagefilter',  'Menampilkan Data dari Tanggal ' . $startdate . ' Sampai Tanggal ' . $enddate);
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
-    // Filter Pemasukan Per User
-    public function filter_pemasukan()
+    // Filter Hutang Per User
+    public function filter_hutang()
     {
         // $startdate = '2020-04-26';
         // $enddate = '2020-04-25';
@@ -127,32 +127,32 @@ class Pemasukan extends CI_Controller
 
         $listasrama                  = $this->asrama_model->get_asrama();
 
-        $filter_pemasukan            = $this->kas_model->filter_pemasukan($startdate, $enddate, $asrama);
-        $total_pemasukan_date        = $this->kas_model->total_pemasukan_date($startdate, $enddate, $asrama);
+        $filter_hutang            = $this->kas_model->filter_hutang($startdate, $enddate, $asrama);
+        $total_hutang_date        = $this->kas_model->total_hutang_date($startdate, $enddate, $asrama);
 
 
 
-        // $total_pemasukan        = $this->kas_model->total_pemasukan();
+        // $total_hutang        = $this->kas_model->total_hutang();
         // $total_pengeluaran      = $this->kas_model->total_pengeluaran();
 
         $data = [
-            'title'                     => 'Data Pemasukan tanggal',
-            'filter_pemasukan'          => $filter_pemasukan,
+            'title'                     => 'Data Hutang tanggal',
+            'filter_hutang'          => $filter_hutang,
             'listasrama'                => $listasrama,
-            'total_pemasukan_date'      => $total_pemasukan_date,
-            'content'                   => 'admin/pemasukan/filter_pemasukan'
+            'total_hutang_date'      => $total_hutang_date,
+            'content'                   => 'admin/hutang/filter_hutang'
         ];
 
         $this->session->set_flashdata('messagefilter',  'Menampilkan Data dari Tanggal ' . date("d/m/Y", strtotime($startdate)) . ' Sampai Tanggal ' . date("d/m/Y", strtotime($enddate)));
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
 
-    // Update Data Pemasukan
+    // Update Data Hutang
     public function update($id)
     {
-        $pemasukan = $this->transaksi_model->detail_pemasukan($id);
-        if (!$pemasukan) {
-            redirect('admin/pemasukan');
+        $hutang = $this->transaksi_model->detail_hutang($id);
+        if (!$hutang) {
+            redirect('admin/hutang');
         }
 
         $car = $this->car_model->get_car();
@@ -170,17 +170,17 @@ class Pemasukan extends CI_Controller
 
         if ($this->form_validation->run() === FALSE) {
             $data = [
-                'title'                 => 'Update Pemasukan',
+                'title'                 => 'Update Hutang',
                 'car'                   => $car,
                 'paket'                 => $paket,
                 'driver'                => $driver,
-                'pemasukan'             => $pemasukan,
-                'content'               => 'admin/pemasukan/update_pemasukan'
+                'hutang'             => $hutang,
+                'content'               => 'admin/hutang/update_hutang'
             ];
             $this->load->view('admin/layout/wrapp', $data, FALSE);
         }else{
-            $kas_keluar = $this->input->post('spj')*$pemasukan->long_term;
-            $kas_masukfinal = $pemasukan->harga-$this->input->post('spj')-$this->input->post('bbm')-$this->input->post('toll')-$this->input->post('parkir')-$this->input->post('uang_makan')-$this->input->post('uang_inap')-$this->input->post('ppn')-$this->input->post('pph')-$this->input->post('fee');
+
+            $kas_masukfinal = $hutang->harga-$this->input->post('spj')-$this->input->post('bbm')-$this->input->post('toll')-$this->input->post('parkir')-$this->input->post('uang_makan')-$this->input->post('uang_inap')-$this->input->post('ppn')-$this->input->post('pph')-$this->input->post('fee');
             $data  = [
                 'id'                        => $id,
                 'user_id'                   => $this->session->userdata('id'),
@@ -195,26 +195,25 @@ class Pemasukan extends CI_Controller
                 'pph'                       => $this->input->post('pph'),
                 'fee'                       => $this->input->post('fee'),
                 'kas_masuk'                 => $kas_masukfinal,
-                'kas_keluar'                => $kas_keluar,
                 'status_update'             => 1,
                 'date_updated'              => time()
             ];
             $this->transaksi_model->update($data);
             $this->session->set_flashdata('message', 'Data Transaksi telah di Update');
-            redirect(base_url('admin/pemasukan'), 'refresh');
+            redirect(base_url('admin/hutang'), 'refresh');
         }
     }
 
-    // View Detail Pemasukan
+    // View Detail Hutang
     public function view($id)
     {
-        $pemasukan = $this->transaksi_model->detail_pemasukan($id);
+        $hutang = $this->transaksi_model->detail_hutang($id);
 
         //End Validasi
         $data = [
             'title'                 => 'Detail Data',
-            'pemasukan'             => $pemasukan,
-            'content'               => 'admin/pemasukan/view_pemasukan'
+            'hutang'             => $hutang,
+            'content'               => 'admin/hutang/view_hutang'
         ];
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
@@ -225,15 +224,15 @@ class Pemasukan extends CI_Controller
         //Proteksi delete
         is_login();
 
-        $pemasukan = $this->kas_model->kas_detail($id);
+        $hutang = $this->kas_model->kas_detail($id);
         //Hapus gambar
 
-        if ($pemasukan->foto != "") {
-            unlink('./assets/img/donasi/' . $pemasukan->foto);
+        if ($hutang->foto != "") {
+            unlink('./assets/img/donasi/' . $hutang->foto);
             // unlink('./assets/img/artikel/thumbs/' . $berita->berita_gambar);
         }
         //End Hapus Gambar
-        $data = ['id'   => $pemasukan->id];
+        $data = ['id'   => $hutang->id];
         $this->kas_model->delete($data);
         $this->session->set_flashdata('message', 'Data telah di Hapus');
         redirect($_SERVER['HTTP_REFERER']);

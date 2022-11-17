@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Transaksi_model extends CI_Model
+class Pengeluaran_model extends CI_Model
 {
     //load database
     public function __construct()
@@ -9,15 +9,7 @@ class Transaksi_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-    //listing Pendaftaran
-    public function listUser()
-    {
-        $this->db->select('*');
-        $this->db->from('transaksi');
-        $this->db->order_by('id', 'DESC');
-        $query = $this->db->get();
-        return $query->result();
-    }
+
     public function count_transaksi()
     {
         $this->db->select('*');
@@ -112,7 +104,7 @@ class Transaksi_model extends CI_Model
         $this->db->join('driver', 'driver.id = transaksi.driver_id', 'LEFT');
         $this->db->join('category', 'category.id = transaksi.category_id', 'LEFT');
         // End Join
-        // $this->db->where('tipe_transaksi', 'Pengeluaran');
+        $this->db->where('tipe_transaksi', 'Pengeluaran');
         $this->db->order_by('id', 'DESC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -215,7 +207,7 @@ class Transaksi_model extends CI_Model
     public function total_pengeluaran()
     {
         $this->db->select_sum('kas_keluar');
-        // $this->db->where('tipe_transaksi', 'Pengeluaran');
+        $this->db->where('tipe_transaksi', 'Pengeluaran');
         $query = $this->db->get('transaksi');
         if ($query->num_rows() > 0) {
             return $query->row()->kas_keluar;

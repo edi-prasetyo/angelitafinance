@@ -1,8 +1,8 @@
-<a href="" class="text-primary" data-toggle="modal" data-target="#Edit<?php echo $pemasukan->id; ?>">
+<a href="" class="text-primary" data-toggle="modal" data-target="#Edit<?php echo $hutang->id; ?>">
     <i class="fa fa-eye"></i> 
 </a>
 
-<div class="modal modal-default fade" id="Edit<?php echo $pemasukan->id; ?>">
+<div class="modal modal-default fade" id="Edit<?php echo $hutang->id; ?>">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -25,23 +25,30 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fa fa-user"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->user_name;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->user_name;?>" readonly>
               </div>
             </div>
+
+
+            
+
 </div>
-       
+        
 <div class="col-md-6">
        
-                    
+            
+          
 <div class="form-group">
               <label for="example-text-input" class="col-form-label">Nomor Handphone </label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fa fa-phone"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->user_phone;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->user_phone;?>" readonly>
               </div>
             </div>
+     
+        
 </div>
 
 <div class="row">
@@ -59,36 +66,46 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fa fa-car"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->car_name;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->car_name;?>" readonly>
               </div>
-            </div>       
+            </div>
+        
             <div class="form-group">
               <label for="example-text-input" class="col-form-label">Start Date </label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->start_date;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->start_date;?>" readonly>
               </div>
             </div>
+        
+
+         
             <div class="form-group">
               <label for="example-text-input" class="col-form-label">End Date</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->end_date;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->end_date;?>" readonly>
               </div>
             </div>
+       
+
+    
             <div class="form-group">
               <label for="example-text-input" class="col-form-label">Driver</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->driver_name;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->driver_name;?>" readonly>
               </div>
             </div>
+          
+
+     
                     </div>
 
                     <div class="col-md-6">
@@ -99,9 +116,11 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->payment_method;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->payment_method;?>" readonly>
               </div>
             </div>
+        
+
          
             <div class="form-group">
               <label for="example-text-input" class="col-form-label">Lama Sewa </label>
@@ -109,31 +128,37 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->long_term;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->long_term;?>" readonly>
               </div>
             </div>
+
             <div class="form-group">
               <label for="example-text-input" class="col-form-label">Alamat <span class="text-success">( Optional )</span></label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fa fa-map-marker-alt"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo $pemasukan->user_address;?>" readonly>
+                <input class="form-control" type="text" value="<?php echo $hutang->user_address;?>" readonly>
               </div>
             </div>
+      
+
+     
             <div class="form-group">
               <label for="example-text-input" class="col-form-label">Harga Sewa </label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
                 </div>
-                <input class="form-control" type="text" value="<?php echo number_format($pemasukan->harga,'0',',','.');?>" readonly>
+                <input class="form-control" type="text" value="<?php echo number_format($hutang->harga,'0',',','.');?>" readonly>
               </div>
-            </div>         
+            </div>
+                        
                     </div>
                 </div>
             </div>
 </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary pull-right" data-dismiss="modal"><i class="fa fa-close"></i> Tutup</button>
 

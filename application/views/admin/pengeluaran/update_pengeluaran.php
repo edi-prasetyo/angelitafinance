@@ -23,7 +23,7 @@
             <label class="col-lg-3 col-form-label">Tanggal <span class="text-danger">*</span>
             </label>
             <div class="col-lg-6">
-                <input type="text" name="tanggal" class="form-control" value="<?php echo date("d/m/Y", strtotime($pengeluaran->tanggal)); ?>" readonly>
+                <input type="text" name="kas_tanggal" class="form-control" value="<?php echo $pengeluaran->kas_tanggal; ?>" readonly>
 
             </div>
         </div>
@@ -51,27 +51,17 @@
             <label class="col-lg-3 col-form-label">Nominal Rp. <span class="text-danger"> *</span>
             </label>
             <div class="col-lg-6">
-                <input type="text" name="pengeluaran" class="form-control" placeholder="Nominal" value="<?php echo $pengeluaran->pengeluaran; ?>">
+                <input type="text" name="kas_keluar" class="form-control" placeholder="Nominal" value="<?php echo $pengeluaran->kas_keluar; ?>">
             </div>
         </div>
 
-        <div class="form-group row">
-            <label class="col-lg-3 col-form-label">Upload Foto <span class="text-danger">*</span>
-            </label>
-            <div class="col-lg-6">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" name="foto">
-                    <label class="custom-file-label" for="customFile"><i class="ti-camera"></i> Ambil Foto</label>
-                </div>
-                <img id="blah" src="<?php echo base_url('assets/img/donatur/' . $pengeluaran->foto); ?>" alt="Gambar Akan Muncul Disini" class="img-fluid" />
-            </div>
-        </div>
+
 
         <div class="form-group row">
             <label class="col-lg-3 col-form-label">Keterangan <span class="text-danger"> *</span>
             </label>
             <div class="col-lg-6">
-                <textarea class="form-control" id="summernote" name="keterangan"><?php echo $pengeluaran->keterangan; ?></textarea>
+                <textarea class="form-control" id="summernote" name="kas_description"><?php echo $pengeluaran->kas_description; ?></textarea>
                 <?php echo form_error('keterangan', '<small class="text-danger">', '</small>'); ?>
             </div>
         </div>

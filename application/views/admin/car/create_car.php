@@ -9,7 +9,7 @@
                                             <label class="col-form-label">Pilih Mobil</label>
                                             <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="fas fa-check"></i></div>
+                                                            <div class="input-group-text"><i class="fas fa-car"></i></div>
                                                         </div>
                                             <select class="custom-select" name="type_id">
                                             <?php foreach ($type as $type) : ?>
@@ -20,13 +20,13 @@
                                         </div>
                 </div>
 
-               
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="example-text-input" class="col-form-label">Plat Nomor <span class="text-danger">*</span></label>
                         <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="ti-user"></i></div>
+                                                            <div class="input-group-text"><i class="fas fa-money-check"></i></div>
                                                         </div>
                         <input class="form-control" type="text" name="car_number" placeholder="B 3344 VSA">
                     </div>
@@ -47,14 +47,14 @@
                     </div>
                 </div>
 
-              
+
 
                 <div class="col-md-6">
                 <div class="form-group">
                                             <label class="col-form-label"> Status Mobil</label>
                                             <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="ti-check-box"></i></div>
+                                                            <div class="input-group-text"><i class="fas fa-check-circle"></i></div>
                                                         </div>
                                             <select class="custom-select" name="car_status">
                                                 <option value="Active">Active</option>
@@ -66,13 +66,13 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        
+
                         <input class="btn btn-primary" type="submit" value="Simpan Kendaraan">
-                    
+
                     </div>
                 </div>
 
-                
+
 
             </div>
             <?php echo form_close();?>

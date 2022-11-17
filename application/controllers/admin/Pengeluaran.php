@@ -107,12 +107,12 @@ class Pengeluaran extends CI_Controller
         $this->session->set_flashdata('messagefilter',  'Menampilkan Data dari Tanggal ' . $startdate . ' Sampai Tanggal ' .$enddate);
         $this->load->view('admin/layout/wrapp', $data, FALSE);
     }
-    
+
     //Buat Data Pengeluaran
     public function create()
     {
         $category       = $this->category_model->get_category_pengeluaran();
-        
+
         $this->form_validation->set_rules(
             'kas_description',
             'Keterangan',
@@ -151,118 +151,45 @@ class Pengeluaran extends CI_Controller
     // Update Data Pengeluaran
     public function update($id)
     {
-        $category       = $this->category_model->get_category_pengeluaran();
-        $pengeluaran    = $this->kas_model->kas_detail_pengeluaran($id);
+      $category       = $this->category_model->get_category_pengeluaran();
+      $pengeluaran    = $this->transaksi_model->detail_pengeluaran($id);
 
-        if (!$pengeluaran) {
-            redirect('admin/pengeluaran');
-        }
+      $this->form_validation->set_rules(
+          'kas_description',
+          'Keterangan',
+          'required',
+          [
+              'required'      => 'Keterangan harus di isi',
+          ]
+      );
 
-        $this->form_validation->set_rules(
-            'pengeluaran',
-            'Nominal Pengeluaran',
-            'required',
-            [
-                'required'      => 'Nominal Pengeluaran harus di isi',
-            ]
-        );
-        if ($this->form_validation->run()) {
+      if ($this->form_validation->run() === FALSE) {
+          $data = [
+              'title'                 => 'Tambah Data Driver',
+              'category'              => $category,
+              'pengeluaran'           => $pengeluaran,
+              'content'               => 'admin/pengeluaran/update_pengeluaran'
+          ];
+          $this->load->view('admin/layout/wrapp', $data, FALSE);
+      }else{
 
-            if (!empty($_FILES['foto']['name'])) {
 
-                $config['upload_path']          = './assets/img/donatur/';
-                $config['allowed_types']        = 'gif|jpg|png|jpeg';
-                $config['max_size']             = 5000; //Dalam Kilobyte
-                $config['max_width']            = 5000; //Lebar (pixel)
-                $config['max_height']           = 5000; //tinggi (pixel)
-                $this->load->library('upload', $config);
-
-                if (!$this->upload->do_upload('foto')) {
-
-                    //End Validasi
-                    $data = [
-                        'title'                 => 'Update Data',
-                        'category'              => $category,
-                        'pengeluaran'           => $pengeluaran,
-                        'error_upload'          => $this->upload->display_errors(),
-                        'content'               => 'admin/pengeluaran/update_pengeluaran'
-                    ];
-                    $this->load->view('admin/layout/wrapp', $data, FALSE);
-
-                    //Masuk Database
-
-                } else {
-
-                    //Proses Manipulasi Gambar
-                    $upload_data    = array('uploads'  => $this->upload->data());
-                    //Gambar Asli disimpan di folder assets/upload/image
-                    //lalu gambara Asli di copy untuk versi mini size ke folder assets/upload/image/thumbs
-
-                    $config['image_library']    = 'gd2';
-                    $config['source_image']     = './assets/img/donatur/' . $upload_data['uploads']['file_name'];
-                    //Gambar Versi Kecil dipindahkan
-                    // $config['new_image']        = './assets/img/artikel/thumbs/' . $upload_data['uploads']['file_name'];
-                    $config['create_thumb']     = TRUE;
-                    $config['maintain_ratio']   = TRUE;
-                    $config['width']            = 500;
-                    $config['height']           = 500;
-                    $config['thumb_marker']     = '';
-
-                    $this->load->library('image_lib', $config);
-                    $this->image_lib->resize();
-
-                    // Hapus Gambar Lama Jika Ada upload gambar baru
-                    if ($pengeluaran->foto != "") {
-                        unlink('./assets/img/donatur/' . $pengeluaran->foto);
-                        // unlink('./assets/img/artikel/thumbs/' . $berita->berita_gambar);
-                    }
-                    //End Hapus Gambar
-
-                    $data  = [
-                        'id'                    => $id,
-                        'user_id'               => $this->session->userdata('id'),
-                        // 'tanggal'               => $this->input->post('tanggal'),
-                        'category_id'           => $this->input->post('category_id'),
-                        'nominal'               => 0,
-                        'pengeluaran'           => $this->input->post('pengeluaran'),
-                        'foto'                  => $upload_data['uploads']['file_name'],
-                        'keterangan'            => $this->input->post('keterangan'),
-                        'type'                  => 'Pengeluaran',
-                        'date_updated'          => time()
-                    ];
-                    $this->kas_model->update($data);
-                    $this->session->set_flashdata('message', 'Data Pengeluaran telah di Update');
-                    redirect(base_url('admin/pengeluaran'), 'refresh');
-                }
-            } else {
-
-                //Update Berita Tanpa Ganti Gambar
-                if ($pengeluaran->foto != "")
-
-                    $data  = [
-                        'id'                    => $id,
-                        'user_id'               => $this->session->userdata('id'),
-                        // 'tanggal'               => $this->input->post('tanggal'),
-                        'category_id'           => $this->input->post('category_id'),
-                        'nominal'               => 0,
-                        'pengeluaran'           => $this->input->post('pengeluaran'),
-                        'keterangan'            => $this->input->post('keterangan'),
-                        'type'                  => 'Pengeluaran',
-                        'date_updated'          => time()
-                    ];
-                $this->kas_model->update($data);
-                $this->session->set_flashdata('message', 'Data Pengeluaran telah di Update');
-                redirect(base_url('admin/pengeluaran'), 'refresh');
-            }
-        }
-        //End Masuk Database
-        $data = [
-            'title'                     => 'Update Pengeluaran',
-            'category'                  => $category,
-            'pengeluaran'               => $pengeluaran,
-            'content'                   => 'admin/pengeluaran/update_pengeluaran'
-        ];
-        $this->load->view('admin/layout/wrapp', $data, FALSE);
+          $data  = [
+              'user_id'                   => $this->session->userdata('id'),
+              'id'                        => $id,
+              'category_id'               => $this->input->post('category_id'),
+              'kas_tanggal'               => $this->input->post('kas_tanggal'),
+              'kas_description'           => $this->input->post('kas_description'),
+              'kas_keluar'                => $this->input->post('kas_keluar'),
+              'kas_masuk'                 => 0,
+              'status_update'             => 1,
+              'tipe_transaksi'            => 'Pengeluaran',
+              'date_updated'              => time()
+          ];
+          $this->transaksi_model->update($data);
+          $this->session->set_flashdata('message', 'Data Pengeluaran telah ditambahkan');
+          redirect(base_url('admin/pengeluaran'), 'refresh');
+      }
     }
 
     // View Detail Pemasukan

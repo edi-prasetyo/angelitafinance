@@ -20,277 +20,298 @@ $count_pemasukan = $this->transaksi_model->count_pemasukan();
         <img src="<?php echo base_url('assets/img/avatars/' . $user->user_image); ?>" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="<?php echo base_url('admin/myaccount');?>" class="d-block"><?php echo $user->user_name; ?></a>
-        <span class="text-success"><?php echo $user->role;?></span>
+        <a href="<?php echo base_url('admin/myaccount'); ?>" class="d-block"><?php echo $user->user_name; ?></a>
+        <span class="text-success"><?php echo $user->role; ?></span>
       </div>
     </div>
 
-    <!-- SidebarSearch Form -->
-    <!-- <div class="form-inline">
-    <div class="input-group" data-widget="sidebar-search">
-    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-    <div class="input-group-append">
-    <button class="btn btn-sidebar">
-    <i class="fas fa-search fa-fw"></i>
-  </button>
-</div>
-</div>
-</div> -->
 
-<!-- Sidebar Menu -->
-<nav class="mt-2">
-  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-    <!-- Add icons to the links using the .nav-icon class
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
     with font-awesome or any other icon font library -->
-    <?php if ($user->role_id == 1) : ?>
-      <li class="nav-item menu-open">
-        <a href="<?php echo base_url('admin/transaksi/create');?>" class="nav-link">
-          <i class="nav-icon fas fa-receipt"></i>
-          <p>
-            Buat Invoice
+        <?php if ($user->role_id == 1) : ?>
+          <li class="nav-item menu-open">
+            <a href="<?php echo base_url('admin/transaksi/create'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-receipt"></i>
+              <p>
+                Buat Invoice
 
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/dashboard');?>" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>
-            Dashboard
-            <span class="right badge badge-danger">New</span>
-          </p>
-        </a>
-      </li>
-      <li class="nav-header">MASTER</li>
-      <li class="nav-item has-treeview">
-        <a href="<?php echo base_url('admin/car');?>" class="nav-link">
-          <i class="nav-icon fas fa-car"></i>
-          <p>
-            Kendaraan
-            <i class="fas fa-angle-left right"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="<?php echo base_url('admin/car');?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Kendaraan</p>
+              </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?php echo base_url('admin/type');?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Type</p>
+            <a href="<?php echo base_url('admin/dashboard'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "dashboard") {
+                                                                                    echo 'active';
+                                                                                  } ?>">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+
+              </p>
+            </a>
+          </li>
+          <li class="nav-header">MASTER</li>
+          <li class="nav-item has-treeview <?php if ($this->uri->segment(2) == "car" || $this->uri->segment(2) == "type" || $this->uri->segment(2) == "brand") {
+                                              echo 'menu-open';
+                                            } ?>">
+            <a href="<?php echo base_url('admin/car'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-car"></i>
+              <p>
+                Kendaraan
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo base_url('admin/car'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "car") {
+                                                                                  echo 'active';
+                                                                                } ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Mobil</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url('admin/type'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "type") {
+                                                                                  echo 'active';
+                                                                                } ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Type</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url('admin/brand'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "brand") {
+                                                                                    echo 'active';
+                                                                                  } ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Merek</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/driver'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "driver") {
+                                                                                echo 'active';
+                                                                              } ?>">
+              <i class="nav-icon fas fa-id-badge"></i>
+              <p>
+                Driver
+              </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?php echo base_url('admin/brand');?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Merek</p>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/driver');?>" class="nav-link">
-          <i class="nav-icon fas fa-id-badge"></i>
-          <p>
-            Driver
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/paket');?>" class="nav-link">
-          <i class="nav-icon fas fa-cube"></i>
-          <p>
-            Paket Sewa
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/pelanggan');?>" class="nav-link">
-          <i class="nav-icon fas fa-user"></i>
-          <p>
-            Pelanggan
-
-          </p>
-        </a>
-      </li>
-      <li class="nav-header">TRANSAKSI</li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/transaksi');?>" class="nav-link">
-          <i class="nav-icon fas fa-shopping-bag"></i>
-          <p>
-            Transaksi
-           
-          </p>
-        </a>
-      </li>
-
-      <li class="nav-header">FINANCE</li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/pemasukan');?>" class="nav-link">
-          <i class="nav-icon far fa-arrow-alt-circle-right"></i>
-          <p>
-            Pemasukan
-            <span class="badge badge-danger right"><?php echo $count_pemasukan;?></span>
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/pengeluaran');?>" class="nav-link">
-          <i class="nav-icon far fa-arrow-alt-circle-left"></i>
-          <p>
-            Pengeluaran
-          </p>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/kas');?>" class="nav-link">
-          <i class="nav-icon fas fa-coins"></i>
-          <p>
-            Kas
-          </p>
-        </a>
-      </li>
-
-    <?php endif;?>
-<!-- Menu Role ID Admin -->
-    <?php if ($user->role_id == 2) : ?>
-      <li class="nav-item menu-open">
-        <a href="<?php echo base_url('admin/transaksi/create');?>" class="nav-link">
-          <i class="nav-icon fas fa-receipt"></i>
-          <p>
-            Buat Invoice
-
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/dashboard');?>" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>
-            Dashboard
-            <span class="right badge badge-danger">New</span>
-          </p>
-        </a>
-      </li>
-      <li class="nav-header">MASTER</li>
-      <li class="nav-item has-treeview">
-        <a href="<?php echo base_url('admin/car');?>" class="nav-link">
-          <i class="nav-icon fas fa-car"></i>
-          <p>
-            Kendaraan
-            <i class="fas fa-angle-left right"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="<?php echo base_url('admin/car');?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Kendaraan</p>
+            <a href="<?php echo base_url('admin/paket'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "paket") {
+                                                                                echo 'active';
+                                                                              } ?>">
+              <i class="nav-icon fas fa-cube"></i>
+              <p>
+                Paket Sewa
+              </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?php echo base_url('admin/type');?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Type</p>
+            <a href="<?php echo base_url('admin/pelanggan'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "pelanggan") {
+                                                                                    echo 'active';
+                                                                                  } ?>">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Pelanggan
+
+              </p>
+            </a>
+          </li>
+          <li class="nav-header">TRANSAKSI</li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/transaksi'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "transaksi") {
+                                                                                    echo 'active';
+                                                                                  } ?>">
+              <i class="nav-icon fas fa-shopping-bag"></i>
+              <p>
+                Transaksi
+
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-header">FINANCE</li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/pemasukan'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "pemasukan") {
+                                                                                    echo 'active';
+                                                                                  } ?>">
+              <i class="nav-icon far fa-arrow-alt-circle-right"></i>
+              <p>
+                Pemasukan
+                <?php if ($count_pemasukan == 0) : ?>
+                <?php else : ?>
+                  <span class="badge badge-danger right"><?php echo $count_pemasukan; ?></span>
+                <?php endif; ?>
+
+              </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?php echo base_url('admin/brand');?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Merek</p>
+            <a href="<?php echo base_url('admin/pengeluaran'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "pengeluaran") {
+                                                                                      echo 'active';
+                                                                                    } ?>">
+              <i class="nav-icon far fa-arrow-alt-circle-left"></i>
+              <p>
+                Pengeluaran
+              </p>
             </a>
           </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/driver');?>" class="nav-link">
-          <i class="nav-icon fas fa-id-badge"></i>
-          <p>
-            Driver
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/paket');?>" class="nav-link">
-          <i class="nav-icon fas fa-cube"></i>
-          <p>
-            Paket Sewa
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/pelanggan');?>" class="nav-link">
-          <i class="nav-icon fas fa-user"></i>
-          <p>
-            Pelanggan
 
-          </p>
-        </a>
-      </li>
-      <li class="nav-header">TRANSAKSI</li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/transaksi');?>" class="nav-link">
-          <i class="nav-icon fas fa-shopping-bag"></i>
-          <p>
-            Transaksi
-            <span class="right badge badge-danger">10</span>
-          </p>
-        </a>
-      </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/kas'); ?>" class="nav-link <?php if ($this->uri->segment(2) == "kas") {
+                                                                              echo 'active';
+                                                                            } ?>">
+              <i class="nav-icon fas fa-coins"></i>
+              <p>
+                Laporan
+              </p>
+            </a>
+          </li>
 
-    <?php endif;?>
-<!-- Menu Role Finance -->
-    <?php if ($user->role_id == 3) : ?>
+        <?php endif; ?>
+        <!-- Menu Role ID Admin -->
+        <?php if ($user->role_id == 2) : ?>
+          <li class="nav-item menu-open">
+            <a href="<?php echo base_url('admin/transaksi/create'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-receipt"></i>
+              <p>
+                Buat Invoice
 
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/dashboard');?>" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>
-            Dashboard
-            <!-- <span class="right badge badge-danger">New</span> -->
-          </p>
-        </a>
-      </li>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/dashboard'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
 
-      <li class="nav-header">FINANCE</li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/pemasukan');?>" class="nav-link">
-          <i class="nav-icon far fa-arrow-alt-circle-right"></i>
-          <p>
-            Pemasukan
-            <span class="badge badge-danger right"><?php echo $count_pemasukan;?></span>
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/pengeluaran');?>" class="nav-link">
-          <i class="nav-icon far fa-arrow-alt-circle-left"></i>
-          <p>
-            Pengeluaran
-          </p>
-        </a>
-      </li>
+              </p>
+            </a>
+          </li>
+          <li class="nav-header">MASTER</li>
+          <li class="nav-item has-treeview">
+            <a href="<?php echo base_url('admin/car'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-car"></i>
+              <p>
+                Kendaraan
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo base_url('admin/car'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kendaraan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url('admin/type'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Type</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url('admin/brand'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Merek</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/driver'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-id-badge"></i>
+              <p>
+                Driver
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/paket'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-cube"></i>
+              <p>
+                Paket Sewa
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/pelanggan'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Pelanggan
 
-      <li class="nav-item">
-        <a href="<?php echo base_url('admin/kas');?>" class="nav-link">
-          <i class="nav-icon fas fa-coins"></i>
-          <p>
-            Kas
-          </p>
-        </a>
-      </li>
+              </p>
+            </a>
+          </li>
+          <li class="nav-header">TRANSAKSI</li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/transaksi'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-shopping-bag"></i>
+              <p>
+                Transaksi
 
-    <?php endif;?>
+              </p>
+            </a>
+          </li>
 
-  </ul>
-</nav>
-<!-- /.sidebar-menu -->
-</div>
-<!-- /.sidebar -->
+        <?php endif; ?>
+        <!-- Menu Role Finance -->
+        <?php if ($user->role_id == 3) : ?>
+
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/dashboard'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-header">FINANCE</li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/pemasukan'); ?>" class="nav-link">
+              <i class="nav-icon far fa-arrow-alt-circle-right"></i>
+              <p>
+                Pemasukan
+                <?php if ($count_pemasukan == 0) : ?>
+                <?php else : ?>
+                  <span class="badge badge-danger right"><?php echo $count_pemasukan; ?></span>
+                <?php endif; ?>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/pengeluaran'); ?>" class="nav-link">
+              <i class="nav-icon far fa-arrow-alt-circle-left"></i>
+              <p>
+                Pengeluaran
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?php echo base_url('admin/kas'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-coins"></i>
+              <p>
+                Laporan
+              </p>
+            </a>
+          </li>
+
+        <?php endif; ?>
+
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
 </aside>
 
 <!-- Content Wrapper. Contains page content -->
@@ -304,7 +325,7 @@ $count_pemasukan = $this->transaksi_model->count_pemasukan();
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="<?php echo base_url('admin/dashboard');?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo base_url('admin/dashboard'); ?>">Home</a></li>
             <li class="breadcrumb-item active"><?php echo ucfirst(str_replace('_', ' ', $this->uri->segment(2))) ?></li>
           </ol>
         </div><!-- /.col -->

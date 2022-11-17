@@ -22,7 +22,7 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
             </div>
 
             <div class="col-md-3">
-                <a class="m-0 float-right btn btn-primary bg-gradient-primary btn-block" href="<?php echo base_url('admin/pemasukan/filter_alpemasukan'); ?>">Filter Data Per tanggal <i class="fa fa-calendar ml-3"></i></a>
+                <a class="m-0 float-right btn btn-primary bg-gradient-primary btn-block" href="<?php echo base_url('admin/hutang/filter_alhutang'); ?>">Filter Data Per tanggal <i class="fa fa-calendar ml-3"></i></a>
             </div>
         </div>
     </div>
@@ -53,40 +53,48 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                 <th scope="col">User</th>
                 <th scope="col">Keterangan</th>
                 <th scope="col">Status</th>
-                <th scope="col">Pemasukan</th>
+                <th scope="col">Jumlah</th>
                 <th scope="col">action</th>
               </tr>
             </thead>
             <tbody>
-              <?php $no = 1; foreach ($pemasukan as $pemasukan) :?>
+              <?php $no = 1; foreach ($hutang as $hutang) :?>
                 <tr>
                   <th scope="row"><?php echo $no;?></th>
-                  <td><?php echo $pemasukan->kas_tanggal;?></td>
-                  <td><?php echo $pemasukan->user_name;?></td>
-                  <td><?php echo $pemasukan->car_name;?></td>
+                  <td><?php echo $hutang->kas_tanggal;?></td>
+                  <td><?php echo $hutang->user_name;?></td>
+                  <td><?php echo $hutang->car_name;?></td>
                   <td>
-                    <?php if ($pemasukan->payment_status == 'Hutang') :?>
-                      <span class="badge badge-danger"><?php echo $pemasukan->payment_status;?></span>
-                    <?php elseif ($pemasukan->payment_status == 'Proses') :?>
-                      <span class="badge badge-warning"><?php echo $pemasukan->payment_status;?></span>
+                    <?php if ($hutang->payment_status == 'Hutang') :?>
+                      <a href="<?php echo base_url('admin/hutang/lunas/');?>" class="btn btn-danger btn-sm"><?php echo $hutang->payment_status;?></a>
+                    <?php elseif ($hutang->payment_status == 'Proses') :?>
+                      <span class="badge badge-warning"><?php echo $hutang->payment_status;?></span>
                     <?php else :?>
-                      <span class="badge badge-success"><?php echo $pemasukan->payment_status;?></span>
+                      <span class="badge badge-success"><?php echo $hutang->payment_status;?></span>
                     <?php endif;?>
                   </td>
 
                   <td>
-                    Rp. <?php echo number_format($pemasukan->total_harga,'0',',','.');?></td>
+                    Rp. <?php echo number_format($hutang->kas_masuk,'0',',','.');?></td>
                   <td>
-                    <?php include "view_pemasukan.php";?>
-                    <a href="<?php echo base_url('admin/pemasukan/update/' .$pemasukan->id);?>" class="text-primary"><i class="fas fa-edit"></i></a>
-                    <?php if ($pemasukan->status_update == 0 ) :?>
+                    <?php include "view_hutang.php";?>
+                    <a href="<?php echo base_url('admin/pemasukan/update/' .$hutang->id);?>" class="text-primary"><i class="fas fa-edit"></i></a>
+                    <?php if ($hutang->status_update == 0 ) :?>
                       <i class="fas fa-dot-circle text-danger"></i>
                     <?php else:?>
                       <i class="fas fa-dot-circle text-success"></i>
                     <?php endif;?>
                   </td>
                 </tr>
-                
+                <!-- <tr>
+                  <td colspan="7">
+                    <p>
+                      BBM : <?php echo $hutang->bbm;?>, TOLL : <?php echo $hutang->toll;?>,
+                      Parkir : <?php echo $hutang->parkir;?>,
+                    Uang Makan : <?php echo $hutang->uang_makan;?>
+                  </p>
+                  </td>
+                </tr> -->
 
 
                 <?php $no++; endforeach;  ?>
@@ -99,7 +107,7 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                   <th></th>
                   <th></th>
                   <th style="font-size: 30px;">Jumlah</th>
-                  <th style="font-size: 30px;">Rp. <?php echo number_format($total_pemasukan, '0', ',', '.'); ?></th>
+                  <th style="font-size: 30px;">Rp. <?php echo number_format($total_hutang, '0', ',', '.'); ?></th>
                   <th width="22%"></th>
                 </tr>
               </tfoot>

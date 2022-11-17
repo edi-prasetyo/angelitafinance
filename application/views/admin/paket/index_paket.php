@@ -19,11 +19,11 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
 
 ?>
                             <?php echo form_open('admin/paket');?>
-                           
+
                                             <div class="form-row d-flex justify-content-between align-items-center ">
-                                            
+
                                                 <div class="col-sm-7 my-1 row">
-                                                
+
                                                     <div class="col-6">
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -34,21 +34,21 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                                     </div>
                                                     <div class="col-auto">
                                                     <button type="submit" class="btn btn-primary">Submit</button>
-                                                   
+
                                                 </div>
-                                                
+
                                                 </div>
                                                 <?php echo form_close();?>
-                                               
-                                                
+
+
                                                 <?php include "create_paket.php";?>
 
                                             </div>
-                                    
+
                                         <hr>
                                 <div class="single-table">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered text-center">
+                                        <table class="table table-bordered">
                                             <thead class="text-uppercase">
                                                 <tr>
                                                     <th scope="col">ID</th>
@@ -58,23 +58,23 @@ echo validation_errors('<div class="alert alert-warning">', '</div>');
                                             </thead>
                                             <tbody>
                                                 <?php $no = 1; foreach ($paket as $paket) :?>
-                                                  
+
                                                 <tr>
                                                     <th scope="row"><?php echo $no;?></th>
-                                                    <td><?php echo $paket->paket_name;?></td> 
+                                                    <td><?php echo $paket->paket_name;?></td>
                                                     <td>
                                                         <?php include "update_paket.php";?>
                                                         <?php include "delete_paket.php";?>
-                                                        <a href="<?php echo base_url('admin/paket/update/'.$paket->id);?>">Update</a>
+
                                                     </td>
                                                 </tr>
-                                                
+
                                                 <?php $no++; endforeach;  ?>
-                                               
+
                                             </tbody>
                                         </table>
 
-                                        <div class="pagination col-md-12 text-center mt-3">
+                                        <div class="pagination col-md-12 mt-3">
         <?php if (isset($pagination)) {
             echo $pagination;
         } ?>

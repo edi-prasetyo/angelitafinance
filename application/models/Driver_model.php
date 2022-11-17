@@ -14,6 +14,7 @@ class Driver_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('driver');
+        $this->db->where(['driver_status' => 'Active']);
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result();

@@ -299,18 +299,6 @@
             </div>
           </div>
 
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="example-text-input" class="col-form-label">Total harga </label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text"><i class="fas fa-user-slash"></i></div>
-                </div>
-                <input class="form-control" type="text" value="<?php echo number_format($pemasukan->total_harga,'0',',','.');?>" readonly>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>

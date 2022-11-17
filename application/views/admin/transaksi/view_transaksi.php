@@ -23,7 +23,7 @@
               From
               <address>
                 <strong>Pool Angelita Rentcar.</strong><br>
-                <?php echo $meta->alamat;?>
+                <?php echo $meta->alamat;?><br>
                 Phone: <?php echo $meta->telepon;?><br>
                 Email: <?php echo $meta->email;?>
               </address>
@@ -57,24 +57,42 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Lama Sewa</th>
-                    <th>Kendaraan</th>
+                    <th>Item</th>
+                    <th>QTY</th>
                     <th>Start Date</th>
                     <th>End Date</th>
-                    <th>Subtotal</th>
+                    <th>Harga</th>
+                    <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><?php echo $transaksi->long_term;?> Hari</td>
                     <td><?php echo $transaksi->car_name;?></td>
+                    <td><?php echo $transaksi->long_term;?> Hari</td>
                     <td><?php echo $transaksi->start_date;?></td>
                     <td><?php echo $transaksi->end_date;?></td>
                     <td>IDR. <?php echo number_format($transaksi->harga,'0',',','.');?></td>
+                    <td>IDR. <?php echo number_format($transaksi->total_harga,'0',',','.');?></td>
 
                   </tr>
                   <tr>
-                    <td><td><td><td><td>
+                    <td>Uang Makan</td>
+                    <td><?php echo $transaksi->long_term;?> Hari</td>
+                    <td></td>
+                    <td></td>
+                    <td>IDR. <?php echo number_format($transaksi->uang_makan_inv,'0',',','.');?></td>
+                    <td>IDR. <?php $total_uang_makan=$transaksi->uang_makan_inv*$transaksi->long_term; echo number_format($total_uang_makan,'0',',','.');?></td>
+                  </tr>
+                  <tr>
+                    <td>Uang Inap</td>
+                    <td><?php echo $transaksi->long_term;?> Hari</td>
+                    <td></td>
+                    <td></td>
+                    <td>IDR. <?php echo number_format($transaksi->uang_inap_inv,'0',',','.');?></td>
+                    <td>IDR. <?php $total_uang_inap=$transaksi->uang_inap_inv*$transaksi->long_term;echo number_format($total_uang_inap,'0',',','.');?></td>
+                  </tr>
+                  <tr>
+                    <td><td><td><td><td><td>
                   </tr>
 
                 </tbody>
@@ -97,7 +115,8 @@
               <table class="table">
                 <tr>
                   <th style="width:50%">Subtotal:</th>
-                  <td>IDR. <?php echo number_format($transaksi->harga,'0',',','.');?></td>
+                  
+                  <td>IDR. <?php $subtotal = $transaksi->total_harga+$total_uang_inap+$total_uang_makan; echo number_format($subtotal,'0',',','.');?></td>
                 </tr>
                 <tr>
                   <th>DP</th>
@@ -105,11 +124,11 @@
                 </tr>
 
                 <tr>
-                  <th>Total:</th>
+                  <th>Grandtotal:</th>
                   <td>IDR.
                     <?php
-                    $total = $transaksi->harga-$transaksi->down_payment;
-                    echo number_format($total,'0',',','.');
+                    $grand_total = $transaksi->total_harga+$total_uang_inap+$total_uang_makan-$transaksi->down_payment;
+                    echo number_format($grand_total,'0',',','.');
                   ?></td>
                 </tr>
               </table>

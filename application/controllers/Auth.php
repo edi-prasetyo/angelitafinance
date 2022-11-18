@@ -33,7 +33,7 @@ class Auth extends CI_Controller
 				'title' 		=> 'User Login',
 				'content'       => 'front/auth/login'
 			];
-			$this->load->view('front/layout/wrapp', $data, FALSE);
+			$this->load->view('front/auth/login', $data, FALSE);
 		} else {
 			//Validasi Berhasil
 			$this->_login();

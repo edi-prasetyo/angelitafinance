@@ -37,7 +37,7 @@ class Car_model extends CI_Model
         // Join
         $this->db->join('type', 'type.id = car.type_id', 'LEFT');
         // End Join
-        $this->db->like('car_number',$keyword);
+        $this->db->like('car_number', $keyword);
         $this->db->order_by('car_status', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -82,13 +82,31 @@ class Car_model extends CI_Model
         return $query->result();
     }
     // SEARCH Car
-    public function get_car_keyword($keyword){
+    public function get_car_keyword($keyword)
+    {
         $this->db->select('*');
         $this->db->from('car');
-        $this->db->like('car_name',$keyword);
-        $this->db->or_like('car_phone',$keyword);
+        $this->db->like('car_name', $keyword);
+        $this->db->or_like('car_phone', $keyword);
         return $this->db->get()->result();
     }
 
-
+    // Nopol
+    public function get_nopol($limit, $start)
+    {
+        $this->db->select('*');
+        $this->db->from('nopol');
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function total_row_nopol()
+    {
+        $this->db->select('*');
+        $this->db->from('nopol');
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

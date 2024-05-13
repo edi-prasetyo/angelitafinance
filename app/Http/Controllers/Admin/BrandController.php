@@ -48,6 +48,6 @@ class BrandController extends Controller
         $brand->status = $request->status == true ? '1' : '0';
 
         $brand->update();
-        return redirect('admin/brands')->with('message', 'Brand update Succesfully');
+        return redirect('admin/brands')->with('message', ' Brand update Succesfully');
     }
 }

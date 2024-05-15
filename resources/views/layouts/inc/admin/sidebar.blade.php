@@ -17,7 +17,7 @@
     <ul class="menu-inner py-1">
 
 
-        @role('Superadmin')
+        @role('superadmin')
             <!-- Dashboard -->
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a href="{{ url('admin/dashboard') }}" class="menu-link">
@@ -95,7 +95,7 @@
             </li>
         @endrole
 
-        @role('Admin')
+        @role('admin')
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a href="{{ url('admin/dashboard') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -110,7 +110,7 @@
             </li>
         @endrole
 
-        @role('Finance')
+        @role('finance')
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a href="{{ url('admin/dashboard') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>

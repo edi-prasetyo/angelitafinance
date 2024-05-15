@@ -17,7 +17,7 @@
     <ul class="menu-inner py-1">
 
 
-        @if (Auth::user()->role_as == '1')
+        @role('Superadmin')
             <!-- Dashboard -->
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a href="{{ url('admin/dashboard') }}" class="menu-link">
@@ -25,6 +25,7 @@
                     <div data-i18n="Analytics">Dashboard</div>
                 </a>
             </li>
+
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Master</span>
             </li>
@@ -69,12 +70,7 @@
                     <div data-i18n="Analytics">Orders</div>
                 </a>
             </li>
-            {{-- <li class="menu-item {{ request()->is('admin/schedules') ? 'active' : '' }}">
-                <a href="{{ url('admin/schedules') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-calendar"></i>
-                    <div data-i18n="Analytics">Jadwal</div>
-                </a>
-            </li> --}}
+
 
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Pengguna</span>
@@ -97,75 +93,56 @@
                     <div data-i18n="Analytics">Driver</div>
                 </a>
             </li>
+        @endrole
 
-            {{--
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Finance</span>
-        </li>
-
-        <li class="menu-item">
-            <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-archive-in"></i>
-                <div data-i18n="Analytics">Pemasukan</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-archive-out"></i>
-                <div data-i18n="Analytics">Pengeluaran</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-objects-vertical-bottom"></i>
-                <div data-i18n="Analytics">Laporan</div>
-            </a>
-        </li> --}}
-        @elseif(Auth::user()->role_as == '2')
+        @role('Admin')
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a href="{{ url('admin/dashboard') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
                     <div data-i18n="Analytics">Dashboard</div>
                 </a>
             </li>
-
             <li class="menu-item {{ request()->is('admin/customers') ? 'active' : '' }}">
                 <a href="{{ url('admin/customers') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
-                    <div data-i18n="Analytics">Pelanggan</div>
+                    <div data-i18n="Analytics">Customer</div>
                 </a>
             </li>
-            <li class="menu-item {{ request()->is('admin/customers/calling') ? 'active' : '' }}">
-                <a href="{{ url('admin/customers/calling') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-phone"></i>
-                    <div data-i18n="Analytics">Hubungi</div>
-                    @if (count($customer_nav) == 0)
-                    @else
-                        <div class="badge bg-danger rounded-pill ms-auto">{{ count($customer_nav) }}</div>
-                    @endif
-                </a>
-            </li>
-        @else
+        @endrole
+
+        @role('Finance')
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a href="{{ url('admin/dashboard') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
                     <div data-i18n="Analytics">Dashboard</div>
                 </a>
             </li>
-
-            <li class="menu-item">
-                <a class="menu-link" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                    <i class="bx bx-power-off me-2"></i>
-                    <span class="align-middle">Log Out</span>
+            <li class="menu-item {{ request()->is('admin/customers') ? 'active' : '' }}">
+                <a href="{{ url('admin/customers') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div data-i18n="Analytics">Customer</div>
                 </a>
             </li>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-        @endif
+            <li class="menu-item {{ request()->is('admin/transactions') ? 'active' : '' }}">
+                <a href="{{ url('admin/transactions') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-shopping-bag"></i>
+                    <div data-i18n="Analytics">Orders</div>
+                </a>
+            </li>
+        @endrole
 
+        <li class="menu-item">
+            <a class="menu-link" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                <i class="bx bx-power-off me-2"></i>
+                <span class="align-middle">Log Out</span>
+            </a>
+        </li>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
 
     </ul>
 </aside>

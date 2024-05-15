@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\File;
 
 class BrandController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:brand-list|brand-create|brand-edit|brand-delete'], ['only' => ['index', 'store']]);
+        $this->middleware(['permission:brand-create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:brand-edit'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:brand-delete'], ['only' => ['destroy']]);
+    }
     public function index()
     {
         return view('admin.brand.index');

@@ -6,6 +6,17 @@
             {{ session('message') }}
         </div>
     @endif
+
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="col-md-12">
         <div class="card">
             <div class="card-header bg-white">
@@ -17,8 +28,9 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror">
-                            @error('name')
+                            <input type="text" name="full_name"
+                                class="form-control @error('full_name') is-invalid @enderror">
+                            @error('full_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -26,9 +38,9 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Phone Number</label>
-                            <input type="text" name="whatsapp"
-                                class="form-control @error('whatsapp') is-invalid @enderror">
-                            @error('whatsapp')
+                            <input type="text" name="phone_number"
+                                class="form-control @error('phone_number') is-invalid @enderror">
+                            @error('phone_number')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

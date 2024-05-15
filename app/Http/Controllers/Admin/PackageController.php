@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:package-list|package-create|package-edit|package-delete'], ['only' => ['index', 'store']]);
+        $this->middleware(['permission:package-create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:package-edit'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:package-delete'], ['only' => ['destroy']]);
+    }
     public function index()
     {
         $packages = Package::all();

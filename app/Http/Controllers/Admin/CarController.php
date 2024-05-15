@@ -11,6 +11,13 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:car-list|car-create|car-edit|car-delete'], ['only' => ['index', 'store']]);
+        $this->middleware(['permission:car-create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:car-edit'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:car-delete'], ['only' => ['destroy']]);
+    }
     public function index()
     {
         $cars = Car::all();

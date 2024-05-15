@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:transaction-list|transaction-create|transaction-edit|transaction-delete'], ['only' => ['index', 'store']]);
+        $this->middleware(['permission:transaction-create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:transaction-edit'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:transaction-delete'], ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $transactions = Transaction::orderBy('id', 'desc')->paginate(3);

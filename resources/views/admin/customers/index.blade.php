@@ -8,6 +8,17 @@
             </div>
         @endif
 
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="card mb-3">
 
             <div class="card-body">
@@ -19,10 +30,10 @@
                             <label class="form-label">Nama</label>
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon11"><i class='bx bx-user'></i></span>
-                                <input type="text" name="name"
-                                    class="form-control @error('name') is-invalid @enderror" placeholder="Nama Customer"
-                                    aria-label="Username" aria-describedby="basic-addon11">
-                                @error('name')
+                                <input type="text" name="full_name"
+                                    class="form-control @error('full_name') is-invalid @enderror"
+                                    placeholder="Nama Customer" aria-label="Username" aria-describedby="basic-addon11">
+                                @error('full_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -33,10 +44,10 @@
                             <label class="form-label">Whatsapp</label>
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon11"><i class='bx bxl-whatsapp'></i></span>
-                                <input type="number" name="whatsapp"
-                                    class="form-control @error('whatsapp') is-invalid @enderror" placeholder="No. Whatsapp"
-                                    aria-label="Username" aria-describedby="basic-addon11">
-                                @error('whatsapp')
+                                <input type="number" name="phone_number"
+                                    class="form-control @error('phone_number') is-invalid @enderror"
+                                    placeholder="No. Whatsapp" aria-label="Username" aria-describedby="basic-addon11">
+                                @error('phone_number')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -91,8 +102,8 @@
                         @forelse ($customers as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->whatsapp }}</td>
+                                <td>{{ $item->full_name }}</td>
+                                <td>{{ $item->phone_number }}</td>
 
                                 <td>
                                     <a href="{{ url('admin/customers/edit/' . $item->id) }}"

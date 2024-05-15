@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:customer-list|customer-create|customer-edit|customer-delete'], ['only' => ['index', 'store']]);
+        $this->middleware(['permission:customer-create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:customer-edit'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:customer-delete'], ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $customers = Customer::orderBy('id', 'desc')->paginate(15);
@@ -26,22 +34,23 @@ class CustomerController extends Controller
     {
         $validated = $request->validate(
             [
-                'name' => 'required',
-                'whatsapp' => 'required|unique:customers',
-                'address' => 'nullable',
+                'full_name' => 'required',
+                'phone_number' => 'required|unique:customers',
+                'customer_name' => 'nullable',
             ],
             [
-                'name.required' => 'Bidang Ini Harus Di Isi!',
-                'whatsapp.required' => 'Nomor Whatsapp Harus Di isi!',
-                'whatsapp.unique' => 'Nomor Whatsapp Sudah Ada!'
+                'full_name.required' => 'Bidang Ini Harus Di Isi!',
+                'phone_number.required' => 'Nomor Whatsapp Harus Di isi!',
+                'phone_number.unique' => 'Nomor Whatsapp Sudah Ada!'
             ]
         );
 
         // $validatedData = $request->validated();
 
         $customer = new Customer();
-        $customer->name = $validated['name'];
-        $customer->whatsapp = $validated['whatsapp'];
+        $customer->full_name = $validated['full_name'];
+        $customer->phone_number = $validated['phone_number'];
+        $customer->customer_name =  $validated['full_name'];
         $customer->save();
         Alert::success('Customer', 'Customer Berhasil Dibuat');
         return back();

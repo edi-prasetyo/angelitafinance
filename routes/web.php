@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TimerController;
@@ -37,6 +38,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/', [HomeController::class, 'index']);
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
+
+    Route::get('roles', [AdminRoleController::class, 'index']);
+    Route::get('roles/create', [AdminRoleController::class, 'create']);
+    Route::post('roles/store', [AdminRoleController::class, 'store']);
+    Route::get('roles/show/{id}', [AdminRoleController::class, 'show']);
+    Route::get('roles/edit/{id}', [AdminRoleController::class, 'edit']);
+    Route::post('roles/update/{id}', [AdminRoleController::class, 'update']);
+    Route::delete('roles/delete/{id}', [AdminRoleController::class, 'destroy']);
 
     Route::get('dashboard', [DashboardController::class, 'index']);
     // Category Route
@@ -102,7 +111,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/users/create', 'create');
         Route::post('/users', 'store');
         Route::get('/users/edit/{user}', 'edit');
-        Route::put('/users/{user}', 'update');
+        Route::post('/users/{user}', 'update');
         Route::get('/users/delete/{user_id}', 'destroy');
         Route::get('/drivers', 'driver');
         Route::get('/finances', 'finance');

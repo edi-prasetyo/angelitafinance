@@ -30,8 +30,8 @@
                         @forelse ($customers as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->whatsapp }}</td>
+                                <td>{{ $item->full_name }}</td>
+                                <td>{{ $item->phone_number }}</td>
 
                                 <td>
                                     <a href="{{ url('admin/customers/gift/' . $item->id) }}" class="btn btn-primary"> <i

@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
     <div class="col-md-12">
 
         <div class="col-md-12 mb-3">
@@ -11,7 +12,7 @@
         </div>
 
 
-        @if (auth()->user()->hasRole('Superadmin'))
+        @if (Auth::user()->role_as == '1' || Auth::user()->role_as == '3')
             {{-- Role Admin --}}
 
             <div class="row">
@@ -178,9 +179,9 @@
                     </div>
                 </div>
             </div>
-        @endif
-        {{-- End Role Superadmin --}}
-        @hasanyrole('Superadmin|Admin')
+
+            {{-- End Role Superadmin --}}
+        @elseif(Auth::user()->role_as == '2')
             <div class="row">
 
                 <div class="col-lg-3 col-md-12 col-6 mb-4">
@@ -257,11 +258,8 @@
 
 
             </div>
-
-
-
-
-            {{-- <div class="row">
+        @elseif(Auth::user()->role_as == '5')
+            <div class="row">
                 <div class="col-lg-6 col-md-12 mb-4">
                     <div class="card">
                         <div class="card-body">
@@ -373,7 +371,9 @@
                                 <a href="{{ url('admin/schedules/additional/' . $order->id) }}" class="btn btn-success">
                                     <span class="tf-icons bx bx-check"></span>&nbsp; Finish
                                 </a>
-                                
+                                {{-- <a href="{{url('admin/schedules/finish/' .$order->id)}}" class="btn btn-success">
+                <span class="tf-icons bx bx-check"></span>&nbsp; Finish
+            </a> --}}
                             @endif
 
                         </div>
@@ -421,10 +421,8 @@
             <div class="card-body">
                 {!! $shcedules->links() !!}
 
-            </div> --}}
-        @else
-            I have none of these roles...
-        @endhasanyrole
+            </div>
+        @endif
 
     </div>
 
@@ -492,4 +490,5 @@
 
         chart.render();
     </script>
+
 @endsection

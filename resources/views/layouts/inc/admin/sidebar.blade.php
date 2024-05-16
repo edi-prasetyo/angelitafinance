@@ -64,8 +64,8 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->is('admin/customers') ? 'active' : '' }}">
-            <a href="{{ url('admin/customers') }}" class="menu-link">
+        <li class="menu-item {{ request()->is('admin/customers/calling') ? 'active' : '' }}">
+            <a href="{{ url('admin/customers/calling') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-phone"></i>
                 <div data-i18n="Analytics">Confirm</div>
                 <div class="badge bg-danger rounded-pill ms-auto">{{ count($customer_nav) }}</div>

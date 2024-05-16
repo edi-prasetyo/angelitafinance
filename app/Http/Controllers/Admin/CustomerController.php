@@ -69,6 +69,7 @@ class CustomerController extends Controller
         // }
 
 
+
         $customer = new Customer();
         $customer->full_name = $validated['full_name'];
         // $customer->phone_number = $hp;

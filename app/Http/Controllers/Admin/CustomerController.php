@@ -24,6 +24,7 @@ class CustomerController extends Controller
         $title = 'Delete Customer!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
+
         return view('admin.customers.index', compact('customers'));
     }
     public function create()
@@ -77,7 +78,7 @@ class CustomerController extends Controller
         $customer->customer_name =  $validated['full_name'];
         $customer->save();
         Alert::success('Customer', 'Customer Berhasil Dibuat');
-        return back();
+        return redirect('admin/customers');
     }
     public function edit(Customer $customer)
     {

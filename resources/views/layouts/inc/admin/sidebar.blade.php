@@ -17,6 +17,11 @@
     <ul class="menu-inner py-1">
 
 
+        @hasrole('Superadmin|Admin')
+            I am a Superadmin And Admin!
+        @else
+            I am not a Finance...
+        @endhasrole
 
         <!-- Dashboard -->
         <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">

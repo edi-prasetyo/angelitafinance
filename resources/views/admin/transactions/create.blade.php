@@ -30,8 +30,8 @@
                             <option value="">--Select Customer--</option>
                             @foreach ($customers as $key => $customer)
                                 <option value="{{ $customer->id }}"
-                                    {{ old('customer_id') == $customer->id ? 'selected' : '' }}>{{ $customer->name }} -
-                                    {{ $customer->whatsapp }}</option>
+                                    {{ old('customer_id') == $customer->id ? 'selected' : '' }}>{{ $customer->full_name }} -
+                                    {{ $customer->phone_number }}</option>
                             @endforeach
 
                         </select>
@@ -56,7 +56,8 @@
                             <option value="">--Select Package--</option>
                             @foreach ($packages as $package)
                                 <option value="{{ $package->id }}"
-                                    {{ old('package_id') == $package->id ? 'selected' : '' }}>{{ $package->name }}</option>
+                                    {{ old('package_id') == $package->id ? 'selected' : '' }}>{{ $package->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>

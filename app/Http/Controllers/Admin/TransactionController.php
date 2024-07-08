@@ -36,8 +36,14 @@ class TransactionController extends Controller
         $packages = Package::all();
         $customers = Customer::all();
         $timers = Timer::orderBy('id', 'asc')->get();
+        $drivers = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'Driver');
+            }
+        )->get();
 
-        return view('admin.transactions.create', compact('customers', 'cars', 'packages', 'timers'));
+        return view('admin.transactions.create', compact('customers', 'cars', 'packages', 'timers', 'drivers'));
     }
     public function store(TransactionFormRequest $request)
     {

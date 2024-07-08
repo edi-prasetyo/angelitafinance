@@ -6,5 +6,7 @@ Aplikasi Untuk pengelolaan Finance Perusahaan
 
 Rincian Update Aplikasi
 
--   08 Juli 2024
-    Update Tambah table payment (user_id, transaction_id, payment_date, amount )
+-   Update 08 Juli 2024
+    -   Tambah table payments
+    -   Tambah table orders
+    -   Tambah table order_details

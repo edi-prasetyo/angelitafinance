@@ -6,4 +6,4 @@ Aplikasi Untuk pengelolaan Finance Perusahaan
 
 Rincian Update Aplikasi
 
--   ** Update Database **
+-   Update Tambah table payment (user_id, transaction_id, payment_date, amount )

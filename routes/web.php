@@ -137,6 +137,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::put('/transactions/{transaction}', 'update');
         Route::get('/transactions/delete/{transaction_id}', 'destroy');
         Route::get('transactions/autocomplete/', 'autocomplete')->name('autocomplete');
+        // Sales
+        Route::get('/transactions/sales', 'sales');
     });
     // Schedule Route
     Route::controller(ScheduleController::class)->group(function () {

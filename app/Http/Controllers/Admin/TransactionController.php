@@ -10,7 +10,6 @@ use App\Models\Package;
 use App\Models\ScheduleLog;
 use App\Models\Timer;
 use App\Models\Transaction;
-use App\Models\TransactionSchedule;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +36,7 @@ class TransactionController extends Controller
         $packages = Package::all();
         $customers = Customer::all();
         $timers = Timer::orderBy('id', 'asc')->get();
+
         return view('admin.transactions.create', compact('customers', 'cars', 'packages', 'timers'));
     }
     public function store(TransactionFormRequest $request)
@@ -88,7 +88,7 @@ class TransactionController extends Controller
         $car = Car::find($car_id);
         $package = Package::find($package_id);
         Transaction::where('id', $transaction->id)->update([
-            'customer_name' => $customer->name,
+            'customer_name' => $customer->full_name,
             'customer_phone' => $customer->phone,
             'customer_address' => $customer->address,
             'car_name' => $car->name,
@@ -148,10 +148,11 @@ class TransactionController extends Controller
 
         // Add Customer Data
         $customer = Customer::find($customer_id);
+        // return $customer;
         $car = Car::find($car_id);
         $package = Package::find($package_id);
         Transaction::where('id', $transaction->id)->update([
-            'customer_name' => $customer->name,
+            'customer_name' => $customer->full_name,
             'customer_phone' => $customer->phone,
             'customer_address' => $customer->address,
             'car_name' => $car->name,
@@ -167,7 +168,13 @@ class TransactionController extends Controller
     public function detail(Request $request, int $transaction_id)
     {
         $transaction = Transaction::findOrFail($transaction_id);
-        $drivers = User::where('role_as', 5)->get();
+        // $drivers = User::where('role_as', 5)->get();
+        $drivers = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'Driver');
+            }
+        )->get();
 
         $scheduleLog = ScheduleLog::select(
             "schedule_log.id",
@@ -221,5 +228,14 @@ class TransactionController extends Controller
                 ->get();
         }
         return response()->json($data);
+    }
+
+    // Sales
+    public function sales(Request $request)
+    {
+        $date = $request->date;
+        $transactions = Transaction::orderBy('id', 'desc')->where('start_date', $date)->get();
+        // dd($transactions);
+        return view('admin.transactions.sales', compact('transactions'));
     }
 }

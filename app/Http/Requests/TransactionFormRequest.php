@@ -37,7 +37,7 @@ class TransactionFormRequest extends FormRequest
             'duration' => ['required', 'string'],
             'price' => ['required', 'string'],
             'discount' => ['nullable', 'string'],
-            'down_payment' => ['required', 'string'],
+            'down_payment' => ['nullable', 'string'],
             'payment_method' => ['required', 'string'],
             'bbm' => ['nullable', 'string'],
             'toll' => ['nullable', 'string'],

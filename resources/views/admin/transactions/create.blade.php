@@ -38,6 +38,19 @@
                     </div>
 
                     <div class="form-group mb-3">
+                        <label class="form-label">Pilih Driver</label>
+                        <select name="driver_name" class="form-control select2" placeholder="Select Driver" required>
+                            <option value="">--Select Customer--</option>
+                            @foreach ($drivers as $key => $driver)
+                                <option value="{{ $customer->id }}"
+                                    {{ old('driver_id') == $customer->id ? 'selected' : '' }}>{{ $driver->name }} -
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
                         <label class="form-label">Pilih Kendaraan</label>
                         <select class="form-select" id="exampleFormControlSelect1" name="car_id"
                             aria-label="Default select example">
@@ -133,7 +146,8 @@
 
                     <div class="form-group mb-3">
                         <label class="form-label">Down Payment</label>
-                        <input type="text" name="down_payment" value="{{ old('down_payment') }}" class="form-control">
+                        <input type="text" name="down_payment" value="{{ old('down_payment') }}"
+                            class="form-control">
                     </div>
 
                     <div class="form-group mb-3">

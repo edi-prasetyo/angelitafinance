@@ -74,76 +74,7 @@
 
 
 
-                <div class="col-lg-3 col-md-12 col-6 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title d-flex align-items-start justify-content-between">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary p-4"><i
-                                            class="bx bx-user display-5"></i></span>
-                                </div>
 
-                            </div>
-                            <span class="fw-semibold d-block mb-1">Customer</span>
-                            <h3 class="card-title mb-2">{{ count($customers) }}</h3>
-                            <small class="text-success fw-semibold"><a href="{{ url('admin/customers') }}"> <i
-                                        class="bx bx-up-arrow-alt"></i> Customers</a></small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-12 col-6 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title d-flex align-items-start justify-content-between">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-danger p-4"><i
-                                            class="bx bx-phone display-5"></i></span>
-                                </div>
-
-                            </div>
-                            <span class="fw-semibold d-block mb-1">Belum Di Hubungi</span>
-                            <h3 class="card-title mb-2">{{ count($customer_calls) }}</h3>
-                            <small class="text-success fw-semibold"><a href="{{ url('admin/customers/calling') }}"> <i
-                                        class="bx bx-up-arrow-alt"></i> Hubungi</a></small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-12 col-6 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title d-flex align-items-start justify-content-between">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-info p-4"><i
-                                            class="bx bx-gift display-5"></i></span>
-                                </div>
-
-                            </div>
-                            <span class="fw-semibold d-block mb-1">Gift Today</span>
-                            <h3 class="card-title mb-2">{{ count($count_today) }}</h3>
-                            <small class="text-success fw-semibold"><a href="{{ url('admin/customers/calling') }}"> <i
-                                        class="bx bx-up-arrow-alt"></i> Gift</a></small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-12 col-6 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title d-flex align-items-start justify-content-between">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-success p-4"><i
-                                            class="bx bx-phone-call display-5"></i></span>
-                                </div>
-
-                            </div>
-                            <span class="fw-semibold d-block mb-1">Sudah di Hubungi</span>
-                            <h3 class="card-title mb-2">{{ count($count_all) }}</h3>
-                            <small class="text-success fw-semibold"><a href="{{ url('admin/customers/calling') }}"> <i
-                                        class="bx bx-up-arrow-alt"></i> Call</a></small>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>

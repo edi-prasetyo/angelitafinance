@@ -17,7 +17,7 @@
     <ul class="menu-inner py-1">
 
 
-        @hasrole('Superadmin|Finance')
+        @hasrole('superadmin|finance')
             <!-- Dashboard -->
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a href="{{ url('admin/dashboard') }}" class="menu-link">
@@ -128,7 +128,7 @@
         @endhasrole
 
 
-        @hasrole('Superadmin')
+        @hasrole('superadmin')
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Pengguna</span>
             </li>

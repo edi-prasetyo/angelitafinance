@@ -24,7 +24,7 @@
     {{-- <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     {{-- Custom Calender --}}
-    <link rel="stylesheet" href="{{ asset('assets/mc/mc-calendar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/mc/mc-calendar.min.css') }}">
 
     {{-- Select2 Bootstrap 5 Css --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
@@ -89,7 +89,7 @@
     {{-- <script src="{{asset('admin/vendor/autocomplete/jquery-ui.js')}}"></script> --}}
     <link href="{{ asset('assets/summernote/summernote-lite.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/summernote/summernote-lite.js') }}"></script>
-    <script src="{{ asset('assets/mc/mc-calendar.min.js') }}"></script>
+    <script src="{{ asset('assets/assets/vendor/mc/mc-calendar.min.js') }}"></script>
     <script>
         $('#summernote').summernote({
             tabsize: 2,

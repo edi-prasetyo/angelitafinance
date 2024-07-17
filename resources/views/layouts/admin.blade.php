@@ -21,10 +21,22 @@
     <script src="{{ asset('assets/assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/assets/js/config.js') }}"></script>
 
-    <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" />
+    {{-- <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    {{-- Custom Calender --}}
+    <link rel="stylesheet" href="{{ asset('assets/mc/mc-calendar.min.css') }}">
+
+    {{-- Select2 Bootstrap 5 Css --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
     <!-- Scripts -->
-    @livewireStyles
+    {{-- @livewireStyles --}}
+
+    {{-- Daterange --}}
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/daterange/css/bootstrap-datepicker3.css') }}">
+
 
 </head>
 
@@ -51,6 +63,7 @@
     </div>
 
     <!-- build:js assets/vendor/js/core.js -->
+    {{-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> --}}
     <script src="{{ asset('assets/assets/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets/assets/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('assets/assets/vendor/js/bootstrap.js') }}"></script>
@@ -64,17 +77,19 @@
 
     <!-- Page JS -->
     <script src="{{ asset('assets/assets/js/dashboards-analytics.js') }}"></script>
-    <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('.select2').select2();
         });
-    </script>
+    </script> --}}
 
     {{-- Tambahan --}}
+    <script src="{{ asset('assets/assets/vendor/daterange/js/bootstrap-datepicker.js') }}"></script>
     {{-- <script src="{{asset('admin/vendor/autocomplete/jquery-ui.js')}}"></script> --}}
     <link href="{{ asset('assets/summernote/summernote-lite.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/summernote/summernote-lite.js') }}"></script>
+    <script src="{{ asset('assets/mc/mc-calendar.min.js') }}"></script>
     <script>
         $('#summernote').summernote({
             tabsize: 2,
@@ -84,11 +99,11 @@
         });
     </script>
 
-
-
-
-    @livewireScripts
-    @stack('script')
+    {{-- Select2 Bootstrap 5 --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @yield('scripts')
+    {{-- @livewireScripts
+    @stack('script') --}}
 </body>
 
 </html>

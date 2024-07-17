@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
@@ -112,8 +113,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('/users', 'store');
         Route::get('/users/edit/{user}', 'edit');
         Route::post('/users/{user}', 'update');
-        Route::get('/users/delete/{user_id}', 'destroy');
+        Route::get('/users/active/{user_id}', 'active');
+        Route::get('/users/nonactive/{user_id}', 'nonactive');
         Route::get('/drivers', 'driver');
+        Route::get('/admins', 'admin');
         Route::get('/finances', 'finance');
         Route::get('/security', 'security');
     });
@@ -140,6 +143,27 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         // Sales
         Route::get('/transactions/sales', 'sales');
     });
+    // Order Route
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/orders', 'index');
+        Route::get('/orders/create', 'create');
+        Route::post('/orders', 'store');
+        Route::get('/orders/detail/{id}', 'show')->name('show');
+        Route::get('/orders/delete/{id}', 'destroy')->name('destroy');
+        Route::get('/orders/create/order_item/{id}', 'add_order_item')->name('add_order_item');
+        Route::post('/orders/create/store_order_item/', 'store_order_item')->name('store_order_item');
+        Route::get('/orders/edit/edit_item/{item_id}', 'edit_item')->name('edit_item');
+        Route::post('/orders/update_item/{order_item_id}', 'update_item')->name('update_item');
+        Route::get('/orders/delete_item/{order_item_id}', 'destroy_item')->name('destroy_item');
+
+
+        Route::get('/orders/payment/{order_id}', 'payment')->name('payment');
+        Route::post('/orders/payment/add_payment', 'add_payment')->name('add_payment');
+        // Sales
+        Route::get('/orders/sales/', 'sales')->name('sales');
+        Route::get('/orders/sales_items/', 'sales_item')->name('sales_item');
+    });
+
     // Schedule Route
     Route::controller(ScheduleController::class)->group(function () {
         Route::get('/schedules', 'index');

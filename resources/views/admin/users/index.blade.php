@@ -45,8 +45,13 @@
                                 <td>
                                     <a href="{{ url('admin/users/edit/' . $item->id) }}"
                                         class="btn btn-sm btn-primary text-white">Edit</a>
-                                    <a href="{{ url('admin/users/delete/' . $item->id) }}"
-                                        class="btn btn-sm btn-danger text-white">Delete</a>
+                                    @if ($item->status == 1)
+                                        <a href="{{ url('admin/users/nonactive/' . $item->id) }}"
+                                            class="btn btn-sm btn-danger text-white">Inactive</a>
+                                    @else
+                                        <a href="{{ url('admin/users/active/' . $item->id) }}"
+                                            class="btn btn-sm btn-success text-white">Active</a>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

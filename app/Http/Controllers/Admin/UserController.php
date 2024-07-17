@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -104,12 +105,33 @@ class UserController extends Controller
 
     public function driver()
     {
-        $users = User::where('role_as', 5)->get();
+        $users  = User::role('driver')->get();
         return view('admin.users.index', compact('users'));
+    }
+    public function admin()
+    {
+        $users  = User::role('admin')->get();
+        return view('admin.users.index', compact('users'));
+    }
+    public function active($user_id)
+    {
+        $user =  User::where('id', $user_id)->first();
+        $user->status = 1;
+        $user->update();
+        Alert::success('User', 'Berhasil Diaktifkan');
+        return redirect()->back();
+    }
+    public function nonactive($user_id)
+    {
+        $user =  User::where('id', $user_id)->first();
+        $user->status = 0;
+        $user->update();
+        Alert::success('User', 'Berhasil Dinonaktifkan');
+        return redirect()->back();
     }
     public function finance()
     {
-        $users = User::where('role_as', 3)->get();
+        $users = User::role('finance')->get();
         return view('admin.users.index', compact('users'));
     }
     public function security()

@@ -78,7 +78,7 @@ class CustomerController extends Controller
         $customer->customer_name =  $validated['full_name'];
         $customer->save();
         Alert::success('Customer', 'Customer Berhasil Dibuat');
-        return redirect('admin/customers');
+        return redirect()->back();
     }
     public function edit(Customer $customer)
     {

@@ -11,7 +11,7 @@
         </div>
 
 
-        @hasrole('Superadmin|Finance')
+        @hasrole('superadmin|finance')
             {{-- Role Admin --}}
 
             <div class="row">
@@ -111,7 +111,7 @@
             </div>
         @endhasrole
 
-        @hasrole('Admin')
+        @hasrole('admin')
             <div class="row">
 
                 <div class="col-lg-3 col-md-12 col-6 mb-4">

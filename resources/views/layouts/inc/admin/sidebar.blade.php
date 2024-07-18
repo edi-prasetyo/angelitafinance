@@ -57,6 +57,12 @@
                 </ul>
             </li>
 
+            <li class="menu-item {{ request()->is('admin/timers') ? 'active' : '' }}">
+                <a href="{{ url('admin/timers') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-timer"></i>
+                    <div data-i18n="Analytics">Timers</div>
+                </a>
+            </li>
             <li class="menu-item {{ request()->is('admin/customers') ? 'active' : '' }}">
                 <a href="{{ url('admin/customers') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>

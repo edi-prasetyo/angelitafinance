@@ -63,12 +63,38 @@
                     <div data-i18n="Analytics">Timers</div>
                 </a>
             </li>
-            <li class="menu-item {{ request()->is('admin/customers') ? 'active' : '' }}">
-                <a href="{{ url('admin/customers') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-user"></i>
-                    <div data-i18n="Analytics">Pelanggan</div>
+
+
+
+
+            <li
+                class="menu-item {{ request()->segment(2) == 'customers' || request()->segment(3) == 'customers/calling' ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                    <div data-i18n="Layouts">Customers</div>
                 </a>
+
+                <ul class="menu-sub">
+
+                    <li class="menu-item {{ request()->is('admin/customers') ? 'active' : '' }}">
+                        <a href="{{ url('admin/customers') }}" class="menu-link">
+                            {{-- <i class="menu-icon tf-icons bx bx-user"></i> --}}
+                            <div data-i18n="Analytics">Pelanggan</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item {{ request()->is('admin/customers/calling') ? 'active' : '' }}">
+                        <a href="{{ url('admin/customers/calling') }}" class="menu-link">
+                            {{-- <i class="menu-icon tf-icons bx bx-phone"></i> --}}
+                            <div data-i18n="Analytics">Confirm</div>
+                            <div class="badge bg-danger rounded-pill ms-auto">{{ count($customer_nav) }}</div>
+                        </a>
+                    </li>
+
+
+                </ul>
             </li>
+
 
             <li class="menu-item {{ request()->is('admin/orders') ? 'active' : '' }}">
                 <a href="{{ url('admin/orders') }}" class="menu-link">
@@ -76,9 +102,6 @@
                     <div data-i18n="Analytics">Orders</div>
                 </a>
             </li>
-
-
-
 
 
             <li class="menu-header small text-uppercase">

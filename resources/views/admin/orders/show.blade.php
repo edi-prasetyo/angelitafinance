@@ -3,17 +3,26 @@
 @section('content')
     <style>
         @media print {
-            #printPageButton {
-                display: none;
+            .hidenprint {
+                visibility: hidden !important;
             }
+
+        }
+
+        @page {
+            size: A5
         }
     </style>
     <section class="invoice">
         <div class="card">
-            <div id="printableArea">
+            <div class="card-header">
+                <a class="btn btn-primary mb-3" id="printPageButton"
+                    href="{{ url('admin/orders/create/order_item/' . $order->id) }}">Add
+                    Order</a>
+            </div>
+            <div id="printableArea" class="A5 landscape">
                 <div class="card-body">
-                    <a class="btn btn-primary mb-3" href="{{ url('admin/orders/create/order_item/' . $order->id) }}">Add
-                        Order</a>
+
                     <!-- title row -->
                     <div class="d-flex justify-content-between align-items-start">
 
@@ -47,45 +56,143 @@
                         <div class="col-sm-4 invoice-col">
                             <b>No Invoice #{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</b><br />
 
-                            <b>Tangal Order:</b> {{ date('d-m-Y', strtotime($order->created_at)) }}<br />
-                            <b>Code Booking:</b> {{ $order->order_code }}<br />
+                            <b>Order Date :</b> {{ date('d-m-Y', strtotime($order->created_at)) }}<br />
+                            <b>Booking Code :</b> {{ $order->order_code }}<br />
+                            <b>Payment Status :</b>
+                            @if ($order->bill <= 0)
+                                <span class="text-success px-2">Paid</span>
+                            @else
+                                <span class="text-danger px-2">Unpaid</span>
+                            @endif <br />
                         </div><!-- /.col -->
                     </div><!-- /.row -->
 
                     <!-- Table row -->
                     <div class="row">
                         <div class="col-xs-12 table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th>Tanggal</th>
-                                        <th>Jam</th>
-                                        <th>Alamat</th>
-                                        <th style="text-align: right">Harga</th>
+                                        @hasrole('superadmin|finance')
+                                            <th></th>
+                                        @endhasrole
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Item Price</th>
+                                        <th>Overtime</th>
+                                        <th>Pickup</th>
+                                        <th style="text-align: right">Price</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($order_items as $item)
                                         <tr>
-                                            <td width="5%">
-                                                <a href="{{ url('admin/orders/delete_item/' . $item->id) }}"
-                                                    class="btn btn-sm btn-danger"><i class="bx bx-trash"></i>
-                                                </a>
+                                            @hasrole('superadmin|finance')
+                                                <td width="5%">
+                                                    <a href="{{ url('admin/orders/delete_item/' . $item->id) }}"
+                                                        class=""><i class="bx bx-trash"></i>
+                                                    </a>
+                                                    <a href="{{ url('admin/orders/edit/edit_item/' . $item->id) }}"
+                                                        class=""><i class="bx bx-edit"></i>
+                                                    </a>
+                                                </td>
+                                            @endhasrole
+                                            <td>{{ date('d M Y', strtotime($item->start_date)) }} - {{ $item->start_time }}
                                             </td>
-                                            <td>{{ date('d-m-Y', strtotime($item->start_date)) }} </td>
-                                            <td>{{ $item->start_time }} </td>
+
+                                            <td>{{ date('d M Y', strtotime($item->end_date)) }} - {{ $item->end_time }}
+                                            </td>
+                                            <td>
+                                                Rp. {{ number_format($item->item_price, 0) }}
+                                            </td>
+
+                                            <td>
+                                                @if ($item->overtime == null)
+                                                    {{ '0' }}
+                                                @else
+                                                    Rp. {{ number_format($item->overtime) }}
+                                                @endif
+                                            </td>
                                             <td>{{ $item->pickup_address }} </td>
-                                            <td style="text-align: right">Rp. {{ number_format($item->price, 0) }}</td>
+                                            <td style="text-align: right">
+
+                                                Rp. {{ number_format($item->price, 0) }}</td>
 
                                         </tr>
                                     @endforeach
+                                    @foreach ($payments as $pay)
+                                        <tr>
+
+                                            @hasrole('superadmin|finance')
+                                                <td colspan="5"
+                                                    style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
+                                                </td>
+                                            @endhasrole
+
+                                            @hasrole('marketing')
+                                                <td colspan="4"
+                                                    style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
+                                                </td>
+                                            @endhasrole
+
+
+                                            <td>{{ $pay->payment_type }}</td>
+                                            <td class="fw-bold" style="text-align: right;">
+                                                Rp.
+                                                {{ number_format($pay->amount) }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                    <tr>
+                                        @hasrole('superadmin|finance')
+                                            <td colspan="5"
+                                                style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
+                                            </td>
+                                        @endhasrole
+
+                                        @hasrole('marketing')
+                                            <td colspan="4"
+                                                style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
+                                            </td>
+                                        @endhasrole
+                                        <td>Grand Total</td>
+                                        <td class="fw-bold" style="text-align: right;">
+                                            Rp.
+                                            {{ number_format($order->bill) }}</td>
+                                    </tr>
                                 </tbody>
+
+
                             </table>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div style="font-size:10px;">
+                                <span class="fw-bold"> Syarat Ketentuan :</span>
+                                <ul>
+                                    <li>Harga belum termasuk biaya BBM, Uang Makan Driver, Tol dan parkir </li>
+                                    <li>Harga di atas tidak berlaku untuk hari raya ( Lebaran )</li>
+                                    <li>Dalam Kota (Jakarta, Tanggerang, Bekasi, Bogor,Depok)</li>
+                                    <li>24 JAM DIHITUNG DARI JAM 08.00 S/D 08.00 BERIKUTNYA</li>
+                                    <li>OVER TIME 10%/ jam DARI HARGA SEWA</li>
+                                    <li>Luar kota (Puncak, Bandung, Banten, Jawa Barat)</li>
+                                    <li>Luar kota : Garut, Tasikmalaya, cirebon, Jawa tengah, lampung tambah Rp. 50.000,-
+                                        /hari
+                                        dan
+                                        minimal 2 hari</li>
+                                    <li>Penjemputan Paling pagi jam 05:00 WIB </li>
+                                    <li>Pembatalan Pada hari H dikenakan biaya cancel 100% dari harga sewa </li>
+                                    <li>DP yang sudah masuk tidak dapat di kembalikan, jika cancel Order</li>
+                                    <li>Harga Sewa dapat berubah sewaktu-waktu tanpa pemberitahuan</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
 
+                        </div>
+                    </div>
 
 
                     <!-- this row will not appear when printing -->

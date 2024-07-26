@@ -10,3 +10,5 @@ Rincian Update Aplikasi
     -   Tambah table payments
     -   Tambah table orders
     -   Tambah table order_details
+-   Update 22 Juli 2024
+    -   Add field "item_price" in "order_details"

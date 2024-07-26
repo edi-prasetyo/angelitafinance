@@ -85,11 +85,13 @@ class OrderController extends Controller
             ->select('orders.*', 'customers.full_name as customer_name')
             ->first();
         $order_items  = OrderItem::where('order_id', $id)->get();
+        $payments = Payment::where('order_id', $id)->get();
+        // return $payments;
         // return $order_items;
         // $title = 'Delete Order!';
         // $text = "Are you sure you want to delete?";
         // confirmDelete($title, $text);
-        return view('admin.orders.show', compact('order', 'order_items'));
+        return view('admin.orders.show', compact('order', 'order_items', 'payments'));
     }
     public function destroy($id)
     {
@@ -138,9 +140,15 @@ class OrderController extends Controller
             'start_time' => 'required',
             'end_date' => 'required',
             'end_time' => 'required',
-            'price' => 'required',
+            'item_price' => 'required',
+            // 'price' => 'required',
+            // 'overtime' => 'nullable',
 
         ]);
+
+        $overtime = $request['overtime'];
+        $item_price = $validated['item_price'];
+        $price =  $overtime + $item_price;
 
         $order_item = new OrderItem();
 
@@ -155,7 +163,9 @@ class OrderController extends Controller
         $order_item->start_time = $validated['start_time'];
         $order_item->end_date = $validated['end_date'];
         $order_item->end_time = $validated['end_time'];
-        $order_item->price = $validated['price'];
+        $order_item->item_price = $item_price;
+        $order_item->price = $price;
+        $order_item->overtime = $overtime;
         $order_item->meal_cost = $request['meal_cost'];
         $order_item->lodging_cost = $request['lodging_cost'];
         $order_item->all_in = $request->all_in == true ? '1' : '0';
@@ -202,11 +212,21 @@ class OrderController extends Controller
             'start_time' => 'required',
             'end_date' => 'required',
             'end_time' => 'required',
-            'price' => 'required',
+            // 'price' => 'required',
+            // 'overtime' => 'nullable',
 
         ]);
 
+        $new_price = $request['item_price'];
+        $overtime = $request['overtime'];
+
         $order_item = OrderItem::where('id', $order_item_id)->first();
+
+        $order = Order::where('id', $order_item->order_id)->first();
+        $price = $new_price + $overtime;
+
+        $last_order_bill = $order->bill - $order_item->price;
+
         $order_item->order_id = $validated['order_id'];
         $order_item->customer_id = $validated['customer_id'];
         $order_item->car_id = $validated['car_id'];
@@ -218,14 +238,17 @@ class OrderController extends Controller
         $order_item->start_time = $validated['start_time'];
         $order_item->end_date = $validated['end_date'];
         $order_item->end_time = $validated['end_time'];
-        $order_item->price = $validated['price'];
+        $order_item->item_price = $new_price;
+        $order_item->price = $price;
+        $order_item->overtime = $overtime;
         $order_item->meal_cost = $request['meal_cost'];
         $order_item->lodging_cost = $request['lodging_cost'];
         $order_item->all_in = $request->all_in == true ? '1' : '0';
         $order_item->update();
 
-        $order = Order::where('id', $order_item->order_id)->first();
-        $total_amount = $order->bill + $order_item->price;
+
+        $total_amount = $last_order_bill + $new_price + $order_item->overtime;
+        // return $last_order_bill;
         $order->bill = $total_amount;
         $order->update();
 

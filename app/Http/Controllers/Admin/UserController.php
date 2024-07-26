@@ -55,8 +55,8 @@ class UserController extends Controller
         $balance->amount = 0;
 
         $balance->save();
-
-        return redirect('admin/users')->with('message', 'Admin Has Added');
+        Alert::success('User', 'Berhasil Diaktifkan');
+        return redirect('admin/drivers')->with('message', 'Admin Has Added');
     }
 
     public function show($id)

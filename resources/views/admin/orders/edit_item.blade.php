@@ -164,10 +164,20 @@
                         <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label class="form-label">Harga Sewa</label>
-                                <input type="text" name="price" value="{{ $order_item->price }}"
+                                <input type="text" name="item_price" value="{{ $order_item->item_price }}"
                                     class="form-control">
                             </div>
                         </div>
+
+                        @hasrole('superadmin|finance')
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Over Time</label>
+                                    <input type="text" name="overtime" value="{{ $order_item->overtime }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        @endhasrole
 
                         <div class="col-md-12">
                             <div class="divider text-start">

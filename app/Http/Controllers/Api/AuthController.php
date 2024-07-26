@@ -20,7 +20,7 @@ class AuthController extends Controller
         $request->validated($request->all);
 
         if (!Auth::attempt($request->only(['email', 'password']))) {
-            return $this->error('', 'Credentian do not match', 401);
+            return $this->error('', 'Credential do not match', 401);
         }
         $user = User::where('email', $request->email)->first();
 
@@ -46,5 +46,12 @@ class AuthController extends Controller
     public function logout()
     {
         return response()->json('This Request Logout with Json');
+    }
+    public function profile()
+    {
+        $user = Auth::user();
+        return response()->json(
+            $user
+        );
     }
 }

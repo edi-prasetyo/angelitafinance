@@ -37,6 +37,9 @@
     {{-- Daterange --}}
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/daterange/css/bootstrap-datepicker3.css') }}">
 
+    {{-- Papper Size --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">
+
 
 </head>
 

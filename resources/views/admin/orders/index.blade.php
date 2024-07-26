@@ -52,15 +52,17 @@
         <div class="card">
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
                 <h4 class="my-auto">All Oders</h4>
-                <div>
-                    <a href="{{ url('admin/orders/sales') }}" class="btn btn-primary text-white"><i
-                            class='bx bx-money-withdraw'></i>
-                        Sales Per Day</a>
-                    <a href="{{ url('admin/orders/sales_items') }}" class="btn btn-info text-white"><i
-                            class='bx bx-calendar'></i>
-                        Sales Item Per Day</a>
+                @hasrole('superadmin|finance')
+                    <div>
+                        <a href="{{ url('admin/orders/sales') }}" class="btn btn-primary text-white"><i
+                                class='bx bx-money-withdraw'></i>
+                            Sales Per Day</a>
+                        <a href="{{ url('admin/orders/sales_items') }}" class="btn btn-info text-white"><i
+                                class='bx bx-calendar'></i>
+                            Sales Item Per Day</a>
 
-                </div>
+                    </div>
+                @endhasrole
             </div>
             <div class="table-responsive">
                 <table class="table">
@@ -108,10 +110,12 @@
                                 </td>
 
                                 <td>
-                                    <a href="{{ url('admin/orders/payment/' . $item->id) }}"
-                                        class="btn btn-sm btn-primary text-white">Pay</a>
+                                    @hasrole('superadmin|finance')
+                                        <a href="{{ url('admin/orders/payment/' . $item->id) }}"
+                                            class="btn btn-sm btn-primary text-white">Pay</a>
+                                    @endhasrole
                                     <a href="{{ url('admin/orders/detail/' . $item->id) }}"
-                                        class="btn btn-sm btn-info text-white">Detil</a>
+                                        class="btn btn-sm btn-info text-white">Detail</a>
 
                                     @role('Superadmin')
                                         <a href="{{ url('admin/orders/delete/' . $item->id) }}"

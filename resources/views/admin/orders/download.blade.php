@@ -352,7 +352,8 @@
                         </td>
                         <td width="40%" style="text-align:center">
                             <h5> Hormat Kami</h5>
-                            <img style="width: 30%" src="{{ $rental->signature_url }}"
+                            <img style="width: 30%"
+                                src="https://finance.angelitarentcar.co.id/uploads/images/signature1724059863.png"
                                 alt="{{ $rental->signature_url }}" />
                             {{-- <img src="{{ public_path($rental->signature) }}"
                                 alt="{{ public_path($rental->signature) }}" style="width: 30%"> --}}

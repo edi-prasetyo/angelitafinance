@@ -57,6 +57,12 @@
                 </ul>
             </li>
 
+            <li class="menu-item {{ request()->is('admin/banks') ? 'active' : '' }}">
+                <a href="{{ url('admin/banks') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-credit-card-alt"></i>
+                    <div data-i18n="Analytics">Bank</div>
+                </a>
+            </li>
             <li class="menu-item {{ request()->is('admin/timers') ? 'active' : '' }}">
                 <a href="{{ url('admin/timers') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-timer"></i>
@@ -104,8 +110,22 @@
             </li>
 
 
+
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Pengguna</span>
+            </li>
+
+            <li class="menu-item {{ request()->is('admin/rentals') ? 'active' : '' }}">
+                <a href="{{ url('admin/rentals') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-store-alt"></i>
+                    <div data-i18n="Analytics">Rental</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->is('admin/partners') ? 'active' : '' }}">
+                <a href="{{ url('admin/partners') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-coffee"></i>
+                    <div data-i18n="Analytics">Partner</div>
+                </a>
             </li>
 
 

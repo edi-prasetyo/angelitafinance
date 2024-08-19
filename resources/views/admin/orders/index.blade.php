@@ -13,7 +13,7 @@
                 <form action="{{ url('admin/orders') }}" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label">Pilih Customer</label>
                             <select class="form-select" name="customer_id" id="single-select-field"
                                 data-placeholder="Pilih Customer">
@@ -24,15 +24,37 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Tanggal Order</label>
+                        <div class="col-md-2">
+                            <label class="form-label">Pilih Rental</label>
+                            <select class="form-select" name="rental_id" id="single-select-field2"
+                                data-placeholder="Pilih Rental">
+                                <option></option>
+                                @foreach ($rentals as $rental)
+                                    <option value="{{ $rental->id }}">{{ $rental->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Order From</label>
+                            <select class="form-select" name="partner_id" id="single-select-field2"
+                                data-placeholder="Pilih Rental">
+                                <option></option>
+                                @foreach ($partners as $partner)
+                                    <option value="{{ $partner->id }}">{{ $partner->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Tanggal </label>
                             <input id="datepicker_one" autocomplete="off" type="text" name="date"
                                 class="form-field__input form-control">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="d-grid gap-2">
                                 <label class="form-label invisible">Date</label>
-                                <button type="submit" class="btn btn-primary">Buat Order</button>
+                                <button type="submit" class="btn btn-primary"><i class="bx bx-save"></i> </button>
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -71,6 +93,7 @@
                             <th width="5%">NO</th>
                             <th scope="col">Order Date</th>
                             <th scope="col">Customer</th>
+                            <th scope="col">Rental</th>
                             <th scope="col">Bill</th>
                             <th scope="col">Amount</th>
 
@@ -85,6 +108,7 @@
                                 <td>{{ $i + 1 }}</td>
                                 <td>{{ $item->order_date }}</td>
                                 <td>{{ $item->customer_name }}</td>
+                                <td>{{ $item->rental_name }}</td>
                                 <td>
                                     @if ($item->bill > 0)
                                         <span class="text-danger fw-bold"> Rp. {{ number_format($item->bill) }}</span>
@@ -205,6 +229,11 @@
 @section('scripts')
     <script>
         $('#single-select-field').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+        });
+        $('#single-select-field2').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),

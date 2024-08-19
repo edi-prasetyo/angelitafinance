@@ -58,6 +58,14 @@
                                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                                 </div>
                             </div>
+
+                            @error('g-recaptcha-response')
+                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            @enderror
+                            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                            <div class="g-recaptcha" id="feedback-recaptcha"
+                                data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}">
+                            </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                             </div>
@@ -69,3 +77,12 @@
         </div>
     </div>
 @endsection
+
+{{-- @section('scripts')
+    <script>
+        if (grecaptcha.getResponse().length == 0) {
+            $('#error-captcha').empty()
+            $('#error-captcha').append("Please tick the recaptcha.");
+        }
+    </script>
+@endsection --}}

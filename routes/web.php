@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BankController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\DashboardController;
@@ -11,6 +12,8 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\RentalController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\TransactionController;
@@ -56,6 +59,28 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('/category', 'store');
         Route::get('/category/edit/{category}', 'edit');
         Route::put('/category/{category}', 'update');
+    });
+    // Rental Route
+    Route::controller(RentalController::class)->group(function () {
+        Route::get('/rentals', 'index');
+        Route::get('/rentals/create', 'create');
+        Route::post('/rentals', 'store');
+        Route::get('/rentals/edit/{rental}', 'edit');
+        Route::put('/rentals/{rental_id}', 'update');
+    });
+    // Bank Route
+    Route::controller(BankController::class)->group(function () {
+        Route::get('/banks', 'index');
+        Route::get('/banks/create', 'create');
+        Route::post('/banks', 'store');
+        Route::get('/banks/edit/{rental}', 'edit');
+        Route::put('/banks/{rental_id}', 'update');
+    });
+    // Pertner Route
+    Route::controller(PartnerController::class)->group(function () {
+        Route::get('/partners', 'index');
+        Route::post('/partners', 'store');
+        Route::put('/partners/{partner_id}', 'update');
     });
     // Brand Route
     Route::controller(BrandController::class)->group(function () {
@@ -162,6 +187,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         // Sales
         Route::get('/orders/sales/', 'sales')->name('sales');
         Route::get('/orders/sales_items/', 'sales_item')->name('sales_item');
+
+        Route::get('/orders/download/{order_id}', 'download')->name('download');
     });
 
     // Schedule Route

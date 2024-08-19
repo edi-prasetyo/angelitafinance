@@ -156,6 +156,7 @@
 
 
 
+
                         <div class="form-group mb-3">
                             <label class="form-label">Alamat Jemput</label>
                             <textarea name="pickup_address" class="form-control">{{ old('pickup_address') }}</textarea>
@@ -179,9 +180,76 @@
                             </div>
                         @endhasrole
 
+
+
                         <div class="col-md-12">
                             <div class="divider text-start">
-                                <div class="divider-text fs-4">All In?</div>
+                                <div class="divider-text fs-5">Including</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">BBM</label>
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="flexSwitchCheckDefault" name="fuel">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Toll</label>
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="flexSwitchCheckDefault" name="toll">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Parkir</label>
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="flexSwitchCheckDefault" name="parking">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Uang Makan</label>
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="flexSwitchCheckDefault" name="meal">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Uang Inap</label>
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="flexSwitchCheckDefault" name="lodging">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Penjemputan Pagi</label>
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="flexSwitchCheckDefault" name="pickup_charge">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="divider text-start">
+                                <div class="divider-text fs-5">All In?</div>
                             </div>
                         </div>
                         <div class="col-md-12">

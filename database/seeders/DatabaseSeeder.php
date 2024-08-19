@@ -52,7 +52,19 @@ class DatabaseSeeder extends Seeder
         'user-list',
         'user-create',
         'user-edit',
-        'user-delete'
+        'user-delete',
+        'order-list',
+        'order-create',
+        'order-edit',
+        'order-delete',
+        'rental-list',
+        'rental-create',
+        'rental-edit',
+        'rental-delete',
+        'bank-list',
+        'bank-create',
+        'bank-edit',
+        'bank-delete',
     ];
 
 

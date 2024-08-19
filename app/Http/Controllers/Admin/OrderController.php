@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bank;
 use App\Models\Car;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Package;
+use App\Models\Partner;
 use App\Models\Payment;
+use App\Models\Rental;
 use App\Models\Timer;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 use Intervention\Image\ImageManager;
@@ -39,23 +43,27 @@ class OrderController extends Controller
     public function index()
     {
         $customers = Customer::all();
+        $rentals = Rental::all();
+        $partners = Partner::all();
         // $payments = Payment::all();
         $amountSum = OrderItem::selectRaw('sum(price)')
             ->whereColumn('order_id', 'orders.id')
             ->getQuery();
 
-        $orders = Order::select('orders.*', 'customers.full_name as customer_name')
+        $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
             ->selectSub($amountSum, 'amount_sum')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
             ->orderBy('id', 'desc')
             ->paginate(10);
         // return $orders;
-        return view('admin.orders.index', compact('orders', 'customers'));
+        return view('admin.orders.index', compact('orders', 'customers', 'rentals', 'partners'));
     }
     public function create()
     {
         $customers = Customer::all();
-        return view('admin.orders.create', compact('customres'));
+        $rentals = Rental::all();
+        return view('admin.orders.create', compact('customres', 'rentals'));
     }
     public function store(Request $request)
     {
@@ -69,6 +77,8 @@ class OrderController extends Controller
         $order = new Order();
         $order->user_id = $user_id;
         $order->customer_id = $validated['customer_id'];
+        $order->rental_id = $request['rental_id'];
+        $order->partner_id = $request['partner_id'];
         $order->order_date = $validated['date'];
         $order->order_code = $code;
 
@@ -85,13 +95,54 @@ class OrderController extends Controller
             ->select('orders.*', 'customers.full_name as customer_name')
             ->first();
         $order_items  = OrderItem::where('order_id', $id)->get();
+        $pickups  = OrderItem::where('order_id', $id)->get();
         $payments = Payment::where('order_id', $id)->get();
-        // return $payments;
-        // return $order_items;
-        // $title = 'Delete Order!';
-        // $text = "Are you sure you want to delete?";
-        // confirmDelete($title, $text);
-        return view('admin.orders.show', compact('order', 'order_items', 'payments'));
+        $rental = Rental::where('id', $order->rental_id)->first();
+        $banks = Bank::where('status', 1)->get();
+        // return $rental;
+        return view('admin.orders.show', compact('order', 'order_items', 'payments', 'rental', 'banks', 'pickups'));
+    }
+    // Load Pdf
+    public function download($order_id)
+    {
+        $order = Order::where('orders.id', $order_id)
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->select('orders.*', 'customers.full_name as customer_name')
+            ->first();
+        $order_items = OrderItem::where('order_id', $order_id)
+            ->get();
+        $pickups = OrderItem::where('order_id', $order_id)
+            ->get();
+        $grand_total = OrderItem::where('order_id', $order_id)
+            ->sum('price');
+        // return $grand_total;
+        $rental = Rental::where('id', $order->rental_id)->first();
+        // $logo = base64_encode(file_get_contents(public_path($rental->logo)));
+        $payments = Payment::where('order_id', $order_id)->get();
+        $banks = Bank::where('status', 1)->get();
+
+
+        $data = [
+            'title' => 'Rental',
+            'date' => date('m/d/Y'),
+            'order' => $order,
+            'order_items' => $order_items,
+            'rental' => $rental,
+            // 'logo' => $logo,
+            'payments' => $payments,
+            'grand_total' => $grand_total,
+            'banks' => $banks,
+            'pickups' => $pickups
+
+        ];
+
+        // return $data;
+        // $customPaper = [0, 0, 567.00, 500.80];
+
+        $pdf = Pdf::loadView('admin.orders.download', $data)->setPaper('a4', 'landscape');
+        return $pdf->download(str_pad($order->id, 6, '0', STR_PAD_LEFT) . '.pdf');
+
+        // return view('admin.orders.download', $data);
     }
     public function destroy($id)
     {
@@ -169,6 +220,14 @@ class OrderController extends Controller
         $order_item->meal_cost = $request['meal_cost'];
         $order_item->lodging_cost = $request['lodging_cost'];
         $order_item->all_in = $request->all_in == true ? '1' : '0';
+
+        $order_item->fuel = $request->fuel == true ? '1' : '0';
+        $order_item->toll = $request->toll == true ? '1' : '0';
+        $order_item->parking = $request->parking == true ? '1' : '0';
+        $order_item->meal = $request->meal == true ? '1' : '0';
+        $order_item->lodging = $request->lodging == true ? '1' : '0';
+        $order_item->pickup_charge = $request->pickup_charge == true ? '1' : '0';
+
         $order_item->save();
 
         $order = Order::where('id', $order_item->order_id)->first();
@@ -238,12 +297,22 @@ class OrderController extends Controller
         $order_item->start_time = $validated['start_time'];
         $order_item->end_date = $validated['end_date'];
         $order_item->end_time = $validated['end_time'];
+        $order_item->departure_time = $request['departure_time'];
+        $order_item->arrival_time = $request['arrival_time'];
         $order_item->item_price = $new_price;
         $order_item->price = $price;
         $order_item->overtime = $overtime;
         $order_item->meal_cost = $request['meal_cost'];
         $order_item->lodging_cost = $request['lodging_cost'];
         $order_item->all_in = $request->all_in == true ? '1' : '0';
+
+        $order_item->fuel = $request->fuel == true ? '1' : '0';
+        $order_item->toll = $request->toll == true ? '1' : '0';
+        $order_item->parking = $request->parking == true ? '1' : '0';
+        $order_item->meal = $request->meal == true ? '1' : '0';
+        $order_item->lodging = $request->lodging == true ? '1' : '0';
+        $order_item->pickup_charge = $request->pickup_charge == true ? '1' : '0';
+
         $order_item->update();
 
 
@@ -336,7 +405,9 @@ class OrderController extends Controller
             ->whereBetween('order_date', [$start_date,  $end_date])
             ->get();
         // return $orders;
-        return view('admin.orders.sales', compact('orders'));
+        $get_total = $orders->sum('bill');
+        $get_price = $orders->sum('amount_sum');
+        return view('admin.orders.sales', compact('orders', 'get_total', 'get_price', 'start_date', 'end_date'));
     }
     public function sales_item(Request $request)
     {
@@ -352,8 +423,16 @@ class OrderController extends Controller
             ->select('order_items.*', 'customers.full_name as customer_name', 'packages.name as package_name', 'cars.name as car_name', 'cars.number as car_number', 'users.name as driver_name')
             ->whereBetween('start_date', [$start_date,  $end_date])
             ->get();
-        // return $order_items;
+        $get_total = $order_items->sum('price');
+        // return $total;
+        // $get_total =   DB::table('order_items')
+        //     ->whereBetween('start_date', [$start_date,  $end_date])
+        //     ->selectRaw('sum(price) as total')
+        //     ->selectRaw('id')
+        //     ->groupBy('id')
+        //     ->get();
+        // return   $get_total->total;
 
-        return view('admin.orders.sales_items', compact('order_items'));
+        return view('admin.orders.sales_items', compact('order_items', 'get_total'));
     }
 }

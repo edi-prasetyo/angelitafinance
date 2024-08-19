@@ -156,6 +156,25 @@
                             </div>
                         </div>
 
+                        @hasrole('superadmin|finance')
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Jam Berangkat</label>
+                                    <input type="text" name="departure_time" value="{{ $order_item->departure_time }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Jam Pulang</label>
+                                    <input type="text" name="arrival_time" value="{{ $order_item->arrival_time }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        @endhasrole
+
                         <div class="form-group mb-3">
                             <label class="form-label">Alamat Jemput</label>
                             <textarea name="pickup_address" class="form-control">{{ $order_item->pickup_address }}</textarea>
@@ -181,7 +200,73 @@
 
                         <div class="col-md-12">
                             <div class="divider text-start">
-                                <div class="divider-text fs-4">All In?</div>
+                                <div class="divider-text fs-5">Including</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">BBM</label>
+                                        <input class="form-check-input" type="checkbox" name="fuel"
+                                            {{ $order_item->fuel == '1' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">TOll</label>
+                                        <input class="form-check-input" type="checkbox" name="toll"
+                                            {{ $order_item->toll == '1' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Parkir</label>
+                                        <input class="form-check-input" type="checkbox" name="parking"
+                                            {{ $order_item->parking == '1' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Uang Makan</label>
+                                        <input class="form-check-input" type="checkbox" name="meal"
+                                            {{ $order_item->meal == '1' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Uang Inap</label>
+                                        <input class="form-check-input" type="checkbox" name="lodging"
+                                            {{ $order_item->lodging == '1' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label">Penjemputan Pagi</label>
+                                        <input class="form-check-input" type="checkbox" name="pickup_charge"
+                                            {{ $order_item->pickup_charge == '1' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-md-12">
+                            <div class="divider text-start">
+                                <div class="divider-text fs-5">All In?</div>
                             </div>
                         </div>
                         <div class="col-md-12">

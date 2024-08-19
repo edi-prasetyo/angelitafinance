@@ -10,7 +10,7 @@
     <meta name="keywords" content="@yield('meta_keyword')">
     <meta name="author" content="@yield('title')">
     <meta property="og:image" content="@yield('image')">
-    <link rel="stylesheet" href="{{asset('assets/vendor/fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/css/all.min.css') }}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     {{-- CSS --}}
@@ -21,15 +21,17 @@
     <link href="{{asset('assets/vendor/offcanvas/offcanvas-navbar.css')}}" rel="stylesheet"> --}}
 
 
-    <link rel="stylesheet" href="{{asset('assets/assets/vendor/fonts/boxicons.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/assets/vendor/css/core.css')}}" class="template-customizer-core-css">
-    <link rel="stylesheet" href="{{asset('assets/assets/vendor/css/theme-default.css')}}"
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/fonts/boxicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/css/core.css') }}" class="template-customizer-core-css">
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/css/theme-default.css') }}"
         class="template-customizer-theme-css">
-    <link rel="stylesheet" href="{{asset('assets/assets/css/demo.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/assets/vendor/css/pages/page-auth.css')}}">
-    <script src="{{asset('assets/assets/vendor/js/helpers.js')}}"></script>
-    <script src="{{asset('assets/assets/js/config.js')}}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/assets/css/demo.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/css/pages/page-auth.css') }}">
+    <script src="{{ asset('assets/assets/vendor/js/helpers.js') }}"></script>
+    <script src="{{ asset('assets/assets/js/config.js') }}"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 
 </head>
@@ -48,12 +50,12 @@
 
 
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{asset('assets/assets/vendor/libs/jquery/jquery.js')}}"></script>
-    <script src="{{asset('assets/assets/vendor/libs/popper/popper.js')}}"></script>
-    <script src="{{asset('assets/assets/vendor/js/bootstrap.js')}}"></script>
-    <script src="{{asset('assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
-    <script src="{{asset('assets/assets/vendor/js/menu.js')}}"></script>
-    <script src="{{asset('assets/assets/js/main.js')}}"></script>
+    <script src="{{ asset('assets/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('assets/assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('assets/assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('assets/assets/vendor/js/menu.js') }}"></script>
+    <script src="{{ asset('assets/assets/js/main.js') }}"></script>
 
 </body>
 

@@ -19,6 +19,8 @@
                 <a class="btn btn-primary mb-3" id="printPageButton"
                     href="{{ url('admin/orders/create/order_item/' . $order->id) }}">Add
                     Order</a>
+
+
             </div>
             <div id="printableArea" class="A5 landscape">
                 <div class="card-body">
@@ -27,7 +29,9 @@
                     <div class="d-flex justify-content-between align-items-start">
 
                         <h2 class="float-start">
-                            <i class="fa fa-globe"></i> Angelita Rentcar
+                            <div class="col-md-3"> <img class="" style="width:300px;" src="{{ $rental->logo_url }}">
+                            </div>
+                            {{-- <i class="fa fa-globe"></i> {{ $rental->name }} --}}
                         </h2>
                         <h2 class="float-end">
                             INVOICE
@@ -39,11 +43,10 @@
                         <div class="col-sm-4 invoice-col">
                             From
                             <address>
-                                <strong>PT. Angelita Trans Nusantara</strong><br>
-                                Jl. H. Adam Malik Kav. 65 Kreo Selatan, Larangan <br>
-                                Tangerang, 15544<br>
-                                Phone: (021) 7359209<br />
-                                Email: angelita_rentcar@yahoo.com
+                                <strong>{{ $rental->legal_name }}</strong><br>
+                                {{ $rental->address }}<br>
+                                Phone: {{ $rental->phone_number }}<br />
+                                Email: {{ $rental->email }}
                             </address>
                         </div><!-- /.col -->
                         <div class="col-sm-4 invoice-col">
@@ -79,8 +82,9 @@
                                         <th>Start Date</th>
                                         <th>End Date</th>
                                         <th>Item Price</th>
+                                        <th>Include</th>
                                         <th>Overtime</th>
-                                        <th>Pickup</th>
+
                                         <th style="text-align: right">Price</th>
 
                                     </tr>
@@ -98,13 +102,48 @@
                                                     </a>
                                                 </td>
                                             @endhasrole
-                                            <td>{{ date('d M Y', strtotime($item->start_date)) }} - {{ $item->start_time }}
+                                            <td>{{ date('d M Y', strtotime($item->start_date)) }} -
+                                                {{ $item->start_time }}
+
+                                                @if ($item->departure_time == null)
+                                                @else
+                                                    <i class='bx bx-chevrons-right me-2 ms-2'></i> <i
+                                                        class="bx bx-timer"></i> {{ $item->departure_time }}
+                                                @endif
                                             </td>
 
                                             <td>{{ date('d M Y', strtotime($item->end_date)) }} - {{ $item->end_time }}
+                                                @if ($item->arrival_time == null)
+                                                @else
+                                                    <i class='bx bx-chevrons-right me-2 ms-2'></i> <i
+                                                        class="bx bx-timer"></i> {{ $item->arrival_time }}
+                                                @endif
                                             </td>
                                             <td>
                                                 Rp. {{ number_format($item->item_price, 0) }}
+                                            </td>
+
+                                            <td>
+                                                -
+                                                @if ($item->fuel == 1)
+                                                    BBM,
+                                                @endif
+                                                @if ($item->toll == 1)
+                                                    Toll,
+                                                @endif
+                                                @if ($item->parking == 1)
+                                                    Parkir,
+                                                @endif
+                                                @if ($item->meal == 1)
+                                                    Uang Makan,
+                                                @endif
+                                                @if ($item->lodging == 1)
+                                                    Uang Inap,
+                                                @endif
+                                                @if ($item->pickup_charge == 1)
+                                                    Penjemputan Pagi,
+                                                @endif
+
                                             </td>
 
                                             <td>
@@ -114,7 +153,7 @@
                                                     Rp. {{ number_format($item->overtime) }}
                                                 @endif
                                             </td>
-                                            <td>{{ $item->pickup_address }} </td>
+
                                             <td style="text-align: right">
 
                                                 Rp. {{ number_format($item->price, 0) }}</td>
@@ -169,11 +208,27 @@
                     </div><!-- /.row -->
                     <div class="row">
                         <div class="col-md-7">
-                            <div style="font-size:10px;">
+                            <span class="fw-bold"> Alamat Penjemputan :</span>
+                            <ul>
+                                @foreach ($pickups as $pickup)
+                                    <li>
+                                        <b>{{ date('d M Y', strtotime($pickup->start_date)) }}</b> -
+                                        {{ $pickup->pickup_address }}
+                                    </li>
+                                @endforeach
+                            </ul>
+
+
+
+                            <div style="font-size:13px;">
                                 <span class="fw-bold"> Syarat Ketentuan :</span>
                                 <ul>
-                                    <li>Harga belum termasuk biaya BBM, Uang Makan Driver, Tol dan parkir </li>
-                                    <li>Harga di atas tidak berlaku untuk hari raya ( Lebaran )</li>
+                                    <li>
+                                        Harga belum termasuk biaya BBM, Uang Makan Driver, Tol dan parkir <b>(Kecuali Paket
+                                            All
+                                            in atau Lihat keterangan Order)</b>
+
+                                    </li>
                                     <li>Dalam Kota (Jakarta, Tanggerang, Bekasi, Bogor,Depok)</li>
                                     <li>24 JAM DIHITUNG DARI JAM 08.00 S/D 08.00 BERIKUTNYA</li>
                                     <li>OVER TIME 10%/ jam DARI HARGA SEWA</li>
@@ -182,15 +237,30 @@
                                         /hari
                                         dan
                                         minimal 2 hari</li>
-                                    <li>Penjemputan Paling pagi jam 05:00 WIB </li>
+                                    <li>Penjemputan Paling pagi jam 05:00 WIB apabila penjemputan sebelum jam tersebut akan
+                                        dikenakan biaya charge sebesar Rp. 100.000 </li>
                                     <li>Pembatalan Pada hari H dikenakan biaya cancel 100% dari harga sewa </li>
                                     <li>DP yang sudah masuk tidak dapat di kembalikan, jika cancel Order</li>
                                     <li>Harga Sewa dapat berubah sewaktu-waktu tanpa pemberitahuan</li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3 mt-5" style="text-align:center">
+                            <h5> Hormat Kami</h5>
 
+                            <img src="{{ $rental->signature_url }}" style="width: 30%">
+
+                            <div style="">
+                                <b> {{ $rental->pic_name }}</b>
+                            </div>
+                            <div style="margin-top:3px;">
+                                Pembayaran Transfer melalui Rekening : <br>
+                                @foreach ($banks as $bank)
+                                    <b>{{ $bank->bank_name }} {{ $bank->bank_number }}</b>
+                                    {{ $bank->bank_account }}<br>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -205,6 +275,9 @@
                 <div class="col-xs-12">
                     <a href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-primary"> <i
                             class='bx bx-printer'></i> Print</a>
+                    <a href="{{ url('admin/orders/download/' . $order->id) }}" class="btn btn-danger text-white">
+                        <i class='bx bxs-file-pdf'></i> Download Pdf
+                    </a>
 
 
 

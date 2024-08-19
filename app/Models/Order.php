@@ -20,4 +20,8 @@ class Order extends Model
         // return $this->belongsTo(Payment::class, 'order_id', 'id');
 
     }
+    public function orderCount()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

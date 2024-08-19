@@ -55,8 +55,9 @@ class OrderController extends Controller
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
             ->orderBy('id', 'desc')
+            ->with('orderCount')
             ->paginate(10);
-        // return $orders;
+        // return $orders->orderCount;
         return view('admin.orders.index', compact('orders', 'customers', 'rentals', 'partners'));
     }
     public function create()
@@ -70,6 +71,7 @@ class OrderController extends Controller
         $validated = $request->validate([
             'customer_id' => 'required',
             'date' => 'required',
+            'start_date' => 'required',
         ]);
         $user_id = Auth::user()->id;
         $code = random_int(100000, 999999);
@@ -80,6 +82,7 @@ class OrderController extends Controller
         $order->rental_id = $request['rental_id'];
         $order->partner_id = $request['partner_id'];
         $order->order_date = $validated['date'];
+        $order->start_date = $validated['start_date'];
         $order->order_code = $code;
 
         $order->save();

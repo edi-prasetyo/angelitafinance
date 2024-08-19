@@ -21,3 +21,5 @@ Rincian Update Aplikasi
     -   Add filed fuel,toll,parking,meal,lodging, pickup_charge in "Order_details"
     -   Add filed rental_id in "orders"
     -   Add filed partner_id in "orders"
+-   Update 19 Agustus 2024
+    -   Add Field start_date in table "orders"

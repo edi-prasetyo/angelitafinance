@@ -47,9 +47,20 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label">Tanggal </label>
-                            <input id="datepicker_one" autocomplete="off" type="text" name="date"
-                                class="form-field__input form-control">
+                            <label class="form-label">Tanggal Pesanan</label>
+                            <div class="input-group mb-3 input-daterange">
+                                <span class="input-group-text" id="basic-addon1"><i class="bx bx-calendar"></i> </span>
+                                <input autocomplete="off" type="text" name="date"
+                                    class="form-field__input form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Tanggal Mulai</label>
+                            <div class="input-group mb-3 input-daterange">
+                                <span class="input-group-text" id="basic-addon1"><i class="bx bx-calendar"></i> </span>
+                                <input autocomplete="off" type="text" name="start_date"
+                                    class="form-field__input form-control">
+                            </div>
                         </div>
                         <div class="col-md-1">
                             <div class="d-grid gap-2">
@@ -94,6 +105,7 @@
                             <th scope="col">Order Date</th>
                             <th scope="col">Customer</th>
                             <th scope="col">Rental</th>
+                            <th scope="col">Order</th>
                             <th scope="col">Bill</th>
                             <th scope="col">Amount</th>
 
@@ -106,9 +118,17 @@
                         @forelse ($orders as $i=> $item)
                             <tr>
                                 <td>{{ $i + 1 }}</td>
-                                <td>{{ $item->order_date }}</td>
+                                <td>{{ date('d-m-Y', strtotime($item->order_date)) }}</td>
                                 <td>{{ $item->customer_name }}</td>
                                 <td>{{ $item->rental_name }}</td>
+                                <td>{{ count($item->orderCount) }}
+
+                                    @if (count($item->orderCount) < 2)
+                                        day
+                                    @else
+                                        days
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($item->bill > 0)
                                         <span class="text-danger fw-bold"> Rp. {{ number_format($item->bill) }}</span>
@@ -117,6 +137,7 @@
                                     @endif
 
                                 </td>
+
                                 <td>
 
                                     {{ number_format($item->amount_sum) }}
@@ -239,21 +260,46 @@
             placeholder: $(this).data('placeholder'),
         });
 
-        const firstCalendar = MCDatepicker.create({
-            el: '#datepicker_one',
-            theme: {
-                display: {
-                    foreground: 'rgba(255, 255, 255, 0.8)',
-                    background: '#38ada9'
-                }
-            },
-            dateFormat: 'yyyy-mm-dd',
-            customWeekDays: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-            customMonths: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
-                'Oktober', 'November', 'Desember'
-            ],
+        $('.input-daterange input').each(function() {
+            $(this).datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+
+            });
+        });
+
+        // const firstCalendar = MCDatepicker.create({
+        //     el: '#datepicker_one',
+        //     theme: {
+        //         display: {
+        //             foreground: 'rgba(255, 255, 255, 0.8)',
+        //             background: '#38ada9'
+        //         }
+        //     },
+        //     dateFormat: 'yyyy-mm-dd',
+        //     customWeekDays: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+        //     customMonths: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+        //         'Oktober', 'November', 'Desember'
+        //     ],
 
 
-        })
+        // })
+        // const firstCalendar = MCDatepicker.create({
+        //     el: '#datepicker_two',
+        //     theme: {
+        //         display: {
+        //             foreground: 'rgba(255, 255, 255, 0.8)',
+        //             background: '#38ada9'
+        //         }
+        //     },
+        //     dateFormat: 'yyyy-mm-dd',
+        //     customWeekDays: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+        //     customMonths: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+        //         'Oktober', 'November', 'Desember'
+        //     ],
+
+
+        // })
     </script>
 @endsection

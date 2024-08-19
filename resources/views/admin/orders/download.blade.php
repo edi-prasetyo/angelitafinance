@@ -110,12 +110,10 @@
         <tbody>
             <tr>
                 <td>
-                    {{-- <img src="./uploads/images/{{ $rental->logo }} " /> --}}
-                    {{-- <img style="width: 30%" src="{{ $rental->logo_url }}" /> --}}
-                    {{-- <img src="{{ $logo }}" alt="{{ $logo }}"> --}}
-                    {{-- <img style="width: 30%" src="https://bengkelonline.com/uploads/logo/1699522071.png" /> --}}
 
-                    <img src="{{ public_path($rental->logo) }}" style="width: 30%">
+                    <img style="width: 30%" src="{{ $rental->logo_url }}" />
+
+                    {{-- <img src="{{ public_path($rental->logo) }}" style="width: 30%">  --}}
                 </td>
                 <td style="float:right;text-align-right">
                     @php
@@ -354,8 +352,8 @@
                         </td>
                         <td width="40%" style="text-align:center">
                             <h5> Hormat Kami</h5>
-
-                            <img src="{{ public_path($rental->signature) }}" style="width: 30%">
+                            <img style="width: 30%" src="{{ $rental->signature_url }}" />
+                            {{-- <img src="{{ public_path($rental->signature) }}" style="width: 30%"> --}}
 
                             <div style="">
                                 <b> {{ $rental->pic_name }}</b>

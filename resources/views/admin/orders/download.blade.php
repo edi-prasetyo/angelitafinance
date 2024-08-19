@@ -353,7 +353,8 @@
                         <td width="40%" style="text-align:center">
                             <h5> Hormat Kami</h5>
                             {{-- <img style="width: 30%" src="{{ $rental->signature_url }}" /> --}}
-                            <img src="{{ public_path($rental->signature) }}" style="width: 30%">
+                            <img src="{{ public_path($rental->signature) }}"
+                                alt="{{ public_path($rental->signature) }}" style="width: 30%">
 
                             <div style="">
                                 <b> {{ $rental->pic_name }}</b>

@@ -111,7 +111,7 @@
             <tr>
                 <td>
 
-                    <img style="width: 30%" src="{{ $rental->logo_url }}" />
+                    <img style="width: 30%" src="{{ $rental->logo_url }}" alt="{{ $rental->logo_url }}" />
 
                     {{-- <img src="{{ public_path($rental->logo) }}" style="width: 30%">  --}}
                 </td>

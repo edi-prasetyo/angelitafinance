@@ -113,7 +113,7 @@
 
                     {{-- <img style="width: 30%" src="{{ $rental->logo_url }}" alt="{{ $rental->logo_url }}" /> --}}
 
-                    <img src="{{ base_path($rental->logo) }}" alt="{{ base_path($rental->logo) }}" style="width: 30%">
+                    <img src="{{ public_path($rental->logo) }}" alt="{{ public_path($rental->logo) }}" style="width: 30%">
                 </td>
                 <td style="float:right;text-align-right">
                     @php

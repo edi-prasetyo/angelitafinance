@@ -42,6 +42,7 @@ return [
         'blendingColor' => 'ffffff',
     ],
 
+    'public_path' => public_path(),
     /*
     |--------------------------------------------------------------------------
     | Application Name

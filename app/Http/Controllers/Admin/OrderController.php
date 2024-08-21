@@ -365,6 +365,7 @@ class OrderController extends Controller
         $payment->order_id = $request['order_id'];
         $payment->payment_date = $validated['payment_date'];
         $payment->payment_type = $validated['payment_type'];
+        $payment->payment_method = $request['payment_method'];
         $payment->amount = $validated['amount'];
 
         if ($request->hasFile('image')) {

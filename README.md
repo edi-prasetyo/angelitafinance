@@ -23,3 +23,4 @@ Rincian Update Aplikasi
     -   Add filed partner_id in "orders"
 -   Update 19 Agustus 2024
     -   Add Field start_date in table "orders"
+    -   Add Field payment_method in table "payments"

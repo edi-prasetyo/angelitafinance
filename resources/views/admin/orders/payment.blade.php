@@ -47,16 +47,22 @@
                         @csrf
                         <div class="row">
                             <input type="hidden" name="order_id" value="{{ $order->id }}">
-                            <div class="col-md-3">
-                                <label class="form-label">Tanggal Bayar</label>
-                                <input id="datepicker_one" autocomplete="off" type="text"
-                                    class="form-field__input form-control" name="payment_date">
+                            <div class="col-md-6">
+                                <label class="form-label">Tanggal Mulai</label>
+                                <div class="input-group date">
+                                    <input id="datepicker" type="text" autocomplete="off" name="payment_date"
+                                        class="form-control" value="{{ old('payment_date') }}"
+                                        data-date-format="yyyy-mm-dd">
+                                    <div class="input-group-text">
+                                        <span class="bx bx-calendar"></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label class="form-label">Jumlah Bayar</label>
                                 <input autocomplete="off" type="text" name="amount" class="form-control">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label class="form-label">Pilih Pembayaran</label>
                                 <select class="form-select" name="payment_type" id="single-select-field"
                                     data-placeholder="Pilih Pembayaran">
@@ -67,7 +73,17 @@
 
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Metode Pembayaran</label>
+                                <select class="form-select" name="payment_method" id="single-select-field2"
+                                    data-placeholder="Metode Pembayaran">
+                                    <option></option>
+                                    <option value="cash">Cash</option>
+                                    <option value="transfer">Transfer</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-4">
                                 <label class="form-label">Bukti Bayar</label>
                                 <input autocomplete="off" type="file" name="image" class="form-control">
                             </div>
@@ -150,22 +166,15 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
         });
+        $('#single-select-field2').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+        });
 
-        const firstCalendar = MCDatepicker.create({
-            el: '#datepicker_one',
-            theme: {
-                display: {
-                    foreground: 'rgba(255, 255, 255, 0.8)',
-                    background: '#38ada9'
-                }
-            },
-            dateFormat: 'yyyy-mm-dd',
-            customWeekDays: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-            customMonths: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
-                'Oktober', 'November', 'Desember'
-            ],
-
-
-        })
+        $('#datepicker').datepicker({
+            todayHighlight: true,
+            autoclose: true
+        });
     </script>
 @endsection

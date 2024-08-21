@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\RentalController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\TransactionController;
@@ -191,6 +192,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/orders/download/{order_id}', 'download')->name('download');
     });
 
+    // Reports Route
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/reports', 'index');
+    });
     // Schedule Route
     Route::controller(ScheduleController::class)->group(function () {
         Route::get('/schedules', 'index');

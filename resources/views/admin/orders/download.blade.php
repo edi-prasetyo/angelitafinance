@@ -335,10 +335,7 @@
                                     <li>OVER TIME 10%/ jam DARI HARGA SEWA</li>
                                     <li>Luar kota (Puncak, Bandung, Banten, Jawa Barat)</li>
                                     <li>Luar kota Plus : Garut, Tasikmalaya, cirebon, Jawa tengah, lampung tambah Rp.
-                                        50.000,-
-                                        /hari
-                                        dan
-                                        minimal 2 hari</li>
+                                        50.000,- /hari dan minimal 2 hari</li>
                                     <li>Penjemputan Paling pagi jam 05:00 WIB apabila penjemputan sebelum jam tersebut
                                         akan
                                         dikenakan biaya charge sebesar Rp. 100.000 </li>

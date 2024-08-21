@@ -35,12 +35,13 @@ class ReportController extends Controller
         )->get();
 
         $order_this_month = OrderItem::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->get();
+        $all_orders = OrderItem::all();
 
         // return $order_last_month;
         // return $orders;
         $get_total = $orders->sum('bill');
         $get_price = $orders->sum('amount_sum');
-        return view('admin.reports.index', compact('orders', 'get_total', 'get_price', 'order_today', 'order_yesterday', 'order_tomorow', 'order_last_month', 'order_this_month'));
+        return view('admin.reports.index', compact('orders', 'all_orders', 'get_total', 'get_price', 'order_today', 'order_yesterday', 'order_tomorow', 'order_last_month', 'order_this_month'));
     }
     public function sales()
     {

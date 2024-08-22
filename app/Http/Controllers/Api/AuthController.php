@@ -51,8 +51,19 @@ class AuthController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return response()->json(
-            $user
-        );
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'data' => $user
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ]);
+        }
+        // return response()->json(
+        //     $user
+        // );
     }
 }

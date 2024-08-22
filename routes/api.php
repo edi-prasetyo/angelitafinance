@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Models\Transaction;
 use App\Models\User;
@@ -32,7 +33,9 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
-    Route::resource('/transaction', TransactionController::class);
+    Route::get('/transactions', [TransactionController::class, 'index']);
+    Route::get('/transactions/all', [TransactionController::class, 'get_orders']);
+    Route::get('/customers', [CustomerController::class, 'index']);
 });
 
 // Test Response Sanctum Api

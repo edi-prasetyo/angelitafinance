@@ -12,4 +12,9 @@ class Customer extends Model
     protected $table = ('customers');
 
     protected $fillable = [];
+
+    public function appOrder()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

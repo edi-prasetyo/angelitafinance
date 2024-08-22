@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 // use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +20,36 @@ class TransactionController extends Controller
     public function index()
     {
 
+        $amountSum = OrderItem::selectRaw('sum(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+
         $orders = Order::orderBy('id', 'asc')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->select('orders.*', 'customers.full_name as customer_name')
-            ->get();
+            ->selectSub($amountSum, 'amount_sum')
+            ->withCount('appOrder')
+            ->with('appOrderItem')
+            ->paginate(10);
 
+        if ($orders) {
+            return response()->json([
+                'success' => true,
+                'data' => $orders
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ]);
+        }
+    }
+    public function get_orders()
+    {
+        $orders = OrderItem::all();
+        $count_orders = count($orders);
         return response()->json(
-            $orders,
+            $count_orders,
         );
     }
 

@@ -82,7 +82,19 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+        $order_items = OrderItem::where('customer_id', $id)->get();
+
+        if ($order_items) {
+            return response()->json([
+                'success' => true,
+                'data' => $order_items
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ]);
+        }
     }
 
     /**
@@ -91,10 +103,7 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    public function edit($id) {}
 
     /**
      * Update the specified resource in storage.

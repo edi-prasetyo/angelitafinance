@@ -24,3 +24,6 @@ Rincian Update Aplikasi
 -   Update 19 Agustus 2024
     -   Add Field start_date in table "orders"
     -   Add Field payment_method in table "payments"
+-   Update 23 Agustus 2024
+    -   Add Field cancel in table "orders"
+    -   Add Field status and cancel in table "orders dan order_items"

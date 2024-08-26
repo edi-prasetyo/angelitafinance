@@ -32,7 +32,7 @@ class OrderController extends Controller
     {
         $this->middleware(['permission:order-list|order-create|order-edit|order-delete'], ['only' => ['index', 'store']]);
         $this->middleware(['permission:order-create'], ['only' => ['create', 'store', 'add_order_item', 'store_order_item', 'add_payment']]);
-        $this->middleware(['permission:order-edit'], ['only' => ['edit', 'update', 'edit_item', 'update_item', 'destroy_item']]);
+        $this->middleware(['permission:order-edit'], ['only' => ['edit', 'update', 'edit_item', 'update_item', 'destroy_item', 'trash', 'cancel']]);
         $this->middleware(['permission:order-delete'], ['only' => ['destroy']]);
     }
     /**
@@ -51,6 +51,7 @@ class OrderController extends Controller
             ->getQuery();
 
         $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+            ->where(['orders.status' => 1])
             ->selectSub($amountSum, 'amount_sum')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
@@ -58,6 +59,9 @@ class OrderController extends Controller
             ->with('orderCount')
             ->paginate(10);
         // return $orders->orderCount;
+        $title = 'Delete Order!';
+        $text = "Anda Yakin ingin menghapus data ini?";
+        confirmDelete($title, $text);
         return view('admin.orders.index', compact('orders', 'customers', 'rentals', 'partners'));
     }
     public function create()
@@ -84,6 +88,8 @@ class OrderController extends Controller
         $order->order_date = $validated['date'];
         $order->start_date = $validated['start_date'];
         $order->order_code = $code;
+        $order->status = 1;
+        $order->cancel = 1;
 
         $order->save();
         $id = $order->id;
@@ -146,6 +152,38 @@ class OrderController extends Controller
         return $pdf->download(str_pad($order->id, 6, '0', STR_PAD_LEFT) . '.pdf');
 
         // return view('admin.orders.download', $data);
+    }
+    public function cancel($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $order->cancel = 0;
+        $order->update();
+
+        $order_items = OrderItem::where('order_id', $order->id)->get();
+        foreach ($order_items as $item) {
+
+            $item->cancel = 0;
+            $item->update();
+        }
+
+        Alert::success('Order', 'Berhasil Dicancel');
+        return redirect()->back();
+    }
+    public function trash($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $order->status = 0;
+        $order->update();
+
+        $order_items_status = OrderItem::where('order_id', $order->id)->get();
+        foreach ($order_items_status as $item_status) {
+
+            $item_status->status = 0;
+            $item_status->update();
+        }
+
+        Alert::success('Order', 'Berhasil Di Pindahkan ke sampah');
+        return redirect()->back();
     }
     public function destroy($id)
     {

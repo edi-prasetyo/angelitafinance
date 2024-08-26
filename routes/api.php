@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::get('/transactions', [TransactionController::class, 'index']);
     Route::get('/transactions/all', [TransactionController::class, 'get_orders']);
+    Route::get('/transactions/{id}', [TransactionController::class, 'show']);
     Route::get('/customers', [CustomerController::class, 'index']);
 });
 

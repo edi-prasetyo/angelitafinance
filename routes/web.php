@@ -175,6 +175,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/orders/create', 'create');
         Route::post('/orders', 'store');
         Route::get('/orders/detail/{id}', 'show')->name('show');
+        Route::get('/orders/cancel/{id}', 'cancel')->name('cancel');
+        Route::get('/orders/trash/{id}', 'trash')->name('trash');
         Route::get('/orders/delete/{id}', 'destroy')->name('destroy');
         Route::get('/orders/create/order_item/{id}', 'add_order_item')->name('add_order_item');
         Route::post('/orders/create/store_order_item/', 'store_order_item')->name('store_order_item');

@@ -19,6 +19,7 @@ class ReportController extends Controller
             ->getQuery();
 
         $orders = Order::orderBy('order_date', 'DESC')
+            ->where(['orders.cancel' => 1, 'status' => 1])
             ->with('payments')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->select('orders.*', 'customers.full_name as customer_name')

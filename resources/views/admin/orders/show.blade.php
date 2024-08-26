@@ -110,6 +110,11 @@
                                                     <i class='bx bx-chevrons-right me-2 ms-2'></i> <i
                                                         class="bx bx-timer"></i> {{ $item->departure_time }}
                                                 @endif
+
+                                                @if ($item->cancel <= 0)
+                                                    <span class="badge bg-label-danger px-2">Cancel</span>
+                                                @else
+                                                @endif
                                             </td>
 
                                             <td>{{ date('d M Y', strtotime($item->end_date)) }} - {{ $item->end_time }}
@@ -118,11 +123,12 @@
                                                     <i class='bx bx-chevrons-right me-2 ms-2'></i> <i
                                                         class="bx bx-timer"></i> {{ $item->arrival_time }}
                                                 @endif
+
+
                                             </td>
                                             <td>
                                                 Rp. {{ number_format($item->item_price, 0) }}
                                             </td>
-
                                             <td>
                                                 -
                                                 @if ($item->fuel == 1)
@@ -263,10 +269,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <!-- this row will not appear when printing -->
-
                 </div>
 
             </div>

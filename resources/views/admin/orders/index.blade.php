@@ -147,6 +147,11 @@
 
 
                                 <td>
+                                    @if ($item->cancel <= 0)
+                                        <span class="badge bg-label-danger px-2">Cancel</span>
+                                    @else
+                                        {{-- <span class="badge bg-label-danger px-2">Unpaid</span> --}}
+                                    @endif
                                     @if ($item->bill <= 0)
                                         <span class="badge bg-label-success px-2">Paid</span>
                                     @else
@@ -158,6 +163,10 @@
                                     @hasrole('superadmin|finance')
                                         <a href="{{ url('admin/orders/payment/' . $item->id) }}"
                                             class="btn btn-sm btn-primary text-white">Pay</a>
+                                        <a href="{{ url('admin/orders/cancel/' . $item->id) }}"
+                                            class="btn btn-sm btn-danger text-white">Cancel</a>
+                                        <a href="{{ url('admin/orders/trash/' . $item->id) }}"
+                                            class="btn btn-sm btn-danger text-white">Hapus</a>
                                     @endhasrole
                                     <a href="{{ url('admin/orders/detail/' . $item->id) }}"
                                         class="btn btn-sm btn-info text-white">Detail</a>

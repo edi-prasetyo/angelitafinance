@@ -10,6 +10,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
+
         $customers = Customer::orderBy('id', 'asc')
             ->withCount('appOrder')
             ->paginate(10);

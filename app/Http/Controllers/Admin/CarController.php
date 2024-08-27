@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Car;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CarController extends Controller
 {
@@ -44,7 +45,8 @@ class CarController extends Controller
         $car->status = $request->status == true ? '1' : '0';
 
         $car->save();
-        return redirect('admin/cars')->with('message', 'Car Has Added');
+        Alert::success('Mobil', 'Berhasil ditambahkan');
+        return redirect('admin/cars');
     }
     public function edit(Car $car)
     {
@@ -52,26 +54,27 @@ class CarController extends Controller
         $brands = Brand::all();
         return view('admin.cars.edit', compact('car', 'brands'));
     }
-    public function update(CarFormRequest $request, $car)
+    public function update(Request $request, $car)
     {
 
-        $validatedData = $request->validated();
+        // $validatedData = $request->validated();
         $car = Car::findOrFail($car);
 
         // $validCar = Rule::unique('cars', 'number')->ignore($car->id);
 
-        $car->name = $validatedData['name'];
-        $car->variant = $validatedData['variant'];
-        $car->number = Rule::unique('cars', 'number')->ignore($car->id);
-        $car->color = $validatedData['color'];
-        $car->seat = $validatedData['seat'];
-        $car->fuel = $validatedData['fuel'];
-        $car->transmision = $validatedData['transmision'];
-        $car->vehicle_certificate = $validatedData['vehicle_certificate'];
+        $car->name = $request['name'];
+        $car->variant = $request['variant'];
+        // $car->number = Rule::unique('cars', 'number')->ignore($car->id);
+        $car->color = $request['color'];
+        $car->seat = $request['seat'];
+        $car->fuel = $request['fuel'];
+        $car->transmision = $request['transmision'];
+        $car->vehicle_certificate = $request['vehicle_certificate'];
         $car->status = $request->status == true ? '1' : '0';
 
         $car->update();
-        return redirect('admin/cars')->with('message', 'Brand update Succesfully');
+        Alert::success('Mobil', 'Berhasil diubah');
+        return redirect('admin/cars');
     }
     public function destroy(int $car_id)
     {

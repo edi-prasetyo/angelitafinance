@@ -164,8 +164,28 @@
 
                                                 Rp. {{ number_format($item->price, 0) }}</td>
 
+
                                         </tr>
                                     @endforeach
+                                    <tr>
+
+
+                                        @hasrole('superadmin|finance')
+                                            <td colspan="5"
+                                                style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
+                                            </td>
+                                        @endhasrole
+                                        @hasrole('marketing')
+                                            <td colspan="4"
+                                                style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
+                                            </td>
+                                        @endhasrole
+
+                                        <td>Total Tagihan</td>
+                                        <td class="fw-bold" style="text-align: right;">
+                                            Rp.
+                                            {{ number_format($grand_total) }}</td>
+                                    </tr>
                                     @foreach ($payments as $pay)
                                         <tr>
 
@@ -201,7 +221,7 @@
                                                 style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
                                             </td>
                                         @endhasrole
-                                        <td>Grand Total</td>
+                                        <td>Sisa Tagihan</td>
                                         <td class="fw-bold" style="text-align: right;">
                                             Rp.
                                             {{ number_format($order->bill) }}</td>
@@ -219,7 +239,7 @@
                                 @foreach ($pickups as $pickup)
                                     <li>
                                         <b>{{ date('d M Y', strtotime($pickup->start_date)) }}</b> -
-                                        {{ $pickup->pickup_address }}
+                                        {{ $pickup->pickup_address }} - <b>Driver</b> : {{ $pickup->driver_name }}
                                     </li>
                                 @endforeach
                             </ul>
@@ -235,6 +255,7 @@
                                             in atau Lihat keterangan Order)</b>
 
                                     </li>
+                                    <li>Dilarang melakukan pemesanan sewa melalui driver</li>
                                     <li>Dalam Kota (Jakarta, Tanggerang, Bekasi, Bogor,Depok)</li>
                                     <li>24 JAM DIHITUNG DARI JAM 08.00 S/D 08.00 BERIKUTNYA</li>
                                     <li>OVER TIME 10%/ jam DARI HARGA SEWA</li>
@@ -262,10 +283,8 @@
                             </div>
                             <div style="margin-top:3px;">
                                 Pembayaran Transfer melalui Rekening : <br>
-                                @foreach ($banks as $bank)
-                                    <b>{{ $bank->bank_name }} {{ $bank->bank_number }}</b>
-                                    {{ $bank->bank_account }}<br>
-                                @endforeach
+                                {{ $rental->bank }} - <b> {{ $rental->number }} </b> <br>
+                                {{ $rental->account }}
                             </div>
                         </div>
                     </div>

@@ -104,12 +104,17 @@ class OrderController extends Controller
             ->select('orders.*', 'customers.full_name as customer_name')
             ->first();
         $order_items  = OrderItem::where('order_id', $id)->get();
-        $pickups  = OrderItem::where('order_id', $id)->get();
+        $pickups  = OrderItem::where('order_id', $id)
+            ->join('users', 'users.id', '=', 'order_items.driver_id')
+            ->select('order_items.*', 'users.name as driver_name')
+            ->get();
         $payments = Payment::where('order_id', $id)->get();
         $rental = Rental::where('id', $order->rental_id)->first();
         $banks = Bank::where('status', 1)->get();
+        $grand_total = OrderItem::where('order_id', $id)
+            ->sum('price');
         // return $rental;
-        return view('admin.orders.show', compact('order', 'order_items', 'payments', 'rental', 'banks', 'pickups'));
+        return view('admin.orders.show', compact('order', 'order_items', 'payments', 'rental', 'banks', 'pickups', 'grand_total'));
     }
     // Load Pdf
     public function download($order_id)

@@ -44,6 +44,9 @@ class RentalController extends Controller
         $rental->email = $request['email'];
         $rental->website = $request['website'];
         $rental->pic_name = $request['pic_name'];
+        $rental->bank = $request['bank'];
+        $rental->account = $request['account'];
+        $rental->number = $request['number'];
 
         $uploadPath = 'uploads/images/';
         if ($request->hasFile('logo')) {
@@ -90,6 +93,9 @@ class RentalController extends Controller
         $rental->email = $request['email'];
         $rental->website = $request['website'];
         $rental->pic_name = $request['pic_name'];
+        $rental->bank = $request['bank'];
+        $rental->account = $request['account'];
+        $rental->number = $request['number'];
 
         $uploadPath = 'uploads/images/';
         if ($request->hasFile('logo')) {

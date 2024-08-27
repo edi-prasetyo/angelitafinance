@@ -329,6 +329,7 @@
                                     <li>Harga belum termasuk biaya BBM, Uang Makan Driver, Tol dan parkir (Kecuali Paket
                                         All
                                         in atau lihat keterangan order) </li>
+                                    <li>Dilarang melakukan pemesanan sewa melalui driver</li>
                                     <li>Harga di atas tidak berlaku untuk hari raya ( Lebaran )</li>
                                     <li>Dalam Kota (Jakarta, Tanggerang, Bekasi, Bogor,Depok)</li>
                                     <li>24 JAM DIHITUNG DARI JAM 08.00 S/D 08.00 BERIKUTNYA</li>
@@ -358,10 +359,8 @@
                             </div>
                             <div style="margin-top:3px;">
                                 Pembayaran Transfer melalui Rekening : <br>
-                                @foreach ($banks as $bank)
-                                    <b>{{ $bank->bank_name }} {{ $bank->bank_number }}</b>
-                                    {{ $bank->bank_account }}<br>
-                                @endforeach
+                                {{ $rental->bank }} - <b> {{ $rental->number }} </b> <br>
+                                {{ $rental->account }}
                             </div>
                         </td>
                     </tr>

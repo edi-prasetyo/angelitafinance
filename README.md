@@ -27,3 +27,5 @@ Rincian Update Aplikasi
 -   Update 23 Agustus 2024
     -   Add Field cancel in table "orders"
     -   Add Field status and cancel in table "orders dan order_items"
+-   Update 27 Agustus 2024
+    -   Add Field bank, account, number in table "rentals"

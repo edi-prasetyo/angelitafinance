@@ -77,6 +77,38 @@
                                     </span>
                                 @enderror
                             </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Bank</label>
+                                <input type="text" name="bank" value="{{ $rental->bank }}"
+                                    class="form-control @error('bank') is-invalid @enderror">
+                                @error('bank')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Atas Nama</label>
+                                <input type="text" name="account" value="{{ $rental->account }}"
+                                    class="form-control @error('account') is-invalid @enderror">
+                                @error('account')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nomor Rekening</label>
+                                <input type="text" name="number" value="{{ $rental->number }}"
+                                    class="form-control @error('number') is-invalid @enderror">
+                                @error('number')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Alamat</label>

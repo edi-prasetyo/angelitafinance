@@ -163,17 +163,15 @@
                                     @hasrole('superadmin|finance')
                                         <a href="{{ url('admin/orders/payment/' . $item->id) }}"
                                             class="btn btn-sm btn-primary text-white">Pay</a>
-                                        <a href="{{ url('admin/orders/cancel/' . $item->id) }}"
-                                            class="btn btn-sm btn-danger text-white">Cancel</a>
-                                        <a href="{{ url('admin/orders/trash/' . $item->id) }}"
-                                            class="btn btn-sm btn-danger text-white">Hapus</a>
                                     @endhasrole
                                     <a href="{{ url('admin/orders/detail/' . $item->id) }}"
                                         class="btn btn-sm btn-info text-white">Detail</a>
 
                                     @role('Superadmin')
-                                        <a href="{{ url('admin/orders/delete/' . $item->id) }}"
-                                            class="btn btn-sm btn-danger text-white">delete</a>
+                                        <a href="{{ url('admin/orders/cancel/' . $item->id) }}"
+                                            class="btn btn-sm btn-danger text-white">Cancel</a>
+                                        <a href="{{ url('admin/orders/trash/' . $item->id) }}"
+                                            class="btn btn-sm btn-danger text-white">Hapus</a>
                                     @endrole
 
 

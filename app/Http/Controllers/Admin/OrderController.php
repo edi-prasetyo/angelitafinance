@@ -273,6 +273,8 @@ class OrderController extends Controller
         $order_item->meal = $request->meal == true ? '1' : '0';
         $order_item->lodging = $request->lodging == true ? '1' : '0';
         $order_item->pickup_charge = $request->pickup_charge == true ? '1' : '0';
+        $order_item->status = 1;
+        $order_item->cancel = 1;
 
         $order_item->save();
 

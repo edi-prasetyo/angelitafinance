@@ -45,10 +45,9 @@ return [
         // ],
 
         'disks' => [
-            'public' => [
+            'public_html' => [
                 'driver' => 'local',
-                'root' => '../public_html',
-                'url' => env('APP_URL'),
+                'root' => public_path(),
                 'visibility' => 'public',
             ],
 

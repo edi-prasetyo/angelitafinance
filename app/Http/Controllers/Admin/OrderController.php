@@ -419,7 +419,7 @@ class OrderController extends Controller
             $img = $manager->read($request->file('image'));
 
             $img = $img->scale(400);
-            $img->toJpeg()->save(base_path('public/uploads/images/' . $name_gen));
+            $img->toJpeg()->save(public_path('public/uploads/images/' . $name_gen));
             $save_url = $name_gen;
 
             $payment->image = $save_url;

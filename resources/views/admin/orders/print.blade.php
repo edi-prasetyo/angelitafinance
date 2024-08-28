@@ -6,17 +6,13 @@
     {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
     <title></title>
     <style>
-        @page {
+        @print {
+            @page :footer {
+                display: none
+            }
 
-            size: auto;
-            /* auto is the current printer page size */
-            margin: 0mm;
-            /* this affects the margin in the printer settings */
-        }
-
-        @media print {
-            #print {
-                display: none;
+            @page :header {
+                display: none
             }
         }
 

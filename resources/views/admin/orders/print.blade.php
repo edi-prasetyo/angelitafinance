@@ -6,6 +6,20 @@
     {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
     <title></title>
     <style>
+        @page {
+
+            size: auto;
+            /* auto is the current printer page size */
+            margin: 0mm;
+            /* this affects the margin in the printer settings */
+        }
+
+        @media print {
+            #print {
+                display: none;
+            }
+        }
+
         body {
             font-family: system-ui, system-ui, sans-serif;
             font-size: 25px;
@@ -342,8 +356,10 @@
 
         </div>
 
-        <a href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-primary"> <i
-                class='bx bx-printer'></i> Print</a>
+    </div>
+
+    <a href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-primary"> <i
+            class='bx bx-printer'></i> Print</a>
 
 </body>
 

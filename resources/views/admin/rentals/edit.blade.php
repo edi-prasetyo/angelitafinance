@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-warning">
+            @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        </div>
+    @endif
     @if (session('message'))
         <div class="alert alert-danger">
             {{ session('message') }}

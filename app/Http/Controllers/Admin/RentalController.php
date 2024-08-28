@@ -137,6 +137,20 @@ class RentalController extends Controller
             $rental->signature = $uploadPath . $filename;
             $rental->signature_url = URL::to('/uploads/images/' . $filename);
         }
+        $uploadPath = 'uploads/images/';
+        if ($request->hasFile('logo_black_url')) {
+
+            $path = 'uploads/images/' . $rental->signature;
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+
+            $file = $request->file('logo_black_url');
+            $ext = $file->getClientOriginalExtension();
+            $filename = 'logo_black_url' . time() . '.' . $ext;
+            $file->move('uploads/images/', $filename);
+            $rental->logo_black_url = URL::to('/uploads/images/' . $filename);
+        }
 
         $rental->status = $request->status == true ? '1' : '0';
 

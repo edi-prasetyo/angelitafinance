@@ -70,8 +70,8 @@
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
-            background-color: #60A5FA;
-            color: white;
+            background-color: #ffffff;
+            color: black;
         }
 
         #signature td,

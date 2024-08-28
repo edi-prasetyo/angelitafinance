@@ -184,6 +184,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('/orders/update_item/{order_item_id}', 'update_item')->name('update_item');
         Route::get('/orders/delete_item/{order_item_id}', 'destroy_item')->name('destroy_item');
 
+        Route::get('/orders/paid', 'paid');
+        Route::get('/orders/cancel', 'order_cancel');
+
 
         Route::get('/orders/payment/{order_id}', 'payment')->name('payment');
         Route::post('/orders/payment/add_payment', 'add_payment')->name('add_payment');
@@ -192,6 +195,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/orders/sales_items/', 'sales_item')->name('sales_item');
 
         Route::get('/orders/download/{order_id}', 'download')->name('download');
+        Route::get('/orders/print/{order_id}', 'print')->name('print');
     });
 
     // Reports Route

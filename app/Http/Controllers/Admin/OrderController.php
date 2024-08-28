@@ -21,6 +21,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 
 use Intervention\Image\ImageManager;
@@ -43,6 +44,7 @@ class OrderController extends Controller
     public function index()
     {
         $customers = Customer::all();
+        $customers2 = Customer::all();
         $rentals = Rental::all();
         $partners = Partner::all();
         // $payments = Payment::all();
@@ -51,7 +53,8 @@ class OrderController extends Controller
             ->getQuery();
 
         $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
-            ->where(['orders.status' => 1])
+            ->where(['orders.status' => 1, 'orders.cancel' => 1])
+            ->where('bill', '>', 0)
             ->selectSub($amountSum, 'amount_sum')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
@@ -62,8 +65,88 @@ class OrderController extends Controller
         $title = 'Delete Order!';
         $text = "Anda Yakin ingin menghapus data ini?";
         confirmDelete($title, $text);
-        return view('admin.orders.index', compact('orders', 'customers', 'rentals', 'partners'));
+        return view('admin.orders.index', compact('orders', 'customers', 'customers2', 'rentals', 'partners'));
     }
+
+    public function unpaid()
+    {
+        $customers = Customer::all();
+        $rentals = Rental::all();
+        $partners = Partner::all();
+        // $payments = Payment::all();
+        $amountSum = OrderItem::selectRaw('sum(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+
+        $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+            ->where(['orders.status' => 1, 'orders.cancel' => 1])
+            ->where('bill', '>', 0)
+            ->selectSub($amountSum, 'amount_sum')
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+            ->orderBy('id', 'desc')
+            ->with('orderCount')
+            ->paginate(10);
+        // return $orders->orderCount;
+        $title = 'Delete Order!';
+        $text = "Anda Yakin ingin menghapus data ini?";
+        confirmDelete($title, $text);
+        return view('admin.orders.unpaid', compact('orders', 'customers', 'rentals', 'partners'));
+    }
+
+    public function paid()
+    {
+        $customers = Customer::all();
+        $rentals = Rental::all();
+        $partners = Partner::all();
+        // $payments = Payment::all();
+        $amountSum = OrderItem::selectRaw('sum(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+
+        $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+            ->where(['orders.status' => 1, 'orders.cancel' => 1])
+            ->where('bill', '=', 0)
+            ->selectSub($amountSum, 'amount_sum')
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+            ->orderBy('id', 'desc')
+            ->with('orderCount')
+            ->paginate(10);
+        // return $orders->orderCount;
+        $title = 'Delete Order!';
+        $text = "Anda Yakin ingin menghapus data ini?";
+        confirmDelete($title, $text);
+
+        return view('admin.orders.paid', compact('orders', 'customers', 'rentals', 'partners'));
+    }
+    public function order_cancel()
+    {
+        $customers = Customer::all();
+        $rentals = Rental::all();
+        $partners = Partner::all();
+        // $payments = Payment::all();
+        $amountSum = OrderItem::selectRaw('sum(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+
+        $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+            ->where(['orders.status' => 1, 'orders.cancel' => 0])
+            ->where('bill', '=', 0)
+            ->selectSub($amountSum, 'amount_sum')
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+            ->orderBy('id', 'desc')
+            ->with('orderCount')
+            ->paginate(10);
+        // return $orders->orderCount;
+        $title = 'Delete Order!';
+        $text = "Anda Yakin ingin menghapus data ini?";
+        confirmDelete($title, $text);
+
+        return view('admin.orders.cancel', compact('orders', 'customers', 'rentals', 'partners'));
+    }
+
     public function create()
     {
         $customers = Customer::all();
@@ -103,7 +186,12 @@ class OrderController extends Controller
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->select('orders.*', 'customers.full_name as customer_name')
             ->first();
-        $order_items  = OrderItem::where('order_id', $id)->get();
+        $order_items  = OrderItem::where('order_id', $id)
+            ->join('cars', 'cars.id', '=', 'order_items.car_id')
+            ->join('packages', 'packages.id', '=', 'order_items.package_id')
+            ->select('order_items.*', 'cars.name as car_name', 'packages.name as package_name')
+            ->get();
+
         $pickups  = OrderItem::where('order_id', $id)
             ->join('users', 'users.id', '=', 'order_items.driver_id')
             ->select('order_items.*', 'users.name as driver_name')
@@ -116,6 +204,8 @@ class OrderController extends Controller
         // return $rental;
         return view('admin.orders.show', compact('order', 'order_items', 'payments', 'rental', 'banks', 'pickups', 'grand_total'));
     }
+
+
     // Load Pdf
     public function download($order_id)
     {
@@ -124,6 +214,9 @@ class OrderController extends Controller
             ->select('orders.*', 'customers.full_name as customer_name')
             ->first();
         $order_items = OrderItem::where('order_id', $order_id)
+            ->join('cars', 'cars.id', '=', 'order_items.car_id')
+            ->join('packages', 'packages.id', '=', 'order_items.package_id')
+            ->select('order_items.*', 'cars.name as car_name', 'packages.name as package_name')
             ->get();
         $pickups = OrderItem::where('order_id', $order_id)
             ->get();
@@ -153,11 +246,53 @@ class OrderController extends Controller
         // return $data;
         // $customPaper = [0, 0, 567.00, 500.80];
 
-        $pdf = Pdf::loadView('admin.orders.download', $data)->setPaper('a4', 'landscape');
+        $pdf = Pdf::loadView('admin.orders.download', $data)->setPaper('letter', 'portrait');
         return $pdf->download(str_pad($order->id, 6, '0', STR_PAD_LEFT) . '.pdf');
 
         // return view('admin.orders.download', $data);
+        // return view('admin.orders.downloadtest', $data);
     }
+    // Print 
+    public function print($order_id)
+    {
+        $order = Order::where('orders.id', $order_id)
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->select('orders.*', 'customers.full_name as customer_name')
+            ->first();
+        $order_items = OrderItem::where('order_id', $order_id)
+            ->join('cars', 'cars.id', '=', 'order_items.car_id')
+            ->join('packages', 'packages.id', '=', 'order_items.package_id')
+            ->select('order_items.*', 'cars.name as car_name', 'packages.name as package_name')
+            ->get();
+        $pickups = OrderItem::where('order_id', $order_id)
+            ->get();
+        $grand_total = OrderItem::where('order_id', $order_id)
+            ->sum('price');
+        // return $grand_total;
+        $rental = Rental::where('id', $order->rental_id)->first();
+        // $logo = base64_encode(file_get_contents(public_path($rental->logo)));
+        $payments = Payment::where('order_id', $order_id)->get();
+        $banks = Bank::where('status', 1)->get();
+
+
+        $data = [
+            'title' => 'Rental',
+            'date' => date('m/d/Y'),
+            'order' => $order,
+            'order_items' => $order_items,
+            'rental' => $rental,
+            // 'logo' => $logo,
+            'payments' => $payments,
+            'grand_total' => $grand_total,
+            'banks' => $banks,
+            'pickups' => $pickups
+
+        ];
+
+
+        return view('admin.orders.print', $data);
+    }
+
     public function cancel($id)
     {
         $order = Order::where('id', $id)->first();

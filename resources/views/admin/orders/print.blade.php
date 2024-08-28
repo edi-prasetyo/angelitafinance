@@ -290,11 +290,11 @@
                     <tbody>
 
                         <tr>
-                            <td width="60%" style="font-size:15px;">
+                            <td width="60%" style="font-size:20px;">
                                 <span class="fw-bold"> Alamat Penjemputan :</span>
                                 <ul>
                                     @foreach ($pickups as $pickup)
-                                        <li style="font-size:15px;">
+                                        <li style="font-size:20px;">
                                             <b>{{ date('d M Y', strtotime($pickup->start_date)) }}</b> -
                                             {{ $pickup->pickup_address }}
                                         </li>
@@ -302,7 +302,7 @@
                                 </ul>
 
 
-                                <div style="font-size:15px;">
+                                <div style="font-size:20px;">
                                     <span class="fw-bold"> Syarat Ketentuan :</span>
                                     <ul>
                                         <li>Harga belum termasuk biaya BBM, Uang Makan Driver, Tol dan parkir (Kecuali
@@ -334,12 +334,12 @@
                                 <h5> Hormat Kami</h5>
                                 {{-- <img style="width: 30%" src="{{ $rental->signature_url }}" /> --}}
                                 <img src="{{ $rental->signature_url }}" alt="{{ public_path($rental->signature) }}"
-                                    style="width: 20%">
+                                    style="width: 15%">
 
                                 <div style="">
                                     <b> {{ $rental->pic_name }}</b>
                                 </div>
-                                <div style="margin-top:3px;">
+                                <div style="margin-top:3px;font-size:30px">
                                     Pembayaran Transfer melalui Rekening : <br>
                                     {{ $rental->bank }} - <b> {{ $rental->number }} </b> <br>
                                     {{ $rental->account }}

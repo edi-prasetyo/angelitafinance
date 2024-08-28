@@ -18,20 +18,20 @@
 
         body {
             font-family: system-ui, system-ui, sans-serif;
-            font-size: 25px;
+            font-size: 30px;
             color: #000;
             font-weight: bold;
         }
 
         table {
             border-spacing: 0;
-            /* font-size: 30px; */
+            /* font-size: 35px; */
         }
 
         table td,
         table th,
         p {
-            /* font-size: 30px !important; */
+            /* font-size: 35px !important; */
         }
 
         img {
@@ -180,10 +180,10 @@
                 <thead>
                     <tr>
 
-                        <th class="fw-bold" style="font-size:30px;color:#000">Keterangan</th>
-                        <th class="fw-bold" style="font-size: 30px;color:#000">Tgl Mulai</th>
-                        <th class="fw-bold" style="font-size: 30px;color:#000">Tgl Selesai</th>
-                        <th class="fw-bold" style="text-align: right;font-size: 30px;color:#000">Harga
+                        <th class="fw-bold" style="font-size:35px;color:#000">Keterangan</th>
+                        <th class="fw-bold" style="font-size: 35px;color:#000">Tgl Mulai</th>
+                        <th class="fw-bold" style="font-size: 35px;color:#000">Tgl Selesai</th>
+                        <th class="fw-bold" style="text-align: right;font-size: 35px;color:#000">Harga
                         </th>
 
                     </tr>
@@ -191,11 +191,11 @@
                 <tbody>
                     @foreach ($order_items as $item)
                         <tr>
-                            <td class="fw-bold" style="font-size: 30px">
+                            <td class="fw-bold" style="font-size: 35px">
                                 {{ $item->car_name }}<br>
                                 {{ $item->package_name }}
                             </td>
-                            <td class="fw-bold" style="font-size: 30px">
+                            <td class="fw-bold" style="font-size: 35px">
                                 {{ date('d M Y', strtotime($item->start_date)) }}
                                 -
                                 {{ $item->start_time }}
@@ -212,7 +212,7 @@
                                 @endif
                             </td>
 
-                            <td class="fw-bold" style="font-size: 30px">
+                            <td class="fw-bold" style="font-size: 35px">
                                 {{ date('d M Y', strtotime($item->end_date)) }} -
                                 {{ $item->end_time }}
                                 @if ($item->arrival_time == null)
@@ -223,7 +223,7 @@
 
                             </td>
 
-                            <td class="fw-bold" style="text-align: right;font-size:30px">
+                            <td class="fw-bold" style="text-align: right;font-size:35px">
 
                                 Rp. {{ number_format($item->price, 0) }}</td>
 
@@ -239,8 +239,8 @@
                         </td>
 
 
-                        <td class="fw-bold" style="font-size: 30px">Total Tagihan</td>
-                        <td class="fw-bold" style="text-align: right; font-size:30px">
+                        <td class="fw-bold" style="font-size: 35px">Total Tagihan</td>
+                        <td class="fw-bold" style="text-align: right; font-size:35px">
                             Rp.
                             {{ number_format($grand_total) }}</td>
                     </tr>
@@ -256,8 +256,8 @@
 
 
 
-                            <td class="fw-bold" style="font-size: 30px">{{ $pay->payment_type }}</td>
-                            <td class="fw-bold" style="text-align: right;font-size:30px">
+                            <td class="fw-bold" style="font-size: 35px">{{ $pay->payment_type }}</td>
+                            <td class="fw-bold" style="text-align: right;font-size:35px">
                                 Rp.
                                 {{ number_format($pay->amount) }}</td>
                         </tr>
@@ -271,8 +271,8 @@
                             style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
                         </td>
 
-                        <td class="fw-bold" style="font-size: 30px">Sisa Tagihan</td>
-                        <td class="fw-bold" style="text-align: right;font-size:30px">
+                        <td class="fw-bold" style="font-size: 35px">Sisa Tagihan</td>
+                        <td class="fw-bold" style="text-align: right;font-size:35px">
                             Rp.
                             {{ number_format($order->bill) }}</td>
                     </tr>
@@ -290,19 +290,19 @@
                     <tbody>
 
                         <tr>
-                            <td width="60%" style="font-size:20px;">
+                            <td width="60%" style="font-size:25px;">
                                 <span class="fw-bold"> Alamat Penjemputan :</span>
                                 <ul>
                                     @foreach ($pickups as $pickup)
                                         <li style="font-size:25px;">
                                             <b>{{ date('d M Y', strtotime($pickup->start_date)) }}</b> -
-                                            {{ $pickup->pickup_address }}
+                                            {{ $pickup->pickup_address }} - DRIVER {{ $pickup->driver_name }}
                                         </li>
                                     @endforeach
                                 </ul>
 
 
-                                <div style="font-size:23px;">
+                                <div style="font-size:27px;">
                                     <span class="fw-bold"> Syarat Ketentuan :</span>
                                     <ul>
                                         <li>Harga belum termasuk biaya BBM, Uang Makan Driver, Tol dan parkir (Kecuali
@@ -339,7 +339,7 @@
                                 <div style="">
                                     <b> {{ $rental->pic_name }}</b>
                                 </div>
-                                <div style="margin-top:3px;font-size:30px">
+                                <div style="margin-top:3px;font-size:35px">
                                     Pembayaran Transfer melalui Rekening : <br>
                                     {{ $rental->bank }} - <b> {{ $rental->number }} </b> <br>
                                     {{ $rental->account }}

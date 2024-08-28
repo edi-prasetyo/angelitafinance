@@ -265,6 +265,8 @@ class OrderController extends Controller
             ->select('order_items.*', 'cars.name as car_name', 'packages.name as package_name')
             ->get();
         $pickups = OrderItem::where('order_id', $order_id)
+            ->join('users', 'users.id', '=', 'order_items.driver_id')
+            ->select('order_items.*', 'users.name as driver_name')
             ->get();
         $grand_total = OrderItem::where('order_id', $order_id)
             ->sum('price');

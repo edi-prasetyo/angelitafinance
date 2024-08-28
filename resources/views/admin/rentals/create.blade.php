@@ -143,10 +143,14 @@
                             <input type="file" name="signature" class="form-control">
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Logo Black</label>
+                            <input type="file" name="logo_black_url" class="form-control">
+                        </div>
+                        <div class="mb-3">
                             <div class="form-check form-switch">
                                 <label class="form-check-label">Status</label>
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-                                    name="status">
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckDefault" name="status">
                             </div>
                         </div>
 

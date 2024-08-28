@@ -135,6 +135,13 @@
                                     src="{{ $rental->signature_url }}">
                             </div>
 
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Logo Black</label>
+                                <input type="file" name="logo_black_url" class="form-control">
+                                <img class="img-fluid img-thumbnail mt-3" style="height:50px;"
+                                    src="{{ $rental->logo_black_url }}">
+                            </div>
+
                         </div>
 
                         <div class="mb-3">

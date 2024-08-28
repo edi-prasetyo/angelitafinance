@@ -53,7 +53,7 @@ class RentalController extends Controller
             $file = $request->file('logo');
             $ext = $file->getClientOriginalExtension();
             $filename = 'rental' . time() . '.' . $ext;
-            $file->move('uploads/images/', $filename);
+            $file->move(base_path('public/uploads/images/' . $filename));
             $rental->logo = $uploadPath . $filename;
             $rental->logo_url = URL::to('/uploads/images/' . $filename);
         }
@@ -62,9 +62,19 @@ class RentalController extends Controller
             $file = $request->file('signature');
             $ext = $file->getClientOriginalExtension();
             $filename = 'signature' . time() . '.' . $ext;
-            $file->move('uploads/images/', $filename);
+            $file->move(base_path('public/uploads/images/' . $filename));
             $rental->signature = $uploadPath . $filename;
             $rental->signature_url = URL::to('/uploads/images/' . $filename);
+        }
+
+        $uploadPath = 'uploads/images/';
+        if ($request->hasFile('logo_black_url')) {
+            $file = $request->file('logo_black_url');
+            $ext = $file->getClientOriginalExtension();
+            $filename = 'logo_black_url' . time() . '.' . $ext;
+            $file->move('public/uploads/images/' . $filename);
+            // $rental->signature = $uploadPath . $filename;
+            $rental->logo_black_url = URL::to('/uploads/images/' . $filename);
         }
 
         $rental->status = $request->status == true ? '1' : '0';

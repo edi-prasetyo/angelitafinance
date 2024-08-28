@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: system-ui, system-ui, sans-serif;
-            font-size: 18px;
+            font-size: 25px;
             color: #000;
             font-weight: bold;
         }
@@ -117,18 +117,10 @@
 
                         {{-- <img style="width: 30%" src="{{ $rental->logo_url }}" alt="{{ $rental->logo_url }}" /> --}}
 
-                        <img src="{{ $rental->logo_url }}" alt="{{ $rental->logo_url }}" style="width: 30%">
+                        <img src="{{ $rental->logo_black_url }}" alt="{{ $rental->logo_black_url }}" style="width: 30%">
                     </td>
                     <td style="float:right;text-align-right">
-                        @php
-                            $invoice_num = str_pad($order->id, 6, '0', STR_PAD_LEFT);
-                        @endphp
-                        <b>NO. INVOICE : {{ $invoice_num }}</b><br>
-                        Payment Status : @if ($order->bill <= 0)
-                            <span class="text-success px-2">Paid</span>
-                        @else
-                            <span class="text-danger px-2">Unpaid</span>
-                        @endif <br />
+                        <h2>INVOICE</h2>
                         {{-- Invoice Date : {{ date('d-m-Y', strtotime($order->invoice_date)) }} --}}
 
                     </td>
@@ -142,8 +134,6 @@
             <tbody>
                 <tr>
                     <td width="40%" style="padding-right: 10px">
-
-                        <strong> {{ $rental->name }}</strong><br>
                         Alamat : <address>
                             {{ $rental->address }}
                         </address><br>
@@ -151,7 +141,7 @@
                         Email: {{ $rental->email }}
 
                     </td>
-                    <td width="40%" style="padding-left: 10px; float-right;text-align-right">
+                    <td width="40%" style="padding-left: 10px;float:right;text-align:right">
 
 
                         Pelanggan :
@@ -294,7 +284,7 @@
                                 <span class="fw-bold"> Alamat Penjemputan :</span>
                                 <ul>
                                     @foreach ($pickups as $pickup)
-                                        <li style="font-size:20px;">
+                                        <li style="font-size:25px;">
                                             <b>{{ date('d M Y', strtotime($pickup->start_date)) }}</b> -
                                             {{ $pickup->pickup_address }}
                                         </li>
@@ -302,7 +292,7 @@
                                 </ul>
 
 
-                                <div style="font-size:20px;">
+                                <div style="font-size:23px;">
                                     <span class="fw-bold"> Syarat Ketentuan :</span>
                                     <ul>
                                         <li>Harga belum termasuk biaya BBM, Uang Makan Driver, Tol dan parkir (Kecuali

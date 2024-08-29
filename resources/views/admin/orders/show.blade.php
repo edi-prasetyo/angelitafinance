@@ -386,10 +386,10 @@
                                     <thead>
                                         <tr>
 
-                                            <th class="fw-bold" style="font-size: 18px;color:#000">Keterangan</th>
-                                            <th class="fw-bold" style="font-size: 18px;color:#000">Tgl Mulai</th>
-                                            <th class="fw-bold" style="font-size: 18px;color:#000">Tgl Selesai</th>
-                                            <th class="fw-bold" style="text-align: right;font-size: 18px;color:#000">Harga
+                                            <th class="fw-bold" style="font-size: 12px;color:#000">Keterangan</th>
+                                            <th class="fw-bold" style="font-size: 12px;color:#000">Tgl Mulai</th>
+                                            <th class="fw-bold" style="font-size: 12px;color:#000">Tgl Selesai</th>
+                                            <th class="fw-bold" style="text-align: right;font-size: 12px;color:#000">Harga
                                             </th>
 
                                         </tr>
@@ -397,11 +397,11 @@
                                     <tbody>
                                         @foreach ($order_items as $item)
                                             <tr>
-                                                <td class="fw-bold" style="font-size: 18px">
+                                                <td class="fw-bold" style="font-size: 12px">
                                                     {{ $item->car_name }}<br>
                                                     {{ $item->package_name }}
                                                 </td>
-                                                <td class="fw-bold" style="font-size: 18px">
+                                                <td class="fw-bold" style="font-size: 12px">
                                                     {{ date('d M Y', strtotime($item->start_date)) }}
                                                     -
                                                     {{ $item->start_time }}
@@ -418,7 +418,7 @@
                                                     @endif
                                                 </td>
 
-                                                <td class="fw-bold" style="font-size: 18px">
+                                                <td class="fw-bold" style="font-size: 12px">
                                                     {{ date('d M Y', strtotime($item->end_date)) }} -
                                                     {{ $item->end_time }}
                                                     @if ($item->arrival_time == null)
@@ -429,7 +429,7 @@
 
                                                 </td>
 
-                                                <td class="fw-bold" style="text-align: right;font-size:18px">
+                                                <td class="fw-bold" style="text-align: right;font-size:12px">
 
                                                     Rp. {{ number_format($item->price, 0) }}</td>
 
@@ -445,8 +445,8 @@
                                             </td>
 
 
-                                            <td class="fw-bold" style="font-size: 18px">Total Tagihan</td>
-                                            <td class="fw-bold" style="text-align: right; font-size:18px">
+                                            <td class="fw-bold" style="font-size: 12px">Total Tagihan</td>
+                                            <td class="fw-bold" style="text-align: right; font-size:12px">
                                                 Rp.
                                                 {{ number_format($grand_total) }}</td>
                                         </tr>
@@ -462,8 +462,8 @@
 
 
 
-                                                <td class="fw-bold" style="font-size: 18px">{{ $pay->payment_type }}</td>
-                                                <td class="fw-bold" style="text-align: right;font-size:18px">
+                                                <td class="fw-bold" style="font-size: 12px">{{ $pay->payment_type }}</td>
+                                                <td class="fw-bold" style="text-align: right;font-size:12px">
                                                     Rp.
                                                     {{ number_format($pay->amount) }}</td>
                                             </tr>
@@ -477,8 +477,8 @@
                                                 style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
                                             </td>
 
-                                            <td class="fw-bold" style="font-size: 18px">Sisa Tagihan</td>
-                                            <td class="fw-bold" style="text-align: right;font-size:18px">
+                                            <td class="fw-bold" style="font-size: 12px">Sisa Tagihan</td>
+                                            <td class="fw-bold" style="text-align: right;font-size:12px">
                                                 Rp.
                                                 {{ number_format($order->bill) }}</td>
                                         </tr>
@@ -570,14 +570,12 @@
 
                 <div class="card-footer">
                     <div class="col-xs-12">
-                        <a href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-primary"> <i
+                        <a href="{{ url('admin/orders/print/' . $order->id) }}" class="btn btn-primary"> <i
                                 class='bx bx-printer'></i> Print</a>
                         <a href="{{ url('admin/orders/download/' . $order->id) }}" class="btn btn-danger text-white">
                             <i class='bx bxs-file-pdf'></i> Download Pdf
                         </a>
-                        <a href="{{ url('admin/orders/print/' . $order->id) }}" class="btn btn-danger text-white">
-                            <i class='bx bxs-file-pdf'></i> Print Pdf
-                        </a>
+
 
 
 

@@ -7,81 +7,8 @@
                 {{ session('message') }}
             </div>
         @endif
-        <div class="card mb-3">
-            <div class="card-body">
 
-                <form action="{{ url('admin/orders') }}" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label class="form-label">Pilih Customer</label>
-                            <select class="form-select" name="customer_id" id="single-select-field"
-                                data-placeholder="Pilih Customer">
-                                <option></option>
-                                @foreach ($customers as $item)
-                                    <option value="{{ $item->id }}">{{ $item->full_name }} - {{ $item->phone_number }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Pilih Rental</label>
-                            <select class="form-select" name="rental_id" id="single-select-field2"
-                                data-placeholder="Pilih Rental">
-                                <option></option>
-                                @foreach ($rentals as $rental)
-                                    <option value="{{ $rental->id }}">{{ $rental->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Order From</label>
-                            <select class="form-select" name="partner_id" id="single-select-field2"
-                                data-placeholder="Pilih Rental">
-                                <option></option>
-                                @foreach ($partners as $partner)
-                                    <option value="{{ $partner->id }}">{{ $partner->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Tanggal Pesanan</label>
-                            <div class="input-group mb-3 input-daterange">
-                                <span class="input-group-text" id="basic-addon1"><i class="bx bx-calendar"></i> </span>
-                                <input autocomplete="off" type="text" name="date"
-                                    class="form-field__input form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Tanggal Mulai</label>
-                            <div class="input-group mb-3 input-daterange">
-                                <span class="input-group-text" id="basic-addon1"><i class="bx bx-calendar"></i> </span>
-                                <input autocomplete="off" type="text" name="start_date"
-                                    class="form-field__input form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="d-grid gap-2">
-                                <label class="form-label invisible">Date</label>
-                                <button type="submit" class="btn btn-primary"><i class="bx bx-save"></i> </button>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="d-grid gap-2">
-                                <label class="form-label invisible">Date</label>
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                    <i class="bx bx-plus"></i> Tambah Customer
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-        </div>
+        @include('admin.orders.create_order')
 
 
         <div class="card mb-3">
@@ -91,9 +18,7 @@
                         data-bs-toggle="tab" aria-controls="navs-pills-justified-home" aria-selected="true"><span
                             class="d-none d-sm-block"><i class="tf-icons bx bx-receipt bx-sm me-1_5 align-text-bottom"></i>
                             Order Belum di Bayar
-                            <span
-                                class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger ms-1_5 pt-50">3</span></span><i
-                            class="bx bx-home bx-sm d-sm-none"></i></a>
+                            <i class="bx bx-home bx-sm d-sm-none"></i></a>
                 </li>
                 <li class="nav-item mb-1 mb-sm-0">
                     <a href="{{ url('admin/orders/paid') }}" class="nav-link"><span class="d-none d-sm-block"><i
@@ -113,17 +38,35 @@
 
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
                 <h4 class="my-auto">All Oders</h4>
-                @hasrole('superadmin|finance')
-                    <div>
-                        <a href="{{ url('admin/orders/sales') }}" class="btn btn-primary text-white"><i
-                                class='bx bx-money-withdraw'></i>
-                            Sales Per Day</a>
-                        <a href="{{ url('admin/orders/sales_items') }}" class="btn btn-info text-white"><i
-                                class='bx bx-calendar'></i>
-                            Sales Item Per Day</a>
+                <div class="col-md-6">
+                    <form action="{{ url('admin/orders') }}" method="GET">
+                        @csrf
+                        <div class="row">
 
-                    </div>
-                @endhasrole
+                            <div class="col-md-8">
+                                <select class="form-select" name="customer_id" id="single-select-field4"
+                                    data-placeholder="Pilih Customer">
+                                    <option></option>
+                                    @foreach ($customers as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == $customer_id ? 'selected' : '' }}>{{ $item->full_name }} -
+                                            {{ $item->phone_number }}
+                                        </option>
+
+                                        {{-- <option value="{{ $item->id }}">{{ $item->full_name }} -
+                                            {{ $item->phone_number }}
+                                        </option> --}}
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary"> Cari</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table">
@@ -208,7 +151,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center">No Transaction Available </td>
+                                <td colspan="9" class="text-center">No Transaction Available </td>
                             </tr>
                         @endforelse
                     </tbody>

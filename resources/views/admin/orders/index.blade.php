@@ -36,19 +36,9 @@
         <div class="card">
 
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
-                <h4 class="my-auto">Order Belum Lunas</h4>
+                <h4 class="my-auto">All Oders</h4>
 
-                <div>
-                    <select class="form-select" name="customer_id" id="single-select-field4"
-                        data-placeholder="Pilih Customer">
-                        <option></option>
-                        @foreach ($customers2 as $item)
-                            <option value="{{ $item->id }}">{{ $item->full_name }} - {{ $item->phone_number }}
-                            </option>
-                        @endforeach
-                    </select>
 
-                </div>
 
             </div>
             <div class="table-responsive">

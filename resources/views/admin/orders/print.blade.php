@@ -119,7 +119,38 @@
             width: 50%;
         }
 
-        a:link,
+
+        .btn {
+
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 10px;
+        }
+
+        .btn-success {
+            background-color: #009171;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #025e4a;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #0e73e7;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #01499b;
+            color: white;
+        }
+
+
+        /* a:link,
         a:visited {
             background-color: #f44336;
             color: white;
@@ -133,7 +164,7 @@
         a:hover,
         a:active {
             background-color: red;
-        }
+        } */
     </style>
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/fonts/boxicons-2.1.4/css/boxicons.css') }}" />
 </head>
@@ -141,6 +172,14 @@
 <body>
 
     <div class="wrapper">
+        <a href="{{ url('admin/orders/detail/' . $order->id) }}" class="btn btn-success"> <i
+                class='bx bx-left-arrow-alt'></i>
+            Kembali</a>
+        <a href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-primary"> <i
+                class='bx bx-printer'></i>
+            Print</a>
+
+
         <div id="printableArea" class="A5 landscape">
             <table width="100%">
                 <tbody>
@@ -395,12 +434,7 @@
 
         </div>
 
-        <a href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn"> <i
-                class='bx bx-printer'></i>
-            Print</a>
 
-        <a href="{{ url('admin/orders/detail/' . $order->id) }}" class="btn"> <i class='bx bx-left-arrow-alt'></i>
-            Kembali</a>
     </div>
 </body>
 

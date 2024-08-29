@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
-use App\Http\Controllers\Api\TransactionController;
+use App\Http\Controllers\Api\OrderController;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Contracts\Support\ValidatedData;
@@ -33,9 +33,14 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
-    Route::get('/transactions', [TransactionController::class, 'index']);
-    Route::get('/transactions/all', [TransactionController::class, 'get_orders']);
-    Route::get('/transactions/{id}', [TransactionController::class, 'show']);
+    Route::get('/orders', [OrderController::class, 'index']);
+
+    Route::get('/orders/unpaid', [OrderController::class, 'unpaid']);
+    Route::get('/orders/paid', [OrderController::class, 'paid']);
+    Route::get('/orders/cancel', [OrderController::class, 'cancel']);
+
+    Route::get('/orders/all', [OrderController::class, 'get_orders']);
+    Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::get('/customers', [CustomerController::class, 'index']);
 });
 

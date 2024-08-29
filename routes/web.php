@@ -171,7 +171,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     });
     // Order Route
     Route::controller(OrderController::class)->group(function () {
-        Route::get('/orders', 'index');
+        Route::get('/orders', 'unpaid');
         Route::get('/orders/create', 'create');
         Route::post('/orders', 'store');
         Route::get('/orders/detail/{id}', 'show')->name('show');

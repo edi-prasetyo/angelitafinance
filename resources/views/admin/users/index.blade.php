@@ -64,7 +64,7 @@
 
             </div>
             <div class="card-body">
-
+                {{ $users->links() }}
             </div>
         </div>
 

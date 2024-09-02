@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/orders/all', [OrderController::class, 'get_orders']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
+    Route::get('/orders/payments/{order_id}', [OrderController::class, 'get_payments']);
     Route::get('/customers', [CustomerController::class, 'index']);
 });
 

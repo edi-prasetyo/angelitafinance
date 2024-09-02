@@ -36,7 +36,8 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:3|max:50',
-            'email' => 'required|max:255', 'unique:users',
+            'email' => 'required|max:255',
+            'unique:users',
             'password' => 'required|confirmed|min:8',
         ]);
 
@@ -105,7 +106,7 @@ class UserController extends Controller
 
     public function driver()
     {
-        $users  = User::role('driver')->get();
+        $users  = User::role('driver')->paginate(10);
         return view('admin.users.index', compact('users'));
     }
     public function admin()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 // use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
@@ -128,6 +129,7 @@ class OrderController extends Controller
             ]);
         }
     }
+
     public function get_orders()
     {
         $orders = OrderItem::all();
@@ -160,7 +162,22 @@ class OrderController extends Controller
             ]);
         }
     }
+    public function get_payments($order_id)
+    {
+        $payments = Payment::where('order_id', $order_id)->get();
 
+        if ($payments) {
+            return response()->json([
+                'success' => true,
+                'data' => $payments
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ]);
+        }
+    }
     public function edit($id)
     {
         //

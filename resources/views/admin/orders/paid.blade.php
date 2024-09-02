@@ -41,17 +41,7 @@
 
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
                 <h4 class="my-auto">All Oders</h4>
-                @hasrole('superadmin|finance')
-                    <div>
-                        <a href="{{ url('admin/orders/sales') }}" class="btn btn-primary text-white"><i
-                                class='bx bx-money-withdraw'></i>
-                            Sales Per Day</a>
-                        <a href="{{ url('admin/orders/sales_items') }}" class="btn btn-info text-white"><i
-                                class='bx bx-calendar'></i>
-                            Sales Item Per Day</a>
 
-                    </div>
-                @endhasrole
             </div>
             <div class="table-responsive">
                 <table class="table">

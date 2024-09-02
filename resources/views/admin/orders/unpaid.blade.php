@@ -42,7 +42,7 @@
         <div class="card">
 
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
-                <h4 class="my-auto">All Oders</h4>
+                <h4 class="my-auto">Order Belum di bayar</h4>
                 <div class="col-md-6">
                     <form action="{{ url('admin/orders') }}" method="GET">
                         @csrf

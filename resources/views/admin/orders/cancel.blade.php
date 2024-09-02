@@ -40,7 +40,7 @@
         <div class="card">
 
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
-                <h4 class="my-auto">All Oders</h4>
+                <h4 class="my-auto">Order Cancel</h4>
 
             </div>
             <div class="table-responsive">

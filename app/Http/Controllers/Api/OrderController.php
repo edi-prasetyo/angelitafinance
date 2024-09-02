@@ -65,7 +65,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $orders
-            ]);
+            ], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([
                 'success' => false,
@@ -148,7 +148,7 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        $order_items = OrderItem::where('customer_id', $id)->get();
+        $order_items = OrderItem::where('order_id', $id)->get();
 
         if ($order_items) {
             return response()->json([

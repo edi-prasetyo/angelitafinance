@@ -37,7 +37,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $orders
-            ]);
+            ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([
                 'success' => false,
@@ -93,7 +93,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $orders
-            ]);
+            ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([
                 'success' => false,
@@ -121,7 +121,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $orders
-            ]);
+            ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([
                 'success' => false,
@@ -136,6 +136,9 @@ class OrderController extends Controller
         $count_orders = count($orders);
         return response()->json(
             $count_orders,
+            200,
+            [],
+            JSON_NUMERIC_CHECK
         );
     }
     public function create()
@@ -154,7 +157,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $order_items
-            ]);
+            ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([
                 'success' => false,
@@ -170,7 +173,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $payments
-            ]);
+            ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([
                 'success' => false,

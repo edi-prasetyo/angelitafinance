@@ -18,9 +18,10 @@
                         @method('PUT')
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                value="{{ $customer->name }}">
-                            @error('name')
+                            <input type="text" name="full_name"
+                                class="form-control @error('full_name') is-invalid @enderror"
+                                value="{{ $customer->full_name }}">
+                            @error('full_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -28,28 +29,19 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Whatsapp</label>
-                            <input type="text" name="whatsapp"
-                                class="form-control @error('whatsapp') is-invalid @enderror"
-                                value="{{ $customer->whatsapp }}">
-                            @error('whatsapp')
+                            <input type="text" name="phone_number"
+                                class="form-control @error('phone_number') is-invalid @enderror"
+                                value="{{ $customer->phone_number }}" readonly>
+                            @error('phone_number')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                        {{-- <div class="mb-3">
-                        <label class="form-label">Address</label>
-                        <textarea type="text" name="address"
-                            class="form-control @error('address') is-invalid @enderror">{{$customer->address}}</textarea>
-                        @error('address')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div> --}}
+
 
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
                 </div>

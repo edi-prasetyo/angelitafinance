@@ -18,14 +18,20 @@ class CustomerController extends Controller
     //     $this->middleware(['permission:customer-delete'], ['only' => ['destroy']]);
     // }
 
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::orderBy('id', 'desc')->paginate(15);
-        $title = 'Delete Customer!';
-        $text = "Are you sure you want to delete?";
-        confirmDelete($title, $text);
+        $phone_number = $request->input('phone_number');
+        if ($phone_number) {
+            $customers = Customer::orderBy('id', 'desc')->where('phone_number', $phone_number)->paginate(10);
+            return view('admin.customers.index', compact('customers'));
+        } else {
+            $customers = Customer::orderBy('id', 'desc')->paginate(15);
+            $title = 'Delete Customer!';
+            $text = "Are you sure you want to delete?";
+            confirmDelete($title, $text);
 
-        return view('admin.customers.index', compact('customers'));
+            return view('admin.customers.index', compact('customers'));
+        }
     }
     public function create()
     {
@@ -84,17 +90,17 @@ class CustomerController extends Controller
     {
         return view('admin.customers.edit', compact('customer'));
     }
-    public function update(CustomerFormRequest $request, $customer)
+    public function update(Request $request, $customer)
     {
-        $validatedData = $request->validated();
+        // $validatedData = $request->validated();
         $customer = Customer::findOrFail($customer);
 
-        $customer->name = $validatedData['name'];
-        $customer->whatsapp = $validatedData['whatsapp'];
+        $customer->full_name = $request['full_name'];
+        $customer->phone_number = $request['phone_number'];
 
         $customer->update();
         Alert::success('Customer', 'Berhasil di Update');
-        return redirect('admin/customers')->with('message', 'Customer update Succesfully');
+        return redirect('admin/customers');
     }
     public function destroy(int $customer_id)
     {

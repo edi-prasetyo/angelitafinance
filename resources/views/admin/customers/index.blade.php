@@ -86,7 +86,21 @@
         <div class="card">
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
                 <h4 class="my-auto">Customer</h4>
-                {{-- <a href="{{ url('admin/customers/create') }}" class="btn btn-success text-white">Add Customer</a> --}}
+                <form action="{{ url('admin/customers') }}" method="GET">
+                    @csrf
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="phone_number"
+                                placeholder="Cari Nomor Handphone">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary"> Cari</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -106,11 +120,15 @@
                                 <td>{{ $item->phone_number }}</td>
 
                                 <td>
-                                    <a href="{{ url('admin/customers/edit/' . $item->id) }}"
-                                        class="btn btn-sm btn-primary text-white"><i class='bx bx-edit'></i></a>
-                                    <a href="{{ url('admin/customers/delete/' . $item->id) }}"
-                                        class="btn btn-sm btn-danger text-white" data-confirm-delete="true"><i
-                                            class='bx bx-trash'></i></a>
+                                    @hasrole('superadmin|finance')
+                                        <a href="{{ url('admin/customers/edit/' . $item->id) }}"
+                                            class="btn btn-sm btn-primary text-white"><i class='bx bx-edit'></i></a>
+                                    @endhasrole
+                                    @hasrole('superadmin')
+                                        <a href="{{ url('admin/customers/delete/' . $item->id) }}"
+                                            class="btn btn-sm btn-danger text-white" data-confirm-delete="true"><i
+                                                class='bx bx-trash'></i></a>
+                                    @endrole
                                 </td>
                             </tr>
                         @empty

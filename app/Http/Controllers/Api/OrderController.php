@@ -65,7 +65,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $orders
-            ], JSON_NUMERIC_CHECK);
+            ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([
                 'success' => false,

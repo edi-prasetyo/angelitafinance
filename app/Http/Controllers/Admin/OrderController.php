@@ -124,6 +124,64 @@ class OrderController extends Controller
         }
     }
 
+    public function verify(Request $request)
+    {
+        $customer_id = $request['customer_id'];
+        if ($customer_id) {
+            $customers = Customer::all();
+            // $customers2 = Customer::all();
+            $rentals = Rental::all();
+            $partners = Partner::all();
+            // $payments = Payment::all();
+            $amountSum = OrderItem::selectRaw('sum(price)')
+                ->whereColumn('order_id', 'orders.id')
+                ->getQuery();
+
+            $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+                ->where(['orders.status' => 1, 'orders.cancel' => 1])
+                ->where('orders.bill', '>', 0)
+                ->where('orders.verify', 1)
+                ->where('customer_id', $customer_id)
+                ->selectSub($amountSum, 'amount_sum')
+                ->join('customers', 'customers.id', '=', 'orders.customer_id')
+                ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+                ->orderBy('id', 'desc')
+                ->with('orderCount')
+                ->paginate(10);
+            // return $orders->orderCount;
+            $title = 'Delete Order!';
+            $text = "Anda Yakin ingin menghapus data ini?";
+            confirmDelete($title, $text);
+            return view('admin.orders.verify', compact('orders', 'customers', 'rentals', 'partners', 'customer_id'));
+        } else {
+            $customers = Customer::all();
+            $customer_id = '';
+            // $customers2 = Customer::all();
+            $rentals = Rental::all();
+            $partners = Partner::all();
+            // $payments = Payment::all();
+            $amountSum = OrderItem::selectRaw('sum(price)')
+                ->whereColumn('order_id', 'orders.id')
+                ->getQuery();
+
+            $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+                // ->where(['orders.status' => 1, 'orders.cancel' => 1])
+                // ->where('orders.bill', '>', 0)
+                ->where('orders.verify', 1)
+                ->selectSub($amountSum, 'amount_sum')
+                ->join('customers', 'customers.id', '=', 'orders.customer_id')
+                ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+                ->orderBy('id', 'desc')
+                ->with('orderCount')
+                ->paginate(10);
+            // return $orders;
+            $title = 'Delete Order!';
+            $text = "Anda Yakin ingin menghapus data ini?";
+            confirmDelete($title, $text);
+            return view('admin.orders.verify', compact('orders', 'customers', 'rentals', 'partners', 'customer_id'));
+        }
+    }
+
     public function paid()
     {
         $customers = Customer::all();
@@ -136,7 +194,8 @@ class OrderController extends Controller
 
         $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
             ->where(['orders.status' => 1, 'orders.cancel' => 1])
-            ->where('bill', '=', 0)
+            ->where('orders.bill', '=', 0)
+            ->where('orders.verify', 0)
             ->selectSub($amountSum, 'amount_sum')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
@@ -602,6 +661,16 @@ class OrderController extends Controller
         $order->update();
 
         Alert::success('Payment', 'Payment Berhasil Di tambahkan');
+        return redirect()->back();
+    }
+
+    public function verify_order($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $order->verify = 1;
+        $order->update();
+
+        Alert::success('Order', 'Berhasil Diverifikasi');
         return redirect()->back();
     }
 

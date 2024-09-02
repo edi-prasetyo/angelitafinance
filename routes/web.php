@@ -177,6 +177,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/orders/detail/{id}', 'show')->name('show');
         Route::get('/orders/cancel/{id}', 'cancel')->name('cancel');
         Route::get('/orders/trash/{id}', 'trash')->name('trash');
+        Route::get('/orders/verify/{id}', 'verify_order')->name('verify_order');
         Route::get('/orders/delete/{id}', 'destroy')->name('destroy');
         Route::get('/orders/create/order_item/{id}', 'add_order_item')->name('add_order_item');
         Route::post('/orders/create/store_order_item/', 'store_order_item')->name('store_order_item');
@@ -186,6 +187,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
         Route::get('/orders/paid', 'paid');
         Route::get('/orders/cancel', 'order_cancel');
+        Route::get('/orders/verify', 'verify');
 
 
         Route::get('/orders/payment/{order_id}', 'payment')->name('payment');

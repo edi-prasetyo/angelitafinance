@@ -14,13 +14,20 @@
                     <thead>
                         <tr>
                             <th scope="col">Order Date</th>
-                            <th scope="col">Customer</th>
+                            <th scope="col">Verifikasi</th>
                             <th scope="col">Bill</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>{{ $order->order_date }}</td>
+                            <td>
+                                @if ($order->verify == 0)
+                                    <span class="badge bg-label-danger">Belum di Verifikasi</span>
+                                @else
+                                    <span class="badge bg-label-success">Terverifikasi</span>
+                                @endif
+                            </td>
                             <td>{{ $order->customer_name }}</td>
                             <td>Rp. {{ number_format($order->bill) }}</td>
                         </tr>
@@ -105,6 +112,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Tanggal Bayar</th>
+                            <th scope="col">Jenis Pembayaran</th>
                             <th scope="col">Jumlah </th>
                             <th width="15%">Bukti Bayar</th>
                         </tr>
@@ -113,6 +121,7 @@
                         @foreach ($payments as $payment)
                             <tr>
                                 <td>{{ $payment->payment_date }}</td>
+                                <td>{{ $payment->payment_method }}</td>
                                 <td>Rp. {{ number_format($payment->amount) }}</td>
                                 <td>
                                     <a href="#" data-bs-toggle="modal"
@@ -147,9 +156,16 @@
 
                     </tbody>
                 </table>
+
+                @if ($order->verify == 1)
+                @else
+                    @role('superadmin')
+                        <a href="{{ url('admin/orders/verify/' . $order->id) }}"
+                            class="btn btn-success text-white mt-3">Verifikasi
+                            Pembayaran</a>
+                    @endrole
+                @endif
             </div>
-
-
         </div>
     </div>
 

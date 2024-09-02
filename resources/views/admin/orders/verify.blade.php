@@ -24,12 +24,12 @@
                             class="bx bx-check-circle bx-sm d-sm-none"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('admin/orders/verify') }}" class="nav-link"><span class="d-none d-sm-block"><i
+                    <a href="{{ url('admin/orders/verify') }}" class="nav-link active"><span class="d-none d-sm-block"><i
                                 class="tf-icons bx bx-check-shield bx-sm me-1_5 align-text-bottom"></i> Order
                             Verify</span><i class="bx bx-check-shield bx-sm d-sm-none"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('admin/orders/cancel') }}" class="nav-link active"><span class="d-none d-sm-block"><i
+                    <a href="{{ url('admin/orders/cancel') }}" class="nav-link"><span class="d-none d-sm-block"><i
                                 class="tf-icons bx bx-x-circle bx-sm me-1_5 align-text-bottom"></i> Order
                             Cancel</span><i class="bx bx-x-circle bx-sm d-sm-none"></i></a>
                 </li>
@@ -40,18 +40,8 @@
         <div class="card">
 
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
-                <h4 class="my-auto">All Oders</h4>
-                @hasrole('superadmin|finance')
-                    <div>
-                        <a href="{{ url('admin/orders/sales') }}" class="btn btn-primary text-white"><i
-                                class='bx bx-money-withdraw'></i>
-                            Sales Per Day</a>
-                        <a href="{{ url('admin/orders/sales_items') }}" class="btn btn-info text-white"><i
-                                class='bx bx-calendar'></i>
-                            Sales Item Per Day</a>
+                <h4 class="my-auto">Verify Oders</h4>
 
-                    </div>
-                @endhasrole
             </div>
             <div class="table-responsive">
                 <table class="table">

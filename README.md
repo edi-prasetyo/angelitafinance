@@ -29,3 +29,5 @@ Rincian Update Aplikasi
     -   Add Field status and cancel in table "orders dan order_items"
 -   Update 27 Agustus 2024
     -   Add Field bank, account, number in table "rentals"
+-   Update 2 Februari 2024
+    -   Add Field verify in table "orders"

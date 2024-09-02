@@ -12,21 +12,26 @@
 
         <div class="card mb-3">
             <ul class="nav nav-pills nav-fill" role="tablist">
-                <li class="nav-item mb-1 mb-sm-0">
+                <li class="nav-item">
                     <a href="{{ url('admin/orders') }}" type="button" class="nav-link"><span class="d-none d-sm-block"><i
                                 class="tf-icons bx bx-receipt bx-sm me-1_5 align-text-bottom"></i>
-                            Order Belum di Bayar
-                            <i class="bx bx-home bx-sm d-sm-none"></i></a>
+                            Order Belum di Bayar</span>
+                        <i class="bx bx-receipt bx-sm d-sm-none"></i></a>
                 </li>
-                <li class="nav-item mb-1 mb-sm-0">
+                <li class="nav-item">
                     <a href="{{ url('admin/orders/paid') }}" class="nav-link active"><span class="d-none d-sm-block"><i
                                 class="tf-icons bx bx-check-circle bx-sm me-1_5 align-text-bottom"></i> Order Lunas</span><i
-                            class="bx bx-user bx-sm d-sm-none"></i></a>
+                            class="bx bx-check-circle bx-sm d-sm-none"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('admin/orders/verify') }}" class="nav-link"><span class="d-none d-sm-block"><i
+                                class="tf-icons bx bx-check-shield bx-sm me-1_5 align-text-bottom"></i> Order
+                            Verify</span><i class="bx bx-check-shield bx-sm d-sm-none"></i></a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('admin/orders/cancel') }}" class="nav-link"><span class="d-none d-sm-block"><i
                                 class="tf-icons bx bx-x-circle bx-sm me-1_5 align-text-bottom"></i> Order
-                            Cancel</span><i class="bx bx-message-square bx-sm d-sm-none"></i></a>
+                            Cancel</span><i class="bx bx-x-circle bx-sm d-sm-none"></i></a>
                 </li>
             </ul>
         </div>
@@ -131,7 +136,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center">No Transaction Available </td>
+                                <td colspan="9" class="text-center">No Transaction Available </td>
                             </tr>
                         @endforelse
                     </tbody>

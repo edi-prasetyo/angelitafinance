@@ -55,20 +55,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-group col-12">
-                            <label class="form-label">Whatsapp</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="basic-addon11"><i
-                                        class='bx bx-map-pin'></i></span>
-                                <textarea name="address" class="form-control @error('whatsapp') is-invalid @enderror" placeholder="Alamat"
-                                    aria-label="Alamat" aria-describedby="basic-addon11"></textarea>
-                                @error('whatsapp')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div> --}}
+
                         <div class="col-12">
                             <div class="d-grid gap-2 mx-auto mt-3">
                                 <button class="btn btn-primary" type="submit">Simpan</button>

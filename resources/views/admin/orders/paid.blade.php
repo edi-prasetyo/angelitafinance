@@ -113,7 +113,7 @@
                                     <a href="{{ url('admin/orders/detail/' . $item->id) }}"
                                         class="btn btn-sm btn-info text-white">Detail</a>
 
-                                    @role('Superadmin')
+                                    @role('superadmin')
                                         <a href="{{ url('admin/orders/cancel/' . $item->id) }}"
                                             class="btn btn-sm btn-danger text-white">Cancel</a>
                                         <a href="{{ url('admin/orders/trash/' . $item->id) }}"

@@ -85,6 +85,7 @@
                                             @hasrole('superadmin|finance')
                                                 <th></th>
                                             @endhasrole
+
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Item Price</th>
@@ -389,6 +390,7 @@
                                             <th class="fw-bold" style="font-size: 12px;color:#000">Keterangan</th>
                                             <th class="fw-bold" style="font-size: 12px;color:#000">Tgl Mulai</th>
                                             <th class="fw-bold" style="font-size: 12px;color:#000">Tgl Selesai</th>
+                                            <th class="fw-bold" style="font-size: 12px;color:#000">Include</th>
                                             <th class="fw-bold" style="text-align: right;font-size: 12px;color:#000">Harga
                                             </th>
 
@@ -399,7 +401,10 @@
                                             <tr>
                                                 <td class="fw-bold" style="font-size: 12px">
                                                     {{ $item->car_name }}<br>
-                                                    {{ $item->package_name }}
+                                                    {{ $item->package_name }} @if ($item->all_in == 0)
+                                                    @else
+                                                        - All In
+                                                    @endif
                                                 </td>
                                                 <td class="fw-bold" style="font-size: 12px">
                                                     {{ date('d M Y', strtotime($item->start_date)) }}
@@ -428,6 +433,26 @@
                                                     @endif
 
                                                 </td>
+                                                <td>-
+                                                    @if ($item->fuel == 1)
+                                                        BBM,
+                                                    @endif
+                                                    @if ($item->toll == 1)
+                                                        Toll,
+                                                    @endif
+                                                    @if ($item->parking == 1)
+                                                        Parkir,
+                                                    @endif
+                                                    @if ($item->meal == 1)
+                                                        Uang Makan,
+                                                    @endif
+                                                    @if ($item->lodging == 1)
+                                                        Uang Inap,
+                                                    @endif
+                                                    @if ($item->pickup_charge == 1)
+                                                        Penjemputan Pagi,
+                                                    @endif
+                                                </td>
 
                                                 <td class="fw-bold" style="text-align: right;font-size:12px">
 
@@ -440,7 +465,7 @@
 
 
 
-                                            <td colspan="2"
+                                            <td colspan="3"
                                                 style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
                                             </td>
 
@@ -456,7 +481,7 @@
 
 
 
-                                                <td colspan="2"
+                                                <td colspan="3"
                                                     style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
                                                 </td>
 
@@ -473,7 +498,7 @@
 
 
 
-                                            <td colspan="2"
+                                            <td colspan="3"
                                                 style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
                                             </td>
 

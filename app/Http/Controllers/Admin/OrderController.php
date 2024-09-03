@@ -85,12 +85,14 @@ class OrderController extends Controller
                 ->where(['orders.status' => 1, 'orders.cancel' => 1])
                 ->where('bill', '>', 0)
                 ->where('customer_id', $customer_id)
+
                 ->selectSub($amountSum, 'amount_sum')
+
                 ->join('customers', 'customers.id', '=', 'orders.customer_id')
                 ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
                 ->orderBy('id', 'desc')
                 ->with('orderCount')
-                ->paginate(10);
+                ->paginate(20);
             // return $orders->orderCount;
             $title = 'Delete Order!';
             $text = "Anda Yakin ingin menghapus data ini?";
@@ -111,10 +113,12 @@ class OrderController extends Controller
                 ->where(['orders.status' => 1, 'orders.cancel' => 1])
                 ->where('bill', '>', 0)
                 ->selectSub($amountSum, 'amount_sum')
+
                 ->join('customers', 'customers.id', '=', 'orders.customer_id')
                 ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
                 ->orderBy('id', 'desc')
                 ->with('orderCount')
+
                 ->paginate(10);
             // return $orders->orderCount;
             $title = 'Delete Order!';
@@ -201,7 +205,7 @@ class OrderController extends Controller
             ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
             ->orderBy('id', 'desc')
             ->with('orderCount')
-            ->paginate(10);
+            ->paginate(20);
         // return $orders->orderCount;
         $title = 'Delete Order!';
         $text = "Anda Yakin ingin menghapus data ini?";
@@ -227,7 +231,7 @@ class OrderController extends Controller
             ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
             ->orderBy('id', 'desc')
             ->with('orderCount')
-            ->paginate(10);
+            ->paginate(20);
         // return $orders->orderCount;
         $title = 'Delete Order!';
         $text = "Anda Yakin ingin menghapus data ini?";
@@ -576,6 +580,7 @@ class OrderController extends Controller
         $order_item->item_price = $new_price;
         $order_item->price = $price;
         $order_item->overtime = $overtime;
+        $order_item->fuel_amount = $request['fuel_amount'];
         $order_item->meal_cost = $request['meal_cost'];
         $order_item->lodging_cost = $request['lodging_cost'];
         $order_item->all_in = $request->all_in == true ? '1' : '0';

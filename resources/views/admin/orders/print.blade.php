@@ -256,7 +256,10 @@
                             <tr>
                                 <td class="fw-bold" style="font-size: 35px">
                                     {{ $item->car_name }}<br>
-                                    {{ $item->package_name }}
+                                    {{ $item->package_name }} - @if ($item->all_in == 0)
+                                    @else
+                                        All In
+                                    @endif
                                 </td>
                                 <td class="fw-bold" style="font-size: 35px">
                                     {{ date('d M Y', strtotime($item->start_date)) }}
@@ -382,7 +385,7 @@
                                     </ul>
 
 
-                                    <div style="font-size:27px;">
+                                    <div style="font-size:30px;">
                                         <span class="fw-bold"> Syarat Ketentuan :</span>
                                         <ul>
                                             <li>Harga belum termasuk biaya BBM, Uang Makan Driver, Tol dan parkir

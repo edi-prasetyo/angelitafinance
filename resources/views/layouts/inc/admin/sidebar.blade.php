@@ -135,6 +135,25 @@
                 </a>
             </li>
 
+            <li class="menu-item {{ request()->is('admin/finances') ? 'active' : '' }}">
+                <a href="{{ url('admin/finances') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                    <div data-i18n="Analytics">Finance</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->is('admin/drivers') ? 'active' : '' }}">
+                <a href="{{ url('admin/drivers') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-check-shield"></i>
+                    <div data-i18n="Analytics">Driver</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->is('admin/users') ? 'active' : '' }}">
+                <a href="{{ url('admin/users') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user-pin"></i>
+                    <div data-i18n="Analytics">Users</div>
+                </a>
+            </li>
+
 
             {{-- <li class="menu-item {{ request()->is('admin/finances') ? 'active' : '' }}">
                 <a href="{{ url('admin/finances') }}" class="menu-link">
@@ -142,31 +161,6 @@
                     <div data-i18n="Analytics">Finance</div>
                 </a>
             </li> --}}
-            <li class="menu-item {{ request()->is('admin/drivers') ? 'active' : '' }}">
-                <a href="{{ url('admin/drivers') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-check-shield"></i>
-                    <div data-i18n="Analytics">Driver</div>
-                </a>
-            </li>
-            {{-- <li class="menu-item {{ request()->is('admin/admins') ? 'active' : '' }}">
-                <a href="{{ url('admin/admins') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-user-pin"></i>
-                    <div data-i18n="Analytics">Admin</div>
-                </a>
-            </li> --}}
-
-            <li class="menu-item">
-                <a class="menu-link" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    <i class="bx bx-power-off me-2"></i>
-                    <span class="align-middle">Log Out</span>
-                </a>
-            </li>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
         @endhasrole
         @hasrole('admin')
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
@@ -222,31 +216,13 @@
 
         @hasrole('superadmin')
             <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Pengguna</span>
+                <span class="menu-header-text">Pengaturan</span>
             </li>
 
             <li class="menu-item {{ request()->is('admin/roles') ? 'active' : '' }}">
                 <a href="{{ url('admin/roles') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bxs-user-detail"></i>
                     <div data-i18n="Analytics">Roles</div>
-                </a>
-            </li>
-            <li class="menu-item {{ request()->is('admin/finances') ? 'active' : '' }}">
-                <a href="{{ url('admin/finances') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-user-plus"></i>
-                    <div data-i18n="Analytics">Finance</div>
-                </a>
-            </li>
-            <li class="menu-item {{ request()->is('admin/drivers') ? 'active' : '' }}">
-                <a href="{{ url('admin/drivers') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-check-shield"></i>
-                    <div data-i18n="Analytics">Driver</div>
-                </a>
-            </li>
-            <li class="menu-item {{ request()->is('admin/users') ? 'active' : '' }}">
-                <a href="{{ url('admin/users') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-user-pin"></i>
-                    <div data-i18n="Analytics">Users</div>
                 </a>
             </li>
         @endhasrole

@@ -196,6 +196,13 @@
                                         class="form-control">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">BBM Reimburs</label>
+                                    <input type="text" name="fuel_amount" value="{{ $order_item->fuel_amount }}"
+                                        class="form-control">
+                                </div>
+                            </div>
                         @endhasrole
 
                         <div class="col-md-12">

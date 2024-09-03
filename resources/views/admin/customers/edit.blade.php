@@ -31,7 +31,7 @@
                             <label class="form-label">Whatsapp</label>
                             <input type="text" name="phone_number"
                                 class="form-control @error('phone_number') is-invalid @enderror"
-                                value="{{ $customer->phone_number }}" readonly>
+                                value="{{ $customer->phone_number }}">
                             @error('phone_number')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

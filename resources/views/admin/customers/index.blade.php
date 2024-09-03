@@ -105,11 +105,11 @@
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->full_name }}</td>
                                 <td>{{ $item->phone_number }}</td>
-
                                 <td>
                                     @hasrole('superadmin|finance')
-                                        <a href="{{ url('admin/customers/edit/' . $item->id) }}"
-                                            class="btn btn-sm btn-primary text-white"><i class='bx bx-edit'></i></a>
+                                        <a href="{{ url('admin/customers/edit/' . $item->id) }}" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" class="btn btn-sm btn-primary text-white"><i
+                                                class='bx bx-edit'></i></a>
                                     @endhasrole
                                     @hasrole('superadmin')
                                         <a href="{{ url('admin/customers/delete/' . $item->id) }}"
@@ -117,6 +117,7 @@
                                                 class='bx bx-trash'></i></a>
                                     @endrole
                                 </td>
+
                             </tr>
                         @empty
                             <tr>

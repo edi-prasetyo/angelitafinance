@@ -54,6 +54,7 @@
                             <th scope="col">Order</th>
                             <th scope="col">Bill</th>
                             <th scope="col">Amount</th>
+                            <th scope="col">Verify By</th>
 
                             <th scope="col">Status</th>
 
@@ -88,6 +89,8 @@
 
                                     {{ number_format($item->amount_sum) }}
 
+                                </td>
+                                <td>{{ $item->verify_name }}
                                 </td>
 
 

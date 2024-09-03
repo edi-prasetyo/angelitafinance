@@ -30,4 +30,4 @@ Rincian Update Aplikasi
 -   Update 27 Agustus 2024
     -   Add Field bank, account, number in table "rentals"
 -   Update 2 Februari 2024
-    -   Add Field verify in table "orders"
+    -   Add Field verify and verify_by in table "orders" 

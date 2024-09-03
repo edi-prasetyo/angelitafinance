@@ -60,7 +60,7 @@ class OrderController extends Controller
             ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
             ->orderBy('id', 'desc')
             ->with('orderCount')
-            ->paginate(10);
+            ->paginate(20);
         // return $orders->orderCount;
         $title = 'Delete Order!';
         $text = "Anda Yakin ingin menghapus data ini?";
@@ -119,7 +119,7 @@ class OrderController extends Controller
                 ->orderBy('id', 'desc')
                 ->with('orderCount')
 
-                ->paginate(10);
+                ->paginate(20);
             // return $orders->orderCount;
             $title = 'Delete Order!';
             $text = "Anda Yakin ingin menghapus data ini?";
@@ -141,7 +141,7 @@ class OrderController extends Controller
                 ->whereColumn('order_id', 'orders.id')
                 ->getQuery();
 
-            $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+            $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name', 'users.name as verify_name')
                 ->where(['orders.status' => 1, 'orders.cancel' => 1])
                 ->where('orders.bill', '>', 0)
                 ->where('orders.verify', 1)
@@ -149,13 +149,15 @@ class OrderController extends Controller
                 ->selectSub($amountSum, 'amount_sum')
                 ->join('customers', 'customers.id', '=', 'orders.customer_id')
                 ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+                ->join('users', 'users.id', '=', 'orders.verify_by')
                 ->orderBy('id', 'desc')
                 ->with('orderCount')
-                ->paginate(10);
+                ->paginate(20);
             // return $orders->orderCount;
             $title = 'Delete Order!';
             $text = "Anda Yakin ingin menghapus data ini?";
             confirmDelete($title, $text);
+
             return view('admin.orders.verify', compact('orders', 'customers', 'rentals', 'partners', 'customer_id'));
         } else {
             $customers = Customer::all();
@@ -168,16 +170,17 @@ class OrderController extends Controller
                 ->whereColumn('order_id', 'orders.id')
                 ->getQuery();
 
-            $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+            $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name', 'users.name as verify_name')
                 // ->where(['orders.status' => 1, 'orders.cancel' => 1])
                 // ->where('orders.bill', '>', 0)
                 ->where('orders.verify', 1)
                 ->selectSub($amountSum, 'amount_sum')
                 ->join('customers', 'customers.id', '=', 'orders.customer_id')
                 ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+                ->join('users', 'users.id', '=', 'orders.verify_by')
                 ->orderBy('id', 'desc')
                 ->with('orderCount')
-                ->paginate(10);
+                ->paginate(20);
             // return $orders;
             $title = 'Delete Order!';
             $text = "Anda Yakin ingin menghapus data ini?";
@@ -673,6 +676,7 @@ class OrderController extends Controller
     {
         $order = Order::where('id', $id)->first();
         $order->verify = 1;
+        $order->verify_by = Auth::user()->id;
         $order->update();
 
         Alert::success('Order', 'Berhasil Diverifikasi');

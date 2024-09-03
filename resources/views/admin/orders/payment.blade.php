@@ -55,7 +55,7 @@
                         <div class="row">
                             <input type="hidden" name="order_id" value="{{ $order->id }}">
                             <div class="col-md-6">
-                                <label class="form-label">Tanggal Mulai</label>
+                                <label class="form-label">Tanggal Bayar</label>
                                 <div class="input-group date">
                                     <input id="datepicker" type="text" autocomplete="off" name="payment_date"
                                         class="form-control" value="{{ old('payment_date') }}"

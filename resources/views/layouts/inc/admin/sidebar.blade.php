@@ -109,10 +109,6 @@
                 </a>
             </li>
 
-
-
-
-
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Pengguna</span>
             </li>
@@ -157,6 +153,16 @@
                 </a>
             </li> --}}
         @endhasrole
+
+        @hasrole('superadmin')
+            <li class="menu-item {{ request()->is('admin/reports') ? 'active' : '' }}">
+                <a href="{{ url('admin/reports') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-pie-chart-alt-2"></i>
+                    <div data-i18n="Analytics">Reports</div>
+                </a>
+            </li>
+        @endhasrole
+
         @hasrole('admin')
             <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a href="{{ url('admin/dashboard') }}" class="menu-link">
@@ -210,13 +216,6 @@
 
 
         @hasrole('superadmin')
-            <li class="menu-item {{ request()->is('admin/reports') ? 'active' : '' }}">
-                <a href="{{ url('admin/reports') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-pie-chart-alt-2"></i>
-                    <div data-i18n="Analytics">Reports</div>
-                </a>
-            </li>
-
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Pengaturan</span>
             </li>

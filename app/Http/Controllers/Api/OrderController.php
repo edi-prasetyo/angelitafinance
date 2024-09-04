@@ -84,7 +84,7 @@ class OrderController extends Controller
             ->select('orders.*', 'customers.full_name as customer_name')
             ->selectSub($amountSum, 'amount_sum')
             ->withCount('appOrder')
-            ->where(['orders.status' => 1, 'orders.cancel' => 1])
+            ->where(['orders.status' => 1, 'orders.cancel' => 1, 'verify' => 0])
             ->where('bill', '=', 0)
             ->with('appOrderItem')
             ->paginate(10);
@@ -121,6 +121,54 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $orders
+            ], 200, [], JSON_NUMERIC_CHECK);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ]);
+        }
+    }
+
+    public function verify()
+    {
+        $amountSum = OrderItem::selectRaw('sum(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+
+        $orders = Order::orderBy('id', 'asc')
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->select('orders.*', 'customers.full_name as customer_name')
+            ->selectSub($amountSum, 'amount_sum')
+            ->withCount('appOrder')
+            ->where(['orders.status' => 1, 'orders.cancel' => 1, 'verify' => 1])
+            ->with('appOrderItem')
+            ->paginate(10);
+
+        if ($orders) {
+            return response()->json([
+                'success' => true,
+                'data' => $orders
+            ], 200, [], JSON_NUMERIC_CHECK);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ]);
+        }
+    }
+
+    public function verify_order($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $order->verify = 1;
+        $order->verify_by = Auth::user()->id;
+        $order->update();
+
+        if ($order) {
+            return response()->json([
+                'success' => true,
+                'data' => $order
             ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([

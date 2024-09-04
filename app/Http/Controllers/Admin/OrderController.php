@@ -67,6 +67,32 @@ class OrderController extends Controller
         confirmDelete($title, $text);
         return view('admin.orders.index', compact('orders', 'customers', 'customers2', 'rentals', 'partners'));
     }
+    public function daily()
+    {
+        $customers = Customer::all();
+        $customers2 = Customer::all();
+        $rentals = Rental::all();
+        $partners = Partner::all();
+        // $payments = Payment::all();
+        $amountSum = OrderItem::selectRaw('sum(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+
+        $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
+            ->where(['orders.status' => 1, 'orders.cancel' => 1])
+            ->where('bill', '>', 0)
+            ->selectSub($amountSum, 'amount_sum')
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+            ->orderBy('id', 'desc')
+            ->with('orderCount')
+            ->paginate(20);
+        // return $orders->orderCount;
+        $title = 'Delete Order!';
+        $text = "Anda Yakin ingin menghapus data ini?";
+        confirmDelete($title, $text);
+        return view('admin.orders.index', compact('orders', 'customers', 'customers2', 'rentals', 'partners'));
+    }
 
     public function unpaid(Request $request)
     {
@@ -201,7 +227,7 @@ class OrderController extends Controller
 
         $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
             ->where(['orders.status' => 1, 'orders.cancel' => 1])
-            ->where('orders.bill', '=', 0)
+            ->where('orders.bill', '<=', 0)
             ->where('orders.verify', 0)
             ->selectSub($amountSum, 'amount_sum')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')

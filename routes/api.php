@@ -29,35 +29,45 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
+
+
+
 // Protected Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/profile', [AuthController::class, 'profile']);
-    Route::get('/orders', [OrderController::class, 'index']);
 
-    Route::get('/orders/unpaid', [OrderController::class, 'unpaid']);
-    Route::get('/orders/paid', [OrderController::class, 'paid']);
-    Route::get('/orders/cancel', [OrderController::class, 'cancel']);
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('/logout', 'logout');
+        Route::get('/profile', 'profile');
+    });
+    // Orders
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/orders', 'index');
+        Route::get('/orders/unpaid', 'unpaid');
+        Route::get('/orders/paid', 'paid');
+        Route::get('/orders/cancel',  'cancel');
+        Route::get('/orders/verify',  'verify');
+        Route::get('/orders/verify/{id}',  'verify_order');
+        Route::get('/orders/all', 'get_orders');
+        Route::get('/orders/{id}',  'show');
+        Route::get('/orders/payments/{order_id}', 'get_payments');
+    });
 
-    Route::get('/orders/all', [OrderController::class, 'get_orders']);
-    Route::get('/orders/{id}', [OrderController::class, 'show']);
-    Route::get('/orders/payments/{order_id}', [OrderController::class, 'get_payments']);
     Route::get('/customers', [CustomerController::class, 'index']);
 });
 
 // Test Response Sanctum Api
-Route::post('/sanctum/token', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
+// Route::post('/sanctum/token', function (Request $request) {
+//     $request->validate([
+//         'email' => 'required|email',
+//         'password' => 'required',
+//         'device_name' => 'required',
+//     ]);
 
-    $user = User::where('email', $request->email)->first();
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['the provided credential are incorrect'],
-        ]);
-    }
-    return $user->createToken($request->device_name)->plainTextToken;
-});
+//     $user = User::where('email', $request->email)->first();
+//     if (!$user || !Hash::check($request->password, $user->password)) {
+//         throw ValidationException::withMessages([
+//             'email' => ['the provided credential are incorrect'],
+//         ]);
+//     }
+//     return $user->createToken($request->device_name)->plainTextToken;
+// });

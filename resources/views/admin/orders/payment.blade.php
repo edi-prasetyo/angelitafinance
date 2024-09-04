@@ -120,7 +120,13 @@
                     <tbody>
                         @foreach ($payments as $payment)
                             <tr>
-                                <td>{{ $payment->payment_date }}</td>
+                                <td>
+
+                                    <a href="{{ url('admin/orders/payment/delete/' . $payment->id) }}"
+                                        class="btn btn-sm btn-danger"><i class="bx bx-trash"></i>
+                                    </a>
+                                    {{ $payment->payment_date }}
+                                </td>
                                 <td>{{ $payment->payment_method }}</td>
                                 <td>Rp. {{ number_format($payment->amount) }}</td>
                                 <td>

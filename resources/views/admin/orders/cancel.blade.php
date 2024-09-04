@@ -29,6 +29,11 @@
                             Verify</span><i class="bx bx-check-shield bx-sm d-sm-none"></i></a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ url('admin/orders/daily') }}" class="nav-link"><span class="d-none d-sm-block"><i
+                                class="tf-icons bx bx-calendar bx-sm me-1_5 align-text-bottom"></i> Daily
+                            Order</span><i class="bx bx-calendar bx-sm d-sm-none"></i></a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('admin/orders/cancel') }}" class="nav-link active"><span class="d-none d-sm-block"><i
                                 class="tf-icons bx bx-x-circle bx-sm me-1_5 align-text-bottom"></i> Order
                             Cancel</span><i class="bx bx-x-circle bx-sm d-sm-none"></i></a>

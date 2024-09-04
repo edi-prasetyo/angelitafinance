@@ -14,9 +14,9 @@
         <div class="card mb-3">
             <ul class="nav nav-pills nav-fill" role="tablist">
                 <li class="nav-item">
-                    <a href="{{ url('admin/orders') }}" type="button" class="nav-link active" role="tab"
-                        data-bs-toggle="tab" aria-controls="navs-pills-justified-home" aria-selected="true"><span
-                            class="d-none d-sm-block"><i class="tf-icons bx bx-receipt bx-sm me-1_5 align-text-bottom"></i>
+                    <a href="{{ url('admin/orders') }}" type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                        aria-controls="navs-pills-justified-home" aria-selected="true"><span class="d-none d-sm-block"><i
+                                class="tf-icons bx bx-receipt bx-sm me-1_5 align-text-bottom"></i>
                             Order Belum di Bayar</span>
                         <i class="bx bx-receipt bx-sm d-sm-none"></i></a>
                 </li>
@@ -30,10 +30,11 @@
                                 class="tf-icons bx bx-check-shield bx-sm me-1_5 align-text-bottom"></i> Order
                             Verify</span><i class="bx bx-check-shield bx-sm d-sm-none"></i></a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="{{ url('admin/orders/daily') }}" class="nav-link"><span class="d-none d-sm-block"><i
+                    <a href="{{ url('admin/orders/cancel') }}" class="nav-link active"><span class="d-none d-sm-block"><i
                                 class="tf-icons bx bx-calendar bx-sm me-1_5 align-text-bottom"></i> Daily
-                            Order</span><i class="bx bx-x-calendar bx-sm d-sm-none"></i></a>
+                            Order</span><i class="bx bx-calendar bx-sm d-sm-none"></i></a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('admin/orders/cancel') }}" class="nav-link"><span class="d-none d-sm-block"><i
@@ -47,27 +48,18 @@
         <div class="card">
 
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
-                <h4 class="my-auto">Order Belum di bayar</h4>
+                <h4 class="my-auto">Cari Order per Tanggal</h4>
                 <div class="col-md-6">
-                    <form action="{{ url('admin/orders') }}" method="GET">
+                    <form action="{{ url('admin/orders/daily') }}" method="GET">
                         @csrf
                         <div class="row">
 
                             <div class="col-md-8">
-                                <select class="form-select" name="customer_id" id="single-select-field4"
-                                    data-placeholder="Pilih Customer">
-                                    <option></option>
-                                    @foreach ($customers as $item)
-                                        <option value="{{ $item->id }}"
-                                            {{ $item->id == $customer_id ? 'selected' : '' }}>{{ $item->full_name }} -
-                                            {{ $item->phone_number }}
-                                        </option>
-
-                                        {{-- <option value="{{ $item->id }}">{{ $item->full_name }} -
-                                            {{ $item->phone_number }}
-                                        </option> --}}
-                                    @endforeach
-                                </select>
+                                <div class="input-group mb-3 input-daterange">
+                                    <span class="input-group-text" id="basic-addon1"><i class="bx bx-calendar"></i> </span>
+                                    <input autocomplete="off" type="text" name="start_date"
+                                        class="form-field__input form-control">
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="d-grid gap-2">
@@ -83,15 +75,11 @@
                     <thead>
                         <tr>
                             <th width="5%">NO</th>
-                            <th scope="col">Order Date</th>
+                            <th scope="col"> Date</th>
+                            <th scope="col"> Mobil</th>
+                            <th scope="col"> Paket</th>
                             <th scope="col">Customer</th>
-                            <th scope="col">Rental</th>
-                            <th scope="col">Order</th>
-                            <th scope="col">Bill</th>
-                            <th scope="col">Amount</th>
-
-                            <th scope="col">Status</th>
-
+                            <th scope="col">Harga</th>
                             <th width="20%">Action</th>
                         </tr>
                     </thead>
@@ -99,45 +87,16 @@
                         @forelse ($orders as $i=> $item)
                             <tr>
                                 <td>{{ $i + 1 }}</td>
-                                <td>{{ date('d-m-Y', strtotime($item->order_date)) }}</td>
+                                <td>{{ date('d-m-Y', strtotime($item->start_date)) }}</td>
+                                <td>{{ $item->car_name }} -
+                                    {{ $item->car_number }}</td>
+                                <td>
+                                    {{ $item->package_name }}
+                                </td>
                                 <td>{{ $item->customer_name }}</td>
-                                <td>{{ $item->rental_name }}</td>
-                                <td>{{ count($item->orderCount) }}
-
-                                    @if (count($item->orderCount) < 2)
-                                        day
-                                    @else
-                                        days
-                                    @endif
-                                </td>
                                 <td>
-                                    @if ($item->bill > 0)
-                                        <span class="text-danger fw-bold"> Rp. {{ number_format($item->bill) }}</span>
-                                    @else
-                                        <span class="text-success fw-bold"> Rp. {{ number_format($item->bill) }}</span>
-                                    @endif
+                                    Rp. {{ number_format($item->price) }}
 
-                                </td>
-
-                                <td>
-
-                                    {{ number_format($item->amount_sum) }}
-
-                                </td>
-
-
-
-                                <td>
-                                    @if ($item->cancel <= 0)
-                                        <span class="badge bg-label-danger px-2">Cancel</span>
-                                    @else
-                                        {{-- <span class="badge bg-label-danger px-2">Unpaid</span> --}}
-                                    @endif
-                                    @if ($item->bill <= 0)
-                                        <span class="badge bg-label-success px-2">Paid</span>
-                                    @else
-                                        <span class="badge bg-label-danger px-2">Unpaid</span>
-                                    @endif
                                 </td>
 
                                 <td>
@@ -145,17 +104,6 @@
                                         <a href="{{ url('admin/orders/payment/' . $item->id) }}"
                                             class="btn btn-sm btn-primary text-white">Pay</a>
                                     @endhasrole
-                                    <a href="{{ url('admin/orders/detail/' . $item->id) }}"
-                                        class="btn btn-sm btn-info text-white">Detail</a>
-
-                                    @role('superadmin')
-                                        <a href="{{ url('admin/orders/cancel/' . $item->id) }}"
-                                            class="btn btn-sm btn-danger text-white">Cancel</a>
-                                        <a href="{{ url('admin/orders/trash/' . $item->id) }}"
-                                            class="btn btn-sm btn-danger text-white">Hapus</a>
-                                    @endrole
-
-
 
                                 </td>
                             </tr>

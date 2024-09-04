@@ -188,10 +188,12 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/orders/paid', 'paid');
         Route::get('/orders/cancel', 'order_cancel');
         Route::get('/orders/verify', 'verify');
+        Route::get('/orders/daily', 'daily');
 
 
         Route::get('/orders/payment/{order_id}', 'payment')->name('payment');
         Route::post('/orders/payment/add_payment', 'add_payment')->name('add_payment');
+        Route::get('/orders/payment/delete/{id}', 'delete_payment');
         // Sales
         Route::get('/orders/sales/', 'sales')->name('sales');
         Route::get('/orders/sales_items/', 'sales_item')->name('sales_item');

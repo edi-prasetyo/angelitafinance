@@ -45,6 +45,7 @@
                             <th scope="col"> Mobil</th>
                             <th scope="col"> Paket</th>
                             <th scope="col">Customer</th>
+                            <th scope="col">Driver</th>
                             <th scope="col">Harga</th>
 
                         </tr>
@@ -61,6 +62,9 @@
                                 </td>
                                 <td>{{ $item->customer_name }}</td>
                                 <td>
+                                    <span class="badge bg-label-primary px-2"> {{ $item->driver_name }} </span>
+                                </td>
+                                <td>
                                     Rp. {{ number_format($item->price) }}
 
                                 </td>
@@ -69,11 +73,11 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center">No Transaction Available </td>
+                                <td colspan="9" class="text-center">No Transaction Available </td>
                             </tr>
                         @endforelse
                         <tr>
-                            <td colspan="4"></td>
+                            <td colspan="5"></td>
                             <td class="fw-bold">Total</td>
                             <td class="fw-bold ">Rp. {{ number_format($get_price) }}</td>
 

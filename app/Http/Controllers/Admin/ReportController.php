@@ -86,9 +86,10 @@ class ReportController extends Controller
             ->getQuery();
 
         $date = $request['start_date'];
-        $order_items = OrderItem::select('order_items.*', 'customers.full_name as customer_name', 'packages.name as package_name', 'cars.name as car_name', 'cars.number as car_number')
+        $order_items = OrderItem::select('order_items.*', 'customers.full_name as customer_name', 'packages.name as package_name', 'cars.name as car_name', 'cars.number as car_number', 'users.name as driver_name')
             ->where('start_date', $date)
             ->join('customers', 'customers.id', '=', 'order_items.customer_id')
+            ->join('users', 'users.id', '=', 'order_items.driver_id')
             ->join('packages', 'packages.id', '=', 'order_items.package_id')
             ->join('cars', 'cars.id', '=', 'order_items.car_id')
             // ->selectSub($amountSum, 'amount_sum')

@@ -14,8 +14,7 @@
         <div class="card mb-3">
             <ul class="nav nav-pills nav-fill" role="tablist">
                 <li class="nav-item">
-                    <a href="{{ url('admin/orders') }}" type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                        aria-controls="navs-pills-justified-home" aria-selected="true"><span class="d-none d-sm-block"><i
+                    <a href="{{ url('admin/orders') }}" type="button" class="nav-link"><span class="d-none d-sm-block"><i
                                 class="tf-icons bx bx-receipt bx-sm me-1_5 align-text-bottom"></i>
                             Order Belum di Bayar</span>
                         <i class="bx bx-receipt bx-sm d-sm-none"></i></a>

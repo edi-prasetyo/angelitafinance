@@ -126,12 +126,7 @@
                 </a>
             </li>
 
-            <li class="menu-item {{ request()->is('admin/finances') ? 'active' : '' }}">
-                <a href="{{ url('admin/finances') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-user-plus"></i>
-                    <div data-i18n="Analytics">Finance</div>
-                </a>
-            </li>
+
             <li class="menu-item {{ request()->is('admin/drivers') ? 'active' : '' }}">
                 <a href="{{ url('admin/drivers') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-check-shield"></i>
@@ -141,7 +136,7 @@
             <li class="menu-item {{ request()->is('admin/users') ? 'active' : '' }}">
                 <a href="{{ url('admin/users') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user-pin"></i>
-                    <div data-i18n="Analytics">Users</div>
+                    <div data-i18n="Analytics">Admin</div>
                 </a>
             </li>
 

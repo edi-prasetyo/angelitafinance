@@ -197,7 +197,7 @@ class OrderController extends Controller
     {
         //
     }
-    public function show($id)
+    public function order_item($id)
     {
         $order_items = OrderItem::where('order_id', $id)->get();
 
@@ -205,6 +205,22 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $order_items
+            ], 200, [], JSON_NUMERIC_CHECK);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ]);
+        }
+    }
+    public function show($id)
+    {
+        $order = Order::where('id', $id)->get();
+
+        if ($order) {
+            return response()->json([
+                'success' => true,
+                'data' => $order
             ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             return response()->json([

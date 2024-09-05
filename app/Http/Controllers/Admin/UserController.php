@@ -39,6 +39,7 @@ class UserController extends Controller
             'email' => 'required|max:255',
             'unique:users',
             'password' => 'required|confirmed|min:8',
+            'roles' => 'required',
         ]);
 
         $user = new User();
@@ -106,7 +107,9 @@ class UserController extends Controller
 
     public function driver()
     {
-        $users  = User::role('driver')->paginate(10);
+        $users  = User::role('driver')
+            ->with('orderDriver')
+            ->paginate(10);
         return view('admin.users.index', compact('users'));
     }
     public function admin()

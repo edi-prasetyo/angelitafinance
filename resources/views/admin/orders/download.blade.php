@@ -175,6 +175,7 @@
         <table id="customers">
             <thead>
                 <tr>
+                    <th>Keterangan</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Item Price</th>
@@ -188,7 +189,12 @@
             <tbody>
                 @foreach ($order_items as $item)
                     <tr>
-
+                        <td>{{ $item->car_name }}<br>
+                            {{ $item->package_name }} @if ($item->all_in == 0)
+                            @else
+                                - All In
+                            @endif
+                        </td>
                         <td>{{ date('d M Y', strtotime($item->start_date)) }} -
                             {{ $item->start_time }}
 
@@ -255,7 +261,7 @@
 
 
 
-                    <td colspan="4"
+                    <td colspan="5"
                         style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
 
 
@@ -272,7 +278,7 @@
 
 
 
-                        <td colspan="4"
+                        <td colspan="5"
                             style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
                         </td>
 
@@ -289,7 +295,7 @@
 
 
 
-                    <td colspan="4"
+                    <td colspan="5"
                         style="border-left: 0px solid Transparent!important;border-right: 0px solid Transparent!important;border-bottom: 1px solid Transparent!important;">
                     </td>
 

@@ -77,11 +77,16 @@
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
                         <strong>Role:</strong>
-                        <select class="form-control multiple" multiple name="roles[]">
+                        <select class="form-control multiple  @error('roles') is-invalid @enderror" multiple name="roles[]">
                             @foreach ($roles as $role)
                                 <option value="{{ $role }}">{{ $role }}</option>
                             @endforeach
                         </select>
+                        @error('roles')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3 text-center">

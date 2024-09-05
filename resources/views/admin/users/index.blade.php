@@ -15,6 +15,7 @@
                         <tr>
                             <th width="5%">ID</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Order</th>
                             <th scope="col">Email</th>
                             <th scope="col">role</th>
                             <th scope="col">status</th>
@@ -26,6 +27,7 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
+                                <td>{{ count($item->orderDriver) }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>
                                     @if (!empty($item->getRoleNames()))

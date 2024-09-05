@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/orders/verify/{id}',  'verify_order');
         Route::get('/orders/all', 'get_orders');
         Route::get('/orders/{id}',  'show');
+        Route::get('/orders/item/{id}',  'order_item');
         Route::get('/orders/payments/{order_id}', 'get_payments');
     });
 

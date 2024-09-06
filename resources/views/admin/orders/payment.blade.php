@@ -77,6 +77,7 @@
 
                                     <option value="down payment">Down Payment</option>
                                     <option value="full payment">Full Payment</option>
+                                    <option value="discount">Discount</option>
 
                                 </select>
                             </div>
@@ -113,6 +114,7 @@
                         <tr>
                             <th scope="col">Tanggal Bayar</th>
                             <th scope="col">Jenis Pembayaran</th>
+                            <th scope="col">Metode Pembayaran</th>
                             <th scope="col">Jumlah </th>
                             <th width="15%">Bukti Bayar</th>
                         </tr>
@@ -126,6 +128,14 @@
                                         class="btn btn-sm btn-danger"><i class="bx bx-trash"></i>
                                     </a>
                                     {{ $payment->payment_date }}
+                                </td>
+                                <td>
+                                    @if ($payment->payment_type == 'discount')
+                                        <span class="badge bg-label-success"><i class='bx bxs-discount'></i>
+                                            {{ $payment->payment_type }}</span>
+                                    @else
+                                        {{ $payment->payment_type }}
+                                    @endif
                                 </td>
                                 <td>{{ $payment->payment_method }}</td>
                                 <td>Rp. {{ number_format($payment->amount) }}</td>

@@ -142,6 +142,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/users/active/{user_id}', 'active');
         Route::get('/users/nonactive/{user_id}', 'nonactive');
         Route::get('/drivers', 'driver');
+        Route::get('/drivers/monthly-order', 'driver_order');
         Route::get('/admins', 'admin');
         Route::get('/finances', 'finance');
         Route::get('/security', 'security');

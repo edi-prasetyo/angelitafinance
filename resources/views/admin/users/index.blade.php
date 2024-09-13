@@ -6,8 +6,13 @@
 
         <div class="card">
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
-                <h4 class="my-auto">Pengguna</h4>
-                <a href="{{ url('admin/users/create') }}" class="btn btn-success text-white">Add <i class='bx bx-plus'></i></a>
+                <h4 class="my-auto">Driver</h4>
+                <div>
+                    <a href="{{ url('admin/drivers/monthly-order') }}" class="btn btn-primary text-white"><i
+                            class="bx bx-calendar"></i> Monthly Order </a>
+                    <a href="{{ url('admin/users/create') }}" class="btn btn-success text-white">Add <i
+                            class='bx bx-plus'></i></a>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped">

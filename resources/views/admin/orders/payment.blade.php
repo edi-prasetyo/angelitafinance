@@ -16,6 +16,8 @@
                             <th scope="col">Order Date</th>
                             <th scope="col">Verifikasi</th>
                             <th scope="col">Bill</th>
+                            {{-- <th scope="col">Amount</th> --}}
+
                         </tr>
                     </thead>
                     <tbody>
@@ -28,8 +30,10 @@
                                     <span class="badge bg-label-success">Terverifikasi</span>
                                 @endif
                             </td>
-                            <td>{{ $order->customer_name }}</td>
+                            {{-- <td>{{ $order->customer_name }}</td> --}}
                             <td>Rp. {{ number_format($order->bill) }}</td>
+                            {{-- <td>Rp. {{ number_format($order->amount_sum) }}</td> --}}
+
                         </tr>
 
                     </tbody>
@@ -107,6 +111,7 @@
             </div>
         @endif
 
+
         <div class="card">
             <div class="card-body">
                 <table class="table table-striped">
@@ -173,7 +178,7 @@
                     </tbody>
                 </table>
 
-                @if ($order->verify == 1)
+                @if ($order->verify == 1 || $order->bill > 0)
                 @else
                     @role('superadmin')
                         <a href="{{ url('admin/orders/verify/' . $order->id) }}"
@@ -181,9 +186,12 @@
                             Pembayaran</a>
                     @endrole
                 @endif
+
             </div>
         </div>
+
     </div>
+
 
 
 

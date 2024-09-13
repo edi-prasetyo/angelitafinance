@@ -8,55 +8,45 @@
             </div>
         @endif
 
-        @include('admin.orders.create_order')
-
-
-        <div class="card mb-3">
-            <ul class="nav nav-pills nav-fill" role="tablist">
-                <li class="nav-item">
-                    <a href="{{ url('admin/orders') }}" type="button" class="nav-link"><span class="d-none d-sm-block"><i
-                                class="tf-icons bx bx-receipt bx-sm me-1_5 align-text-bottom"></i>
-                            Order Belum di Bayar</span>
-                        <i class="bx bx-receipt bx-sm d-sm-none"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ url('admin/orders/paid') }}" class="nav-link"><span class="d-none d-sm-block"><i
-                                class="tf-icons bx bx-check-circle bx-sm me-1_5 align-text-bottom"></i> Order Lunas</span><i
-                            class="bx bx-check-circle bx-sm d-sm-none"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ url('admin/orders/verify') }}" class="nav-link"><span class="d-none d-sm-block"><i
-                                class="tf-icons bx bx-check-shield bx-sm me-1_5 align-text-bottom"></i> Order
-                            Verify</span><i class="bx bx-check-shield bx-sm d-sm-none"></i></a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ url('admin/orders/daily') }}" class="nav-link active"><span class="d-none d-sm-block"><i
-                                class="tf-icons bx bx-calendar bx-sm me-1_5 align-text-bottom"></i> Daily
-                            Order</span><i class="bx bx-calendar bx-sm d-sm-none"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ url('admin/orders/cancel') }}" class="nav-link"><span class="d-none d-sm-block"><i
-                                class="tf-icons bx bx-x-circle bx-sm me-1_5 align-text-bottom"></i> Order
-                            Cancel</span><i class="bx bx-x-circle bx-sm d-sm-none"></i></a>
-                </li>
-            </ul>
-        </div>
-
 
         <div class="card">
 
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
-                <h4 class="my-auto">Cari Order per Tanggal</h4>
+                <h4 class="my-auto"> Jumlah : <span class="badge bg-label-primary"> {{ $count_orders }} Order</span>
+                </h4>
                 <div class="col-md-6">
-                    <form action="{{ url('admin/orders/daily') }}" method="GET">
+                    <form action="{{ url('admin/drivers/monthly-order') }}" method="GET">
                         @csrf
                         <div class="row">
 
-                            <div class="col-md-8">
+                            {{-- <div class="col-md-8">
                                 <div class="input-group mb-3 input-daterange">
                                     <span class="input-group-text" id="basic-addon1"><i class="bx bx-calendar"></i> </span>
-                                    <input autocomplete="off" type="text" name="start_date"
+                                    <input autocomplete="off" type="month" name="start_date"
+                                        class="form-field__input form-control">
+                                </div>
+                            </div> --}}
+
+
+                            <div class="col-md-4">
+                                <select class="form-select" name="driver_id" id="single-select-field4"
+                                    data-placeholder="Pilih Driver">
+                                    <option></option>
+                                    @foreach ($drivers as $item)
+                                        <option value="{{ $item->id }}" {{ $item->id == $driver_id ? 'selected' : '' }}>
+                                            {{ $item->name }} -
+
+                                        </option>
+
+                                        /
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1"><i class="bx bx-calendar"></i> </span>
+                                    <input autocomplete="off" type="month" name="month"
                                         class="form-field__input form-control">
                                 </div>
                             </div>
@@ -80,11 +70,11 @@
                             <th scope="col">Customer</th>
                             <th scope="col">Driver</th>
                             <th scope="col">Harga</th>
-                            {{-- <th width="20%">Action</th> --}}
+
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($orders as $i=> $item)
+                        @forelse ($order_items as $i=> $item)
                             <tr>
                                 <td>{{ $i + 1 }}</td>
                                 <td>{{ date('d-m-Y', strtotime($item->start_date)) }}</td>
@@ -94,21 +84,13 @@
                                     {{ $item->package_name }}
                                 </td>
                                 <td>{{ $item->customer_name }}</td>
-                                <td>
-                                    <span class="badge bg-label-primary"> {{ $item->driver_name }}</span>
-                                </td>
+                                <td>{{ $item->driver_name }}</td>
                                 <td>
                                     Rp. {{ number_format($item->price) }}
 
                                 </td>
 
-                                {{-- <td>
-                                    @hasrole('superadmin|finance')
-                                        <a href="{{ url('admin/orders/payment/' . $item->id) }}"
-                                            class="btn btn-sm btn-primary text-white">Pay</a>
-                                    @endhasrole
 
-                                </td> --}}
                             </tr>
                         @empty
                             <tr>
@@ -120,7 +102,7 @@
 
             </div>
             <div class="card-body">
-                {!! $orders->links() !!}
+                {{-- {!! $order_items->links() !!} --}}
             </div>
         </div>
     </div>

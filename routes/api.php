@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\HomeController;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Contracts\Support\ValidatedData;
@@ -42,6 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Orders
     Route::controller(OrderController::class)->group(function () {
         Route::get('/orders', 'index');
+        Route::get('/orders/all-order', 'all');
         Route::get('/orders/unpaid', 'unpaid');
         Route::get('/orders/paid', 'paid');
         Route::get('/orders/cancel',  'cancel');
@@ -51,6 +53,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/orders/{id}',  'show');
         Route::get('/orders/item/{id}',  'order_item');
         Route::get('/orders/payments/{order_id}', 'get_payments');
+    });
+    // Home
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/home/total-bill', 'total_bill');
+        Route::get('/home/total-paid', 'total_paid');
+        Route::get('/home/total-verified', 'total_verified');
     });
 
     Route::get('/customers', [CustomerController::class, 'index']);

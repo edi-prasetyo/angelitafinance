@@ -45,6 +45,32 @@ class OrderController extends Controller
             ]);
         }
     }
+    public function all()
+    {
+        $amountSum = OrderItem::selectRaw('sum(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+
+        $orders = Order::orderBy('id', 'asc')
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->select('orders.*', 'customers.full_name as customer_name')
+            ->selectSub($amountSum, 'amount_sum')
+            ->withCount('appOrder')
+            ->with('appOrderItem')
+            ->get();
+
+        if ($orders) {
+            return response()->json([
+                'success' => true,
+                'data' => $orders
+            ], 200, [], JSON_NUMERIC_CHECK);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ]);
+        }
+    }
     public function unpaid()
     {
 
@@ -215,7 +241,26 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        $order = Order::where('id', $id)->get();
+        // $order = Order::where('id', $id)->get();
+
+        $amountSum = OrderItem::selectRaw('sum(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+        // $order = Order::where('orders.id', $id)
+        //     ->join('customers', 'customers.id', '=', 'orders.customer_id')
+        //     ->select('orders.*', 'customers.full_name as customer_name')
+        //     ->selectSub($amountSum, 'amount_sum')
+        //     ->withCount('appOrder')
+        //     ->where(['orders.status' => 1, 'orders.cancel' => 1, 'verify' => 1])
+        //     ->where('orders.bill', '=', 0)
+        //     ->with('appOrderItem')
+        //     ->get();
+        $order = Order::where('orders.id', $id)
+            ->select('orders.*', 'customers.full_name as customer_name')
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->selectSub($amountSum, 'amount_sum')
+            ->with('appOrderItem')
+            ->get();
 
         if ($order) {
             return response()->json([

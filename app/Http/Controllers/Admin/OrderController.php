@@ -80,6 +80,7 @@ class OrderController extends Controller
 
         $orders = OrderItem::select('order_items.*', 'customers.full_name as customer_name', 'packages.name as package_name', 'cars.name as car_name', 'cars.number as car_number', 'users.name as driver_name')
             ->where('start_date', $date)
+            ->where(['order_items.status' => 1, 'order_items.cancel' => 1])
             ->join('customers', 'customers.id', '=', 'order_items.customer_id')
             ->join('users', 'users.id', '=', 'order_items.driver_id')
             ->join('packages', 'packages.id', '=', 'order_items.package_id')
@@ -253,7 +254,7 @@ class OrderController extends Controller
 
         $orders = Order::select('orders.*', 'customers.full_name as customer_name', 'rentals.name as rental_name')
             ->where(['orders.status' => 1, 'orders.cancel' => 0])
-            ->where('bill', '=', 0)
+            // ->where('bill', '=', 0)
             ->selectSub($amountSum, 'amount_sum')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->join('rentals', 'rentals.id', '=', 'orders.rental_id')

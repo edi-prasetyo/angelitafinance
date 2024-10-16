@@ -51,13 +51,13 @@ class OrderController extends Controller
             ->whereColumn('order_id', 'orders.id')
             ->getQuery();
 
-        $orders = Order::orderBy('id', 'asc')
+        $orders = Order::orderBy('id', 'desc')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->select('orders.*', 'customers.full_name as customer_name')
             ->selectSub($amountSum, 'amount_sum')
             ->withCount('appOrder')
             ->with('appOrderItem')
-            ->get();
+            ->paginate(10);
 
         if ($orders) {
             return response()->json([

@@ -14,6 +14,8 @@ class ReportController extends Controller
     public function index()
     {
 
+
+
         $amountSum = OrderItem::selectRaw('sum(price)')
             ->whereColumn('order_id', 'orders.id')
             ->getQuery();
@@ -30,6 +32,8 @@ class ReportController extends Controller
         $order_yesterday = OrderItem::whereDate('start_date', Carbon::yesterday())->get();
         $order_tomorow = OrderItem::whereDate('start_date', Carbon::tomorrow())->get();
 
+        $unpaid_all = Order::where(['orders.cancel' => 1, 'status' => 1])->sum('bill');
+
         $order_last_month = OrderItem::whereMonth(
             'start_date',
             '=',
@@ -43,7 +47,7 @@ class ReportController extends Controller
         // return $orders;
         $get_total = $orders->sum('bill');
         $get_price = $orders->sum('amount_sum');
-        return view('admin.reports.index', compact('orders', 'all_orders', 'get_total', 'get_price', 'order_today', 'order_yesterday', 'order_tomorow', 'order_last_month', 'order_this_month'));
+        return view('admin.reports.index', compact('orders', 'all_orders', 'get_total', 'get_price', 'order_today', 'order_yesterday', 'order_tomorow', 'order_last_month', 'order_this_month', 'unpaid_all'));
     }
     public function card()
     {
@@ -64,6 +68,8 @@ class ReportController extends Controller
         $order_yesterday = OrderItem::whereDate('start_date', Carbon::yesterday())->get();
         $order_tomorow = OrderItem::whereDate('start_date', Carbon::tomorrow())->get();
 
+        $unpaid_all = Order::where(['orders.cancel' => 1, 'status' => 1])->sum('bill');
+
         $order_last_month = OrderItem::whereMonth(
             'start_date',
             '=',
@@ -77,7 +83,7 @@ class ReportController extends Controller
         // return $orders;
         $get_total = $orders->sum('bill');
         $get_price = $orders->sum('amount_sum');
-        return view('admin.reports.card', compact('orders', 'all_orders', 'get_total', 'get_price', 'order_today', 'order_yesterday', 'order_tomorow', 'order_last_month', 'order_this_month'));
+        return view('admin.reports.card', compact('orders', 'all_orders', 'get_total', 'get_price', 'order_today', 'order_yesterday', 'order_tomorow', 'order_last_month', 'order_this_month', 'unpaid_all'));
     }
     public function daily(Request $request)
     {
@@ -99,6 +105,8 @@ class ReportController extends Controller
         $order_yesterday = OrderItem::whereDate('start_date', Carbon::yesterday())->get();
         $order_tomorow = OrderItem::whereDate('start_date', Carbon::tomorrow())->get();
 
+        $unpaid_all = Order::where(['orders.cancel' => 1, 'status' => 1])->sum('bill');
+
         $order_last_month = OrderItem::whereMonth(
             'start_date',
             '=',
@@ -112,7 +120,7 @@ class ReportController extends Controller
         // return $orders;
         // $get_total = $order_items->sum('bill');
         $get_price = $order_items->sum('price');
-        return view('admin.reports.daily', compact('order_items', 'all_orders', 'get_price', 'order_today', 'order_yesterday', 'order_tomorow', 'order_last_month', 'order_this_month'));
+        return view('admin.reports.daily', compact('order_items', 'all_orders', 'get_price', 'order_today', 'order_yesterday', 'order_tomorow', 'order_last_month', 'order_this_month', 'unpaid_all'));
     }
     public function sales()
     {

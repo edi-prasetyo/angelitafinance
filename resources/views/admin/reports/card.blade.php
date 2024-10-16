@@ -37,6 +37,8 @@
     </div>
 
 
+
+
     {{-- <div class="col-lg-3 col-sm-6">
         <div class="card card-border-shadow-primary h-100">
             <div class="card-body">
@@ -114,8 +116,8 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
                     <div class="avatar me-4">
-                        <span class="avatar-initial rounded bg-label-danger p-4"><i
-                                class="bx bx-cart display-5"></i></span>
+                        <span class="avatar-initial rounded bg-label-info p-4"><i
+                                class="bx bx-calendar display-5"></i></span>
                     </div>
                     <h4 class="mb-0">{{ count($all_orders) }}</h4>
                 </div>
@@ -127,6 +129,35 @@
                         <i class='bx bx-cart-download text-primary'></i> {{ count($all_orders) }}
                     </span>
                     <span class="text-muted">All Orders</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-sm-6">
+        <div class="card card-border-shadow-primary h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-danger p-4"><i
+                                class="bx bx-wallet display-5"></i></span>
+                    </div>
+                    <h4 class="mb-0">Rp. {{ number_format($unpaid_all) }}</h4>
+                </div>
+                <p class="mb-2">Unpaid Order</p>
+                <p class="mb-0">
+
+
+                    {{-- Today : {{ $count_today }} <br>
+                    Yesterday : {{ $count_yesterday }}<br>
+                    Difference : {{ $difference }} --}}
+                    <span class="text-heading fw-medium me-2">
+
+
+
+                    </span>
+                    <span class="text-muted">Total order yang belum bayar</span>
                 </p>
             </div>
         </div>

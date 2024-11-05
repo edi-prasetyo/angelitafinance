@@ -211,17 +211,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     // Schedule Route
     Route::controller(ScheduleController::class)->group(function () {
         Route::get('/schedules', 'index');
-        Route::get('/schedules/create', 'create');
-        Route::post('/schedules', 'store');
-        Route::get('/schedules/add/{schedule}', 'add_item');
-        Route::post('/schedules/add', 'add');
-        Route::get('/schedules/edit/{schedule}', 'edit');
-        Route::put('/schedules/{schedule}', 'update');
-        Route::get('/schedules/delete/{schedule_id}', 'destroy');
-        Route::get('/schedules/accept/{transaction_id}', 'accept');
-        Route::get('/schedules/on_road/{transaction_id}', 'on_road');
-        Route::put('/schedules/finish/{transaction_id}', 'finish');
-        Route::get('/schedules/detail/{schedule_item_id}', 'show');
-        Route::get('/schedules/additional/{transaction_id}', 'additional');
+        Route::get('/schedules/edit/{order_item_id}', 'edit');
+        Route::put('/schedules/update/{order_item_id}', 'update');
     });
 });

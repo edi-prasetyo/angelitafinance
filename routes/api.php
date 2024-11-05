@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\HomeController;
+use App\Models\OrderItem;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Contracts\Support\ValidatedData;
@@ -28,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 // Public Routes
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login-driver', [AuthController::class, 'login_driver']);
 Route::post('/register', [AuthController::class, 'register']);
 
 
@@ -62,6 +65,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::get('/customers', [CustomerController::class, 'index']);
+
+
+    // Driver App
+    Route::get('driver-order', [DriverController::class, 'order']);
 });
 
 // Test Response Sanctum Api

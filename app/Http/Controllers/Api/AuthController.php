@@ -66,7 +66,8 @@ class AuthController extends Controller
     }
     public function profile()
     {
-        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user = User::where('id', $user_id)->get();
         if ($user) {
             return response()->json([
                 'success' => true,
@@ -81,5 +82,31 @@ class AuthController extends Controller
         // return response()->json(
         //     $user
         // );
+    }
+
+    // Driver
+    public function login_driver(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $user = User::where('email', $request->email)->role('driver')->first();
+
+        if (!Auth::attempt($validatedData)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Login failed. Please check your credentials.'
+            ], 401);
+        }
+
+        $token = $user->createToken($user->name)->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+            'access_token' => $token
+        ], 200);
     }
 }

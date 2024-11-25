@@ -55,6 +55,7 @@
                             <th width="5%">NO</th>
                             <th scope="col">Order Date</th>
                             <th scope="col">Customer</th>
+                            <th scope="col">Order From</th>
                             <th scope="col">Rental</th>
                             <th scope="col">Order</th>
                             <th scope="col">Bill</th>
@@ -71,6 +72,7 @@
                                 <td>{{ $i + 1 }}</td>
                                 <td>{{ date('d-m-Y', strtotime($item->order_date)) }}</td>
                                 <td>{{ $item->customer_name }}</td>
+                                <td>{{ $item->partner_name }}</td>
                                 <td>{{ $item->rental_name }}</td>
                                 <td>{{ count($item->orderCount) }}
 

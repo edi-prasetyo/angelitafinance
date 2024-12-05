@@ -23,7 +23,7 @@ class AuthController extends Controller
             return $this->error('', 'Credential do not match', 401);
         }
 
-        // $users = User::role('writer')->get(); 
+        // $users = User::role('writer')->get();
         $user = User::where('email', $request->email)->role('superadmin')->first();
         if ($user) {
             return $this->success([
@@ -107,6 +107,13 @@ class AuthController extends Controller
             'success' => true,
             'user' => $user,
             'access_token' => $token
+        ], 200);
+    }
+    public function test()
+    {
+        return response()->json([
+            'success' => true,
+            'test' => "response success",
         ], 200);
     }
 }

@@ -39,6 +39,7 @@ class DashboardController extends Controller
         // $month = ['January', 'February', 'March', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         $chartTransaction = OrderItem::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(start_date) as month_name"))
             ->whereYear('start_date', date('Y'))
+            ->where(['cancel' => 1, 'status' => 1])
             ->groupBy(DB::raw("month_name"))
             ->orderBy('id', 'ASC')
             ->pluck('count', 'month_name');

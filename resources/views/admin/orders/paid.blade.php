@@ -70,9 +70,7 @@
                             <th scope="col">Order</th>
                             <th scope="col">Bill</th>
                             <th scope="col">Amount</th>
-
                             <th scope="col">Status</th>
-
                             <th width="20%">Action</th>
                         </tr>
                     </thead>

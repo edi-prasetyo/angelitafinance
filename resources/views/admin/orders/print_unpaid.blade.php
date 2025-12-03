@@ -98,7 +98,7 @@
                     <td>{{ $o->order_code }}</td>
 
                     {{-- Format angka ribuan --}}
-                    <td>{{ number_format($o->bill, 0, ',', '.') }}</td>
+                    <td>{{ number_format($o->bill) }}</td>
 
                     <td>{{ $o->payment_status == 1 ? 'success' : 'pending' }}</td>
                 </tr>

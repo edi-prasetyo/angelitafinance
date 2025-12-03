@@ -422,7 +422,7 @@ class OrderController extends Controller
     {
         $orders = Order::with(['customer', 'partner', 'rental'])
             ->where(['orders.cancel' => 1])
-            ->where('orders.bill', '<=', 0)
+            ->where('orders.bill', '>', 0)
             ->orderBy('id', 'desc')
             ->get();
 

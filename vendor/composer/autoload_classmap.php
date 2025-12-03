@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Exports\\InvoiceExport' => $baseDir . '/app/Exports/InvoiceExport.php',
     'App\\Http\\Controllers\\Admin\\BankController' => $baseDir . '/app/Http/Controllers/Admin/BankController.php',
     'App\\Http\\Controllers\\Admin\\BrandController' => $baseDir . '/app/Http/Controllers/Admin/BrandController.php',
     'App\\Http\\Controllers\\Admin\\CarController' => $baseDir . '/app/Http/Controllers/Admin/CarController.php',
@@ -27,7 +28,9 @@ return array(
     'App\\Http\\Controllers\\Admin\\UserController' => $baseDir . '/app/Http/Controllers/Admin/UserController.php',
     'App\\Http\\Controllers\\Api\\AuthController' => $baseDir . '/app/Http/Controllers/Api/AuthController.php',
     'App\\Http\\Controllers\\Api\\CustomerController' => $baseDir . '/app/Http/Controllers/Api/CustomerController.php',
-    'App\\Http\\Controllers\\Api\\TransactionController' => $baseDir . '/app/Http/Controllers/Api/TransactionController.php',
+    'App\\Http\\Controllers\\Api\\DriverController' => $baseDir . '/app/Http/Controllers/Api/DriverController.php',
+    'App\\Http\\Controllers\\Api\\HomeController' => $baseDir . '/app/Http/Controllers/Api/HomeController.php',
+    'App\\Http\\Controllers\\Api\\OrderController' => $baseDir . '/app/Http/Controllers/Api/OrderController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',

@@ -46,38 +46,51 @@
 
         <div class="card">
 
-            <div class="card-header bg-white d-flex justify-content-between align-items-start">
-                <h4 class="my-auto">Order Belum di bayar</h4>
-                <div class="col-md-6">
-                    <form action="{{ url('admin/orders') }}" method="GET">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+
+                <!-- Title -->
+                <h4 class="m-0">Order Belum Dibayar</h4>
+
+                <!-- Right Content -->
+                <div class="d-flex align-items-center gap-3">
+
+                    <!-- Filter Form -->
+                    <form action="{{ url('admin/orders') }}" method="GET" class="d-flex gap-2">
                         @csrf
-                        <div class="row">
 
-                            <div class="col-md-8">
-                                <select class="form-select" name="customer_id" id="single-select-field4"
-                                    data-placeholder="Pilih Customer">
-                                    <option></option>
-                                    @foreach ($customers as $item)
-                                        <option value="{{ $item->id }}"
-                                            {{ $item->id == $customer_id ? 'selected' : '' }}>{{ $item->full_name }} -
-                                            {{ $item->phone_number }}
-                                        </option>
+                        <select class="form-select" name="customer_id" id="single-select-field4" style="min-width: 240px;"
+                            data-placeholder="Pilih Customer">
+                            <option></option>
+                            @foreach ($customers as $item)
+                                <option value="{{ $item->id }}" {{ $item->id == $customer_id ? 'selected' : '' }}>
+                                    {{ $item->full_name }} - {{ $item->phone_number }}
+                                </option>
+                            @endforeach
+                        </select>
 
-                                        {{-- <option value="{{ $item->id }}">{{ $item->full_name }} -
-                                            {{ $item->phone_number }}
-                                        </option> --}}
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-primary"> Cari</button>
-                                </div>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Cari
+                        </button>
                     </form>
+
+                    <!-- Export Button -->
+                    {{-- <a href="{{ route('export_orders') }}" class="btn btn-danger">
+                        <i class='bx bxs-download'></i> Download Data
+                    </a> --}}
+
+                    <div class="d-flex gap-2 mt-2">
+                        <a href="{{ route('export_orders') }}" class="btn btn-danger">
+                            <i class='bx bxs-download'></i> Download Data
+                        </a>
+
+                        <a href="{{ route('print_unpaid') }}" target="_blank" class="btn btn-secondary">
+                            <i class='bx bx-printer'></i> Print Data
+                        </a>
+                    </div>
+
                 </div>
             </div>
+
             <div class="table-responsive">
                 <table class="table">
                     <thead>

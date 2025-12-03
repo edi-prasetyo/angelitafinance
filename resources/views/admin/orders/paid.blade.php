@@ -47,6 +47,16 @@
             <div class="card-header bg-white d-flex justify-content-between align-items-start">
                 <h4 class="my-auto">Order Sudah di Bayar</h4>
 
+                <div class="d-flex gap-2 mt-2">
+                    <a href="{{ route('export_orders_paid') }}" class="btn btn-danger">
+                        <i class='bx bxs-download'></i> Download Data
+                    </a>
+
+                    <a href="{{ route('print_paid') }}" target="_blank" class="btn btn-secondary">
+                        <i class='bx bx-printer'></i> Print Data
+                    </a>
+                </div>
+
             </div>
             <div class="table-responsive">
                 <table class="table">
@@ -92,12 +102,8 @@
                                 </td>
 
                                 <td>
-
                                     {{ number_format($item->amount_sum) }}
-
                                 </td>
-
-
 
                                 <td>
                                     @if ($item->cancel <= 0)

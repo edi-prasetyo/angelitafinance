@@ -117,7 +117,7 @@ class OrderController extends Controller
                 ->join('partners', 'partners.id', '=', 'orders.partner_id')
                 ->orderBy('id', 'desc')
                 ->with('orderCount')
-                ->paginate(20);
+                ->paginate(3);
             // return $orders;
             $title = 'Delete Order!';
             $text = "Anda Yakin ingin menghapus data ini?";
@@ -143,9 +143,8 @@ class OrderController extends Controller
                 ->join('partners', 'partners.id', '=', 'orders.partner_id')
                 ->orderBy('id', 'desc')
                 ->with('orderCount')
-
-                ->paginate(20);
-            // return $orders->orderCount;
+                ->paginate(10);
+            // return $orders;
             $title = 'Delete Order!';
             $text = "Anda Yakin ingin menghapus data ini?";
             confirmDelete($title, $text);
@@ -376,7 +375,7 @@ class OrderController extends Controller
         // return view('admin.orders.download', $data);
         // return view('admin.orders.downloadtest', $data);
     }
-    // Print 
+    // Print
     public function print($order_id)
     {
         $order = Order::where('orders.id', $order_id)
@@ -417,6 +416,43 @@ class OrderController extends Controller
 
 
         return view('admin.orders.print', $data);
+    }
+
+    public function printUnpaid()
+    {
+        $orders = Order::with(['customer', 'partner', 'rental'])
+            ->where(['orders.cancel' => 1])
+            ->where('orders.bill', '<=', 0)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return view('admin.orders.print_unpaid', compact('orders'));
+    }
+    public function printPaid()
+    {
+        // Subquery amount_sum
+        $amountSum = \App\Models\OrderItem::selectRaw('SUM(price)')
+            ->whereColumn('order_id', 'orders.id')
+            ->getQuery();
+
+        $orders = Order::select(
+            'orders.*',
+            'customers.full_name as customer_name',
+            'rentals.name as rental_name',
+            'partners.name as partner_name'
+        )
+            ->selectSub($amountSum, 'amount_sum')
+            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->join('rentals', 'rentals.id', '=', 'orders.rental_id')
+            ->join('partners', 'partners.id', '=', 'orders.partner_id')
+            ->where('orders.payment_status', 0)
+            ->where('orders.verify', 0)
+            ->where('orders.bill', '<=', 0)
+            ->where('orders.cancel', '>', 0)
+            ->orderBy('orders.id', 'desc')
+            ->get();
+
+        return view('admin.orders.print_paid', compact('orders'));
     }
 
     public function cancel($id)

@@ -21,6 +21,11 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TimerController;
 use App\Http\Controllers\HomeController;
 
+use App\Exports\OrdersExport;
+use App\Exports\OrdersPaidExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -201,6 +206,17 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
         Route::get('/orders/download/{order_id}', 'download')->name('download');
         Route::get('/orders/print/{order_id}', 'print')->name('print');
+
+
+        Route::get('/export/orders', function () {
+            return Excel::download(new OrdersExport, 'orders.xlsx');
+        })->name('export_orders');
+        Route::get('/export/orders-paid', function () {
+            return Excel::download(new OrdersPaidExport, 'orderspaid.xlsx');
+        })->name('export_orders_paid');
+
+        Route::get('/admin/orders/print', [OrderController::class, 'printUnpaid'])->name('print_unpaid');
+        Route::get('/admin/orders/print-paid', [OrderController::class, 'printPaid'])->name('print_paid');
     });
 
     // Reports Route

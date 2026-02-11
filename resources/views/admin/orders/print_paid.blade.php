@@ -54,7 +54,7 @@
         <a href="{{ url()->previous() }}">⬅ Kembali</a>
     </div>
 
-    <h2 class="title">Laporan Order Belum Dibayar</h2>
+    <h2 class="title">Laporan Order Sudah Dibayar</h2>
 
     <table>
         <thead>

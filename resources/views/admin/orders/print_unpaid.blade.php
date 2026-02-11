@@ -44,14 +44,51 @@
                 display: none;
             }
         }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .btn-print {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #0056b3;
+        }
+
+        .btn-back {
+            background: #28a745;
+            color: white;
+            margin-left: 6px;
+        }
+
+        .btn-back:hover {
+            background: #1c7c31;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <div class="no-print" style="margin-bottom: 15px;">
-        <button onclick="window.print()">🖨 Print Sekarang</button>
-        <a href="{{ url()->previous() }}">⬅ Kembali</a>
+        <button class="btn btn-print" onclick="window.print()">🖨 Print Sekarang</button>
+        <a class="btn btn-back" href="{{ url()->previous() }}">⬅ Kembali</a>
     </div>
 
     <h2 class="title">Laporan Order Belum Dibayar</h2>

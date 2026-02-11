@@ -332,6 +332,32 @@ class OrderController extends Controller
     // Load Pdf
     public function download($order_id)
     {
+        // $orderImage = Order::where('id', $order_id)->first();
+        // $rental = Rental::where('id', $orderImage->rental_id)->first();
+
+        // // return $rental;
+        // /**
+        //  * LOGO
+        //  */
+        // $logoBase64 = null;
+        // $logoPath = public_path($rental->logo);
+
+        // if (file_exists($logoPath)) {
+        //     $type = pathinfo($logoPath, PATHINFO_EXTENSION);
+        //     $logoBase64 = 'data:image/' . $type . ';base64,' . base64_encode(file_get_contents($logoPath));
+        // }
+
+        // /**
+        //  * SIGNATURE
+        //  */
+        // $signBase64 = null;
+        // $signPath = public_path($rental->signature);
+
+        // if (file_exists($signPath)) {
+        //     $type = pathinfo($signPath, PATHINFO_EXTENSION);
+        //     $signBase64 = 'data:image/' . $type . ';base64,' . base64_encode(file_get_contents($signPath));
+        // }
+
         $order = Order::where('orders.id', $order_id)
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
             ->select('orders.*', 'customers.full_name as customer_name')
@@ -362,7 +388,9 @@ class OrderController extends Controller
             'payments' => $payments,
             'grand_total' => $grand_total,
             'banks' => $banks,
-            'pickups' => $pickups
+            'pickups' => $pickups,
+            // 'logoBase64' => $logoBase64,
+            // 'signBase64' => $signBase64,
 
         ];
 

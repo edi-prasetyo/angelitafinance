@@ -101,7 +101,6 @@
             width: 50%;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/fonts/boxicons-2.1.4/css/boxicons.css') }}" />
 </head>
 
 <body>
